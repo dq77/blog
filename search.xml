@@ -206,9 +206,9 @@
 <li>面条 甜蒜 海带丝 土豆<span id="more"></span></li>
 </ul>
 <h4 id="烧烤材料列表"><a href="#烧烤材料列表" class="headerlink" title="烧烤材料列表"></a>烧烤材料列表</h4><ul>
-<li>炉钩子 酒精块 盐盒 手套 打火机 塑料袋 纸巾 水</li>
-<li>孜然 木炭 瓶子 炉子 水果刀 辣椒面 蒜蓉酱 薯片盒</li>
-<li>报纸 生菜 饼 盆 凳子 砖头 手电筒 刷子 肉 纸盒箱 剪子</li>
+<li>肉 水果刀 炉子 小桌子 酒精块 手套 打火机 塑料袋 纸巾 水</li>
+<li>盐盒 孜然 辣椒面 蒜蓉酱 木炭 瓶子 炉钩子 刷子</li>
+<li>报纸 生菜 饼 盘子 筷子 凳子 砖头 手电筒 扑克</li>
 </ul>
 ]]></content>
       <categories>
@@ -246,7 +246,17 @@
   <entry>
     <title>Typora快捷键整理</title>
     <url>/blog/typora/</url>
-    <content><![CDATA[<h4 id="MarkDown语法"><a href="#MarkDown语法" class="headerlink" title="MarkDown语法"></a>MarkDown语法</h4><h5 id="各级标题-Ctrl-1"><a href="#各级标题-Ctrl-1" class="headerlink" title="各级标题         Ctrl + 1"></a>各级标题         Ctrl + 1</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h4 id="Typora安装"><a href="#Typora安装" class="headerlink" title="Typora安装"></a>Typora安装</h4><ol>
+<li><p>下载typora-0.11.18后直接安装，双击运行安装程序，最后会提示软件版本过期，无视掉。</p>
+</li>
+<li><p>按 Windows + R 打开运行窗口，输入regedit，点确定，打开注册表。</p>
+</li>
+<li><p>依次展开：计算机\HKEY_CURRENT_USER\Software\Typora，然后在Typora上右键，点权限，选中Administrtors，把权限全部设置为拒绝。</p>
+</li>
+<li><p>打开Typora软件，左上角点击：文件 → 偏好设置 → 自动检查更新。取消前面的勾选。</p>
+</li>
+</ol>
+<h4 id="MarkDown语法"><a href="#MarkDown语法" class="headerlink" title="MarkDown语法"></a>MarkDown语法</h4><h5 id="各级标题-Ctrl-1"><a href="#各级标题-Ctrl-1" class="headerlink" title="各级标题         Ctrl + 1"></a>各级标题         Ctrl + 1</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
 <p><em>斜体文本</em> 和 <strong>粗体文本</strong> 以及 ***粗斜体文本 ***        Ctrl + I    Ctrl + B</p>
@@ -270,7 +280,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">`函数块`</span><br></pre></td></tr></table></figure>
 
 <p>代码块的使用         Ctrl + Shift + K</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">​```javascript</span><br><span class="line">$(document).ready(function () &#123;</span><br><span class="line">    alert(&#x27;RUNOOB&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line">​```</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">```javascript</span><br><span class="line">$(document).ready(function () &#123;</span><br><span class="line">    alert(&#x27;RUNOOB&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line">​```</span><br></pre></td></tr></table></figure>
 <p>链接                       Ctrl + K</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[菜鸟教程](https://www.runoob.com)</span><br></pre></td></tr></table></figure>
 <p>图片                       Ctrl + Shift + I</p>
@@ -1070,14 +1080,14 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
 <p>成功后再往下一步走，此处没成功则排查问题。</p>
 </li>
-<li><h5 id="下载Trojan服务器"><a href="#下载Trojan服务器" class="headerlink" title="下载Trojan服务器"></a>下载Trojan服务器</h5><p>最新地址去github查 最终文件名为：trojan-x.x.x-linux-amd64.tar.xz</p>
+<li><h5 id="下载Trojan服务器"><a href="#下载Trojan服务器" class="headerlink" title="下载Trojan服务器"></a>下载Trojan服务器</h5><p>下载地址：<a href="https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz">https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz</a></p>
 <blockquote>
-<p>即可以在github下载后拖入服务器，也可在服务器上下载。都一样。</p>
+<p>既可以在github下载后拖入服务器，也可在服务器上下载。都一样。</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/src  #进入该目录</span><br><span class="line">wget https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz    #下载官方 Trojan 服务器</span><br><span class="line">tar xf trojan-1.*   #解压该文件</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>国内备份：<a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/trojan/server/trojan-1.16.0-linux-amd64.tar.xz">trojan-1.16.0-linux-amd64.tar.xz</a></p>
+<p>国内备份：<a href="https://ghproxy.com/https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz">trojan-1.16.0-linux-amd64.tar.xz</a></p>
 </blockquote>
 </li>
 <li><h5 id="创建-Trojan-服务器配置文件"><a href="#创建-Trojan-服务器配置文件" class="headerlink" title="创建 Trojan 服务器配置文件"></a>创建 Trojan 服务器配置文件</h5><p>找到 <code>/usr/src/trojan/</code> 目录，创建并打开<code>server.conf</code>文件</p>
@@ -1105,34 +1115,25 @@
 <p>至此，服务端搭建结束。</p>
 <hr>
 <h3 id="Trojan-客户端下载"><a href="#Trojan-客户端下载" class="headerlink" title="Trojan 客户端下载"></a>Trojan 客户端下载</h3><ul>
-<li><h4 id="安卓客户端"><a href="#安卓客户端" class="headerlink" title="安卓客户端"></a>安卓客户端</h4><ul>
-<li><h5 id="igniter"><a href="#igniter" class="headerlink" title="igniter"></a>igniter</h5><p>这个是官方的原版<a href="https://github.com/trojan-gfw/igniter/releases">安卓客户端igniter</a>，在<a href="https://github.com/trojan-gfw/igniter/releases">官网</a>即可下载，可放心使用。</p>
+<li><h4 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h4><ul>
+<li><h5 id="Clash"><a href="#Clash" class="headerlink" title="Clash"></a>Clash</h5><p>首先<strong>强烈</strong>推荐<a href="https://github.com/Fndroid/clash_for_windows_pkg/releases">Clash</a>，一端配置，多端通用。配置好了之后，安卓、IOS、Mac都可以开箱即用，非常好用。</p>
 <blockquote>
-<p>国内备份：<a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/trojan/client/android/igniter-v0.10.2-beta-arm64-v8a-release.apk">安卓客户端igniter</a></p>
+<p>国内备份：<a href="https://ghproxy.com/https://github.com/Fndroid/clash_for_windows_pkg/releases/download/0.20.36/Clash.for.Windows.Setup.0.20.36.exe">Clash</a>    <a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/trojan/Clash.for.Windows%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8F%8A%E6%95%99%E7%A8%8B.zip">配置文件及教程</a></p>
 </blockquote>
 </li>
-</ul>
-</li>
-<li><h4 id="IOS客户端"><a href="#IOS客户端" class="headerlink" title="IOS客户端"></a>IOS客户端</h4><ul>
-<li><h5 id="ClashX"><a href="#ClashX" class="headerlink" title="ClashX"></a>ClashX</h5><p><a href="https://github.com/yichengchen/clashX/releases">ClashX</a>(需翻)是目前最火的IOS客户端。</p>
-</li>
-</ul>
-</li>
-<li><h4 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h4><ul>
-<li><h5 id="Qv2ray"><a href="#Qv2ray" class="headerlink" title="Qv2ray"></a>Qv2ray</h5><p>首先<strong>强烈</strong>推荐<a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>。这个需要安装<a href="https://github.com/v2ray/v2ray-core/releases">v2ray的内核</a>，并且还要安装<a href="https://github.com/Qv2ray/QvPlugin-Trojan/releases">Trojan插件</a>才能用，虽然有点小费劲，但很极客，开源软件简洁且放心，使用教程在<a href="https://ssr.tools/1617">这里</a>。</p>
+<li><h5 id="Qv2ray"><a href="#Qv2ray" class="headerlink" title="Qv2ray"></a>Qv2ray</h5><p><a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>是社区维护的客户端。这个需要安装<a href="https://github.com/v2ray/v2ray-core/releases">v2ray的内核</a>，并且还要安装<a href="https://github.com/Qv2ray/QvPlugin-Trojan/releases">Trojan插件</a>才能用，虽然有点小费劲，但很极客，开源软件简洁且放心，使用教程在<a href="https://ssr.tools/1617">这里</a>。</p>
 <blockquote>
-<p>国内备份：<a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/trojan/client/windows/Qv2ray/Qv2ray-v2.7.0-Windows-Installer.exe">Qv2ray</a>  <a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/trojan/client/windows/Qv2ray/v2ray-4.31.0-windows-64.zip">v2ray内核</a>  <a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/trojan/client/windows/Qv2ray/QvPlugin-Trojan.v3.0.0.Windows-x64.dll">Trojan插件</a>  <a href="https://v2xtls.org/qv2ray%E4%B8%8B%E8%BD%BD%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B-v2ray-windows%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%90%8C%E6%97%B6%E6%94%AF%E6%8C%81ss-ssr-v2ray-trojan/">使用教程</a></p>
+<p>国内备份：<a href="https://ghproxy.com/https://github.com/Qv2ray/Qv2ray/releases/download/v2.7.0/Qv2ray-v2.7.0-Windows-Installer.exe">Qv2ray</a>   <a href="https://ghproxy.com/https://github.com/v2fly/v2ray-core/releases/download/v4.31.0/v2ray-windows-64.zip">v2ray内核</a>   <a href="https://ghproxy.com/https://github.com/Qv2ray/QvPlugin-Trojan/releases/download/v3.0.0/QvPlugin-Trojan.v3.0.0.Windows-x64.dll">Trojan插件</a>   <a href="https://v2xtls.org/qv2ray%E4%B8%8B%E8%BD%BD%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B-v2ray-windows%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%90%8C%E6%97%B6%E6%94%AF%E6%8C%81ss-ssr-v2ray-trojan/">使用教程</a></p>
 </blockquote>
 </li>
 <li><h5 id="西部世界"><a href="#西部世界" class="headerlink" title="西部世界"></a>西部世界</h5><p>一键式傻瓜客户端：<a href="https://westworldss.com/">西部世界官网</a></p>
 <blockquote>
-<p>国内备份：<a href="https://sjssr.fun/portal/account/login">西部世界官网</a></p>
-<p>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#x69;&#110;&#102;&#111;&#64;&#x77;&#x65;&#115;&#x74;&#x77;&#111;&#x72;&#108;&#x64;&#x73;&#x73;&#x2e;&#99;&#x6f;&#x6d;">&#x69;&#110;&#102;&#111;&#64;&#x77;&#x65;&#115;&#x74;&#x77;&#111;&#x72;&#108;&#x64;&#x73;&#x73;&#x2e;&#99;&#x6f;&#x6d;</a> 即可获取最新地址</p>
+<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#105;&#110;&#x66;&#111;&#64;&#119;&#x65;&#115;&#x74;&#119;&#111;&#x72;&#108;&#x64;&#115;&#x73;&#46;&#x63;&#x6f;&#109;">&#105;&#110;&#x66;&#111;&#64;&#119;&#x65;&#115;&#x74;&#119;&#111;&#x72;&#108;&#x64;&#115;&#x73;&#46;&#x63;&#x6f;&#109;</a> 即可获取最新地址</p>
 </blockquote>
 </li>
-<li><h5 id="破解版V2rayN"><a href="#破解版V2rayN" class="headerlink" title="破解版V2rayN"></a>破解版V2rayN</h5><p>另外，v2rayssr网站提供了一个<a href="https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a>。缺点就是版本很老，但可用。 <a href="https://www.v2rayssr.com/trojanwin.html">具体使用教程在这</a>。（仅适用于Windows）</p>
+<li><h5 id="破解版V2rayN"><a href="#破解版V2rayN" class="headerlink" title="破解版V2rayN"></a>破解版V2rayN</h5><p>另外，v2rayssr网站提供了一个<a href="https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a>。缺点就是版本很老，但可用。 <a href="https://www.v2rayssr.com/trojanwin.html">具体使用教程在这</a>。</p>
 <blockquote>
-<p>国内备份：<a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/trojan/client/windows/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a></p>
+<p>国内备份：<a href="https://ghproxy.com/https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a></p>
 </blockquote>
 </li>
 <li><h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>其他的好用客户端，都在<a href="https://tlanyan.me/trojan-clients-download/">这里</a>。</p>
@@ -1140,10 +1141,53 @@
 </ul>
 </li>
 <li><h4 id="macOS客户端"><a href="#macOS客户端" class="headerlink" title="macOS客户端"></a>macOS客户端</h4><ul>
-<li><h5 id="Qv2ray-1"><a href="#Qv2ray-1" class="headerlink" title="Qv2ray"></a><a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a></h5></li>
-</ul>
+<li><h5 id="ClashX"><a href="#ClashX" class="headerlink" title="ClashX"></a>ClashX</h5><p>在Mac上运行的<a href="https://github.com/yichengchen/clashX/releases">clashX</a>，使用说明参考<a href="https://github.com/yichengchen/clashX">官网</a>，也是需要配置文件。</p>
+</li>
+<li><h5 id="Qv2ray-1"><a href="#Qv2ray-1" class="headerlink" title="Qv2ray"></a>Qv2ray</h5><p>可用但不推荐，<a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>的复杂配置在Mac端有些不方便。适合熟悉Qv2ray的配置方式或者用惯Qv2ray的人使用。</p>
 </li>
 </ul>
+</li>
+<li><h4 id="安卓客户端"><a href="#安卓客户端" class="headerlink" title="安卓客户端"></a>安卓客户端</h4><ul>
+<li><h5 id="igniter"><a href="#igniter" class="headerlink" title="igniter"></a>igniter</h5></li>
+</ul>
+<p>  这个是官方的原版安卓客户端 <a href="https://github.com/trojan-gfw/igniter/releases">igniter</a>，可放心使用。</p>
+<blockquote>
+<p>国内备份：<a href="https://ghproxy.com/https://github.com/trojan-gfw/igniter/releases/download/v0.10.2-beta/io.github.trojan_gfw.igniter-v0.10.2-beta-230001002-arm64-v8a-release.apk">igniter</a></p>
+</blockquote>
+<ul>
+<li><h5 id="Clash-1"><a href="#Clash-1" class="headerlink" title="Clash"></a>Clash</h5></li>
+</ul>
+<p>  需要先把配置文件弄好，手机下载<a href="https://github.com/Kr328/ClashForAndroid/releases/download/v2.5.12/cfa-2.5.12-foss-arm64-v8a-release.apk">Clash</a>，然后导入URL或者文件即可使用。</p>
+<blockquote>
+<p>国内备份：<a href="https://ghproxy.com/https://github.com/Kr328/ClashForAndroid/releases/download/v2.5.12/cfa-2.5.12-foss-arm64-v8a-release.apk">Clash</a></p>
+</blockquote>
+</li>
+<li><h4 id="IOS客户端"><a href="#IOS客户端" class="headerlink" title="IOS客户端"></a>IOS客户端</h4><ul>
+<li><h5 id="Stash"><a href="#Stash" class="headerlink" title="Stash"></a>Stash</h5></li>
+</ul>
+<p>  用美区Apple ID登录AppStore，购买 <a href="https://apps.apple.com/us/app/stash-rule-based-proxy/id1596063349">Stash</a>。</p>
+<blockquote>
+<p>本人未尝试过，无教程，盲猜和安卓差不多</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><h4 id="Linux客户端"><a href="#Linux客户端" class="headerlink" title="Linux客户端"></a>Linux客户端</h4><ul>
+<li><h5 id="Qv2ray-2"><a href="#Qv2ray-2" class="headerlink" title="Qv2ray"></a>Qv2ray</h5></li>
+</ul>
+<p>  支持Linux的客户端不多，<a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>算是最好用的之一，具体配置方式同Windows。</p>
+</li>
+<li><h4 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h4><ul>
+<li><h5 id="梅林路由器"><a href="#梅林路由器" class="headerlink" title="梅林路由器"></a>梅林路由器</h5></li>
+</ul>
+<p>  支持RT-AC86U 官改固件，Trojan 暂时没有可用的路由器插件。</p>
+<ul>
+<li><h5 id="OpenWRT路由器"><a href="#OpenWRT路由器" class="headerlink" title="OpenWRT路由器"></a>OpenWRT路由器</h5></li>
+</ul>
+<p>  支持NanoPi R2S 软路由，刷入固件FriendlyWrt_20200616_NanoPi-R2S_arm64_sd.img。</p>
+</li>
+</ul>
+<p>由于很多客户端不存在国内备份，而国外链接又打不开。故建议先搭建Windows环境客户端，成功后再访问其他链接。</p>
 <p>至此，客户端搭建完毕，开始你的表演。</p>
 <hr>
 <h3 id="开启BBR加速服务（选修）"><a href="#开启BBR加速服务（选修）" class="headerlink" title="开启BBR加速服务（选修）"></a>开启BBR加速服务（选修）</h3><p>大家都知道国外的服务器远离我们，在国内连接速度并不是很好，尤其是在晚高峰期体验效果明显有所下降，此时我们需要安装一些脚本进行加速。</p>
