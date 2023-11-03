@@ -222,7 +222,7 @@
   <entry>
     <title>Hexo使用说明书</title>
     <url>/blog/sysms/</url>
-    <content><![CDATA[<h5 id="使用图片"><a href="#使用图片" class="headerlink" title="使用图片"></a>使用图片</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% img newimg &#x2F;sysms&#x2F;test.png 200 200 &quot;title text&quot; %&#125;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h5 id="使用图片"><a href="#使用图片" class="headerlink" title="使用图片"></a>使用图片</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% img newimg /sysms/test.png 200 200 &quot;title text&quot; %&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p><code>newimg</code> 表示图片的class类名， <code>title text</code> 是图片的title</p>
@@ -234,6 +234,16 @@
 <h5 id="查看更多"><a href="#查看更多" class="headerlink" title="查看更多"></a>查看更多</h5><p>在文章中使用 <code>&lt;!-- more --&gt;</code> 即可，注意一定要写在顶格</p>
 <p>阅读全文跳转到文章头部： 修改文件 <code>themes/next/layout/_macro/post.swig</code> ，删除 “#more”</p>
 <h5 id="canvas-nest"><a href="#canvas-nest" class="headerlink" title="canvas-nest"></a>canvas-nest</h5><p>需要自己下载js，然后在 <code>next/layout/_scripts/vendors.swig</code> 中配置路径。然后在next配置文件中添加对应的配置。</p>
+<h5 id="查询文件哈希值"><a href="#查询文件哈希值" class="headerlink" title="查询文件哈希值"></a>查询文件哈希值</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 后面的SHA256，缺省值为SHA1，可换成MD5</span><br><span class="line">certutil -hashfile file.txt SHA256</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="Git更新远程分支列表"><a href="#Git更新远程分支列表" class="headerlink" title="Git更新远程分支列表"></a>Git更新远程分支列表</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git fetch -p</span><br><span class="line">// 或者</span><br><span class="line">git remote update origin -p</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 ]]></content>
       <categories>
         <category>Hexo</category>
@@ -1128,7 +1138,7 @@
 </li>
 <li><h5 id="西部世界"><a href="#西部世界" class="headerlink" title="西部世界"></a>西部世界</h5><p>一键式傻瓜客户端：<a href="https://westworldss.com/">西部世界官网</a></p>
 <blockquote>
-<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#105;&#110;&#x66;&#111;&#64;&#119;&#x65;&#115;&#x74;&#119;&#111;&#x72;&#108;&#x64;&#115;&#x73;&#46;&#x63;&#x6f;&#109;">&#105;&#110;&#x66;&#111;&#64;&#119;&#x65;&#115;&#x74;&#119;&#111;&#x72;&#108;&#x64;&#115;&#x73;&#46;&#x63;&#x6f;&#109;</a> 即可获取最新地址</p>
+<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#105;&#110;&#102;&#x6f;&#x40;&#x77;&#x65;&#115;&#x74;&#119;&#111;&#x72;&#x6c;&#x64;&#115;&#x73;&#x2e;&#x63;&#111;&#109;">&#105;&#110;&#102;&#x6f;&#x40;&#x77;&#x65;&#115;&#x74;&#119;&#111;&#x72;&#x6c;&#x64;&#115;&#x73;&#x2e;&#x63;&#111;&#109;</a> 即可获取最新地址</p>
 </blockquote>
 </li>
 <li><h5 id="破解版V2rayN"><a href="#破解版V2rayN" class="headerlink" title="破解版V2rayN"></a>破解版V2rayN</h5><p>另外，v2rayssr网站提供了一个<a href="https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a>。缺点就是版本很老，但可用。 <a href="https://www.v2rayssr.com/trojanwin.html">具体使用教程在这</a>。</p>
