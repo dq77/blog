@@ -1413,7 +1413,7 @@
 <hr>
 <h3 id="Trojan-客户端下载"><a href="#Trojan-客户端下载" class="headerlink" title="Trojan 客户端下载"></a>Trojan 客户端下载</h3><ul>
 <li><h4 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h4><ul>
-<li><h5 id="Clash"><a href="#Clash" class="headerlink" title="Clash"></a>Clash</h5><p>首先<strong>强烈</strong>推荐Clash，一端配置，多端通用。配置好了之后，安卓、IOS、Mac都可以开箱即用，非常好用。目前作者已停更，可以从<a href="https://github.com/BoyceLig/Clash_Chinese_Patch/releases">这里下载</a>。</p>
+<li><h5 id="Clash-For-Windows"><a href="#Clash-For-Windows" class="headerlink" title="Clash For Windows"></a>Clash For Windows</h5><p>首先<strong>强烈</strong>推荐Clash，一端配置，多端通用。配置好了之后，安卓、IOS、Mac都可以开箱即用，非常好用。目前作者已停更，可以从<a href="https://github.com/BoyceLig/Clash_Chinese_Patch/releases">这里下载</a>。</p>
 <blockquote>
 <p>国内备份：<a href="https://ghproxy.com/https://github.com/BoyceLig/Clash_Chinese_Patch/releases/download/0.20.39/Clash.for.Windows-0.20.39-win.7z">Clash</a>    <a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/troojan/Clash.for.Windows%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8F%8A%E6%95%99%E7%A8%8B.zip">配置文件及教程</a></p>
 </blockquote>
@@ -1425,7 +1425,7 @@
 </li>
 <li><h5 id="西部世界"><a href="#西部世界" class="headerlink" title="西部世界"></a>西部世界</h5><p>一键式傻瓜客户端：<a href="https://westworldss.com/">西部世界官网</a></p>
 <blockquote>
-<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#105;&#110;&#102;&#111;&#64;&#119;&#101;&#115;&#x74;&#x77;&#111;&#x72;&#108;&#x64;&#x73;&#115;&#46;&#99;&#111;&#x6d;">&#105;&#110;&#102;&#111;&#64;&#119;&#101;&#115;&#x74;&#x77;&#111;&#x72;&#108;&#x64;&#x73;&#115;&#46;&#99;&#111;&#x6d;</a> 即可获取最新地址</p>
+<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#x69;&#x6e;&#102;&#111;&#x40;&#x77;&#x65;&#115;&#x74;&#119;&#x6f;&#x72;&#108;&#100;&#x73;&#115;&#46;&#x63;&#111;&#109;">&#x69;&#x6e;&#102;&#111;&#x40;&#x77;&#x65;&#115;&#x74;&#119;&#x6f;&#x72;&#108;&#100;&#x73;&#115;&#46;&#x63;&#111;&#109;</a> 即可获取最新地址</p>
 </blockquote>
 </li>
 <li><h5 id="破解版V2rayN"><a href="#破解版V2rayN" class="headerlink" title="破解版V2rayN"></a>破解版V2rayN</h5><p>另外，v2rayssr网站提供了一个<a href="https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a>。缺点就是版本很老，但可用。 <a href="https://www.v2rayssr.com/trojanwin.html">具体使用教程在这</a>。</p>
@@ -1440,6 +1440,8 @@
 <li><h4 id="macOS客户端"><a href="#macOS客户端" class="headerlink" title="macOS客户端"></a>macOS客户端</h4><ul>
 <li><h5 id="ClashX"><a href="#ClashX" class="headerlink" title="ClashX"></a>ClashX</h5><p>在Mac上运行的<a href="https://github.com/yichengchen/clashX/releases">clashX</a>，使用说明参考<a href="https://github.com/yichengchen/clashX">官网</a>，也是需要配置文件。</p>
 </li>
+<li><h5 id="Clash-For-Windows-1"><a href="#Clash-For-Windows-1" class="headerlink" title="Clash For Windows"></a>Clash For Windows</h5><p>没错，这货也支持MacOS。也需要从<a href="https://github.com/BoyceLig/Clash_Chinese_Patch/releases">这里下载</a>。</p>
+</li>
 <li><h5 id="Qv2ray-1"><a href="#Qv2ray-1" class="headerlink" title="Qv2ray"></a>Qv2ray</h5><p>可用但不推荐，<a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>的复杂配置在Mac端有些不方便。适合熟悉Qv2ray的配置方式或者用惯Qv2ray的人使用。</p>
 </li>
 </ul>
@@ -1452,7 +1454,7 @@
 <p>国内备份：<a href="https://ghproxy.com/https://github.com/trojan-gfw/igniter/releases/download/v0.10.2-beta/io.github.trojan_gfw.igniter-v0.10.2-beta-230001002-arm64-v8a-release.apk">igniter</a></p>
 </blockquote>
 <ul>
-<li><h5 id="Clash-1"><a href="#Clash-1" class="headerlink" title="Clash"></a>Clash</h5></li>
+<li><h5 id="Clash"><a href="#Clash" class="headerlink" title="Clash"></a>Clash</h5></li>
 </ul>
 <p>  需要先把配置文件弄好，手机下载<a href="https://github.com/Kr328/ClashForAndroid/releases/download/v2.5.12/cfa-2.5.12-foss-arm64-v8a-release.apk">Clash</a>，然后导入URL或者文件即可使用。</p>
 <blockquote>
