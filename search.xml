@@ -538,33 +538,171 @@
   <entry>
     <title>键盘使用说明书</title>
     <url>/blog/jpsms/</url>
-    <content><![CDATA[<h5 id="Fn-Ins-：整体键盘背光颜色统一变化"><a href="#Fn-Ins-：整体键盘背光颜色统一变化" class="headerlink" title="Fn + Ins ：整体键盘背光颜色统一变化"></a><kbd>Fn</kbd> + <kbd>Ins</kbd> ：整体键盘背光颜色统一变化</h5><blockquote>
+    <content><![CDATA[<h4 id="狼蛛F87"><a href="#狼蛛F87" class="headerlink" title="狼蛛F87"></a>狼蛛F87</h4><table>
+<thead>
+<tr>
+<th>Fn+</th>
+<th>ESC</th>
+<th>`~</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>Q</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>功能</td>
+<td>恢复默认</td>
+<td>2.4G对码</td>
+<td>蓝牙1</td>
+<td>蓝牙2</td>
+<td>蓝牙3</td>
+<td>安卓</td>
+</tr>
+<tr>
+<td>Fn+</td>
+<td>W</td>
+<td>E</td>
+<td>R</td>
+<td>INS</td>
+<td>DEL</td>
+<td>↑</td>
+</tr>
+<tr>
+<td>功能</td>
+<td>windows</td>
+<td>Mac</td>
+<td>IOS</td>
+<td>灯光模式</td>
+<td>颜色切换</td>
+<td>亮度+</td>
+</tr>
+<tr>
+<td>Fn+</td>
+<td>↓</td>
+<td>←</td>
+<td>→</td>
+<td>WIN</td>
+<td>左Shift</td>
+<td>Z</td>
+</tr>
+<tr>
+<td>功能</td>
+<td>亮度-</td>
+<td>速度-</td>
+<td>速度+</td>
+<td>锁WIN</td>
+<td>灯条模式</td>
+<td>灯条颜色</td>
+</tr>
+<tr>
+<td>Fn+</td>
+<td>B</td>
+<td>右Shift</td>
+<td>/?</td>
+<td>右Alt</td>
+<td>右Ctrl</td>
+<td></td>
+</tr>
+<tr>
+<td>功能</td>
+<td>展示电量</td>
+<td>侧灯模式</td>
+<td>侧灯颜色</td>
+<td>侧灯亮度</td>
+<td>侧灯速度</td>
+<td></td>
+</tr>
+</tbody></table>
+<h5 id="windows下F键快捷功能"><a href="#windows下F键快捷功能" class="headerlink" title="windows下F键快捷功能"></a>windows下F键快捷功能</h5><table>
+<thead>
+<tr>
+<th>Fn+</th>
+<th>F1</th>
+<th>F2</th>
+<th>F3</th>
+<th>F4</th>
+<th>F5</th>
+<th>F6</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>功能</td>
+<td>主页</td>
+<td>邮件</td>
+<td>转换窗口</td>
+<td>打开资源管理器</td>
+<td>亮度-</td>
+<td>亮度+</td>
+</tr>
+<tr>
+<td>Fn+</td>
+<td>F7</td>
+<td>F8</td>
+<td>F9</td>
+<td>F10</td>
+<td>F11</td>
+<td>F12</td>
+</tr>
+<tr>
+<td>功能</td>
+<td>上一曲</td>
+<td>播放/暂停</td>
+<td>下一曲</td>
+<td>静音</td>
+<td>音量-</td>
+<td>音量+</td>
+</tr>
+</tbody></table>
+<p><kbd>Fn</kbd> + <kbd>Ins</kbd> ：15种RGB和关闭共16种灯效切换</p>
+<blockquote>
+<p>随波逐流(默认)、如影随形、正弦光波、旋转风车、七彩瀑布、花开富贵、游戏模式、关闭、常亮模式、呼吸模式、梦幻彩虹、一触即发、雨中漫步、按键涟漪、繁星点点、川流不息。</p>
+</blockquote>
+<p><kbd>Fn</kbd> + <kbd>Esc</kbd> 长按3秒，恢复默认。</p>
+<p><kbd>Fn</kbd> + 左<kbd>Win</kbd>锁定/打开左WIN窗口键(锁时灯常亮)。</p>
+<p><kbd>Fn</kbd> + <kbd>B</kbd>切换到电量模式，充电时流光，充满常亮绿色，5个灯一个代表20%电量。</p>
+<p>驱动教程及下载地址<a href="https://www.aulacn.com/product-detail/f87">在这里</a>，可音乐律动、颜色及按键自定义、宏定义。</p>
+<h5 id="2-4G对码"><a href="#2-4G对码" class="headerlink" title="2.4G对码"></a>2.4G对码</h5><p>开关拨至2.4G模式，<kbd><del></kbd> 键青色灯慢闪，然后长按3秒<kbd>Fn</kbd> + <kbd></del></kbd>青色灯快闪进入对码状态。此时插入接收器完成对码， <kbd>~</kbd>键青色灯亮2s，2.4G连接成功。</p>
+<h5 id="蓝牙连接"><a href="#蓝牙连接" class="headerlink" title="蓝牙连接"></a>蓝牙连接</h5><p>设备名AULA-F87。</p>
+<p>开关拨至蓝牙模式，可连接三个设备。<kbd>Fn</kbd> + <kbd>1/2/3</kbd>通道广播时蓝灯快闪，连上亮2S。</p>
+<h4 id="黑爵AK35i"><a href="#黑爵AK35i" class="headerlink" title="黑爵AK35i"></a>黑爵AK35i</h4><p><kbd>Fn</kbd> + <kbd>Ins</kbd> ：整体键盘背光颜色统一变化</p>
+<blockquote>
 <p>1：常亮模式    2：游戏阶梯    3：呼吸模式    4：暗阴前行</p>
 </blockquote>
-<h5 id="Fn-Home-：触发一次键盘，灯光以按键为中心扩散或点亮"><a href="#Fn-Home-：触发一次键盘，灯光以按键为中心扩散或点亮" class="headerlink" title="Fn + Home ：触发一次键盘，灯光以按键为中心扩散或点亮"></a><kbd>Fn</kbd> + <kbd>Home</kbd> ：触发一次键盘，灯光以按键为中心扩散或点亮</h5><blockquote>
+<p><kbd>Fn</kbd> + <kbd>Home</kbd> ：触发一次键盘，灯光以按键为中心扩散或点亮</p>
+<blockquote>
 <p>1：涟漪模式    2：踏雪无痕    3：单行涟漪    4：六心连锁</p>
 </blockquote>
 <span id="more"></span>
 
-<h5 id="Fn-PgUp-：整个键盘背光快节奏的有规律的灯光变化"><a href="#Fn-PgUp-：整个键盘背光快节奏的有规律的灯光变化" class="headerlink" title="Fn + PgUp ：整个键盘背光快节奏的有规律的灯光变化"></a><kbd>Fn</kbd> + <kbd>PgUp</kbd> ：整个键盘背光快节奏的有规律的灯光变化</h5><blockquote>
+<p><kbd>Fn</kbd> + <kbd>PgUp</kbd> ：整个键盘背光快节奏的有规律的灯光变化</p>
+<blockquote>
 <p>1：跑马灯    2：大鹏展翅    3：数码时代    4：推波助澜</p>
 </blockquote>
-<h5 id="Fn-Del-：整个键盘背光按规律动态流动"><a href="#Fn-Del-：整个键盘背光按规律动态流动" class="headerlink" title="Fn + Del ：整个键盘背光按规律动态流动"></a><kbd>Fn</kbd> + <kbd>Del</kbd> ：整个键盘背光按规律动态流动</h5><blockquote>
+<p><kbd>Fn</kbd> + <kbd>Del</kbd> ：整个键盘背光按规律动态流动</p>
+<blockquote>
 <p>1：随波逐流    2：峰回路转    3：涌泉相拥    4：波光粼粼</p>
 </blockquote>
-<h5 id="Fn-End-：指点江山：自定义每个键的亮灭，默认心形图案"><a href="#Fn-End-：指点江山：自定义每个键的亮灭，默认心形图案" class="headerlink" title="Fn + End ：指点江山：自定义每个键的亮灭，默认心形图案"></a><kbd>Fn</kbd> + <kbd>End</kbd> ：指点江山：自定义每个键的亮灭，默认心形图案</h5><blockquote>
+<p><kbd>Fn</kbd> + <kbd>End</kbd> ：指点江山：自定义每个键的亮灭，默认心形图案</p>
+<blockquote>
 <p>按Fn+Del进入该模式默认恢复上一次定义的效果，再次按Fn+End指示灯闪烁表示进入编辑模式，触发按键可切换LED的亮灭，定义完成后再次按Fn+End保存</p>
 </blockquote>
-<h5 id="Fn-PgDn-：整个键盘背光为多彩动态变化"><a href="#Fn-PgDn-：整个键盘背光为多彩动态变化" class="headerlink" title="Fn + PgDn ：整个键盘背光为多彩动态变化"></a><kbd>Fn</kbd> + <kbd>PgDn</kbd> ：整个键盘背光为多彩动态变化</h5><blockquote>
+<p><kbd>Fn</kbd> + <kbd>PgDn</kbd> ：整个键盘背光为多彩动态变化</p>
+<blockquote>
 <p>1：星光闪烁    2：微波粼粼    3：流星赶月    4：彩旗飞扬</p>
 </blockquote>
-<h5 id="Fn-方向键上-下-：调节背光亮度"><a href="#Fn-方向键上-下-：调节背光亮度" class="headerlink" title="Fn + 方向键上/下 ：调节背光亮度"></a><kbd>Fn</kbd> + <kbd>方向键上/下</kbd> ：调节背光亮度</h5><h5 id="Fn-退格左边两个加减号-：调节流彩速度"><a href="#Fn-退格左边两个加减号-：调节流彩速度" class="headerlink" title="Fn + 退格左边两个加减号 ：调节流彩速度"></a><kbd>Fn</kbd> + <kbd>退格左边两个加减号</kbd> ：调节流彩速度</h5><h5 id="Fn-方向键左-右-：调节流光方向"><a href="#Fn-方向键左-右-：调节流光方向" class="headerlink" title="Fn + 方向键左/右 ：调节流光方向"></a><kbd>Fn</kbd> + <kbd>方向键左/右</kbd> ：调节流光方向</h5><h5 id="Fn-Esc-：长按恢复出厂设置"><a href="#Fn-Esc-：长按恢复出厂设置" class="headerlink" title="Fn + Esc ：长按恢复出厂设置"></a><kbd>Fn</kbd> + <kbd>Esc</kbd> ：长按恢复出厂设置</h5><h5 id="Fn-Pause-：暂停当前动态的背光模式"><a href="#Fn-Pause-：暂停当前动态的背光模式" class="headerlink" title="Fn + Pause ：暂停当前动态的背光模式"></a><kbd>Fn</kbd> + <kbd>Pause</kbd> ：暂停当前动态的背光模式</h5>]]></content>
+<p><kbd>Fn</kbd> + <kbd>方向键上/下</kbd> ：调节背光亮度</p>
+<p><kbd>Fn</kbd> + <kbd>退格左边两个加减号</kbd> ：调节流彩速度</p>
+<p><kbd>Fn</kbd> + <kbd>方向键左/右</kbd> ：调节流光方向</p>
+<p><kbd>Fn</kbd> + <kbd>Esc</kbd> ：长按恢复出厂设置</p>
+<p><kbd>Fn</kbd> + <kbd>Pause</kbd> ：暂停当前动态的背光模式</p>
+]]></content>
       <categories>
         <category>说明书</category>
       </categories>
       <tags>
+        <tag>说明书</tag>
         <tag>键盘</tag>
-        <tag>黑爵</tag>
       </tags>
   </entry>
   <entry>
@@ -1523,6 +1661,8 @@
     <content><![CDATA[<h4 id="1-删除原有密钥"><a href="#1-删除原有密钥" class="headerlink" title="1. 删除原有密钥"></a>1. 删除原有密钥</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">slmgr.vbs /upk</span><br></pre></td></tr></table></figure>
 
 <p>会弹窗提示成功卸载密钥，刚装完的系统会提示找不到产品密钥。</p>
+<span id="more"></span>
+
 <h4 id="2-安装密钥"><a href="#2-安装密钥" class="headerlink" title="2. 安装密钥"></a>2. 安装密钥</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX</span><br></pre></td></tr></table></figure>
 
 <p>密钥请在<a href="https://learn.microsoft.com/zh-cn/windows-server/get-started/kms-client-activation-keys">微软官方文档</a>中找自己对应版本的密钥，弹窗提示安装成功后进行下一步。</p>
