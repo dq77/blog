@@ -196,6 +196,77 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://diaoqi.gitee.io/blog/kms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/huluobo.png">
+      <meta itemprop="name" content="掉漆的标题">
+      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/kms/" class="post-title-link" itemprop="url">Windows10/11 KMS激活</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-11-15 15:41:12 / 修改时间：15:54:05" itemprop="dateCreated datePublished" datetime="2023-11-15T15:41:12+08:00">2023-11-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="1-删除原有密钥"><a href="#1-删除原有密钥" class="headerlink" title="1. 删除原有密钥"></a>1. 删除原有密钥</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slmgr.vbs /upk</span><br></pre></td></tr></table></figure>
+
+<p>会弹窗提示成功卸载密钥，刚装完的系统会提示找不到产品密钥。</p>
+<h4 id="2-安装密钥"><a href="#2-安装密钥" class="headerlink" title="2. 安装密钥"></a>2. 安装密钥</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX</span><br></pre></td></tr></table></figure>
+
+<p>密钥请在<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-server/get-started/kms-client-activation-keys">微软官方文档</a>中找自己对应版本的密钥，弹窗提示安装成功后进行下一步。</p>
+<h4 id="3-设置激活服务器"><a href="#3-设置激活服务器" class="headerlink" title="3. 设置激活服务器"></a>3. 设置激活服务器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slmgr /skms kms.ghxi.com</span><br></pre></td></tr></table></figure>
+
+<p>这里使用<a target="_blank" rel="noopener" href="https://www.ghxi.com/kms.html">果核剥壳</a>提供的KMS服务器，弹窗提示设置成功后进行下一步。</p>
+<h4 id="4-开始激活"><a href="#4-开始激活" class="headerlink" title="4. 开始激活"></a>4. 开始激活</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slmgr /ato</span><br></pre></td></tr></table></figure>
+
+<p>输入后回车，<strong>稍等一会</strong>，会弹窗提示激活成功。</p>
+<h4 id="数字激活"><a href="#数字激活" class="headerlink" title="数字激活"></a>数字激活</h4><p>此外，由<a target="_blank" rel="noopener" href="https://github.com/zbezj">zbezj</a>提供的一键激活工具正在Github维护中，支持多种方式智能激活，<a target="_blank" rel="noopener" href="https://github.com/zbezj/HEU_KMS_Activator">点击这里</a>下载并查看使用说明手册。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://diaoqi.gitee.io/blog/windowsRoute/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -862,91 +933,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://diaoqi.gitee.io/blog/shellProxy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/huluobo.png">
-      <meta itemprop="name" content="掉漆的标题">
-      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="萝卜小站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/shellProxy/" class="post-title-link" itemprop="url">终端代理到外网配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-14 14:48:09" itemprop="dateCreated datePublished" datetime="2021-07-14T14:48:09+08:00">2021-07-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-14 16:59:43" itemprop="dateModified" datetime="2022-01-14T16:59:43+08:00">2022-01-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">代理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="终端代理到外网配置"><a href="#终端代理到外网配置" class="headerlink" title="终端代理到外网配置"></a>终端代理到外网配置</h4><p>大家都知道部分仓库源在国外，墙挡着，Git需要配淘宝源才行，Maven也需要配阿里源，比较坑。</p>
-<p>本文记载终端怎么突破封锁，用原生的源最牛逼。</p>
-<blockquote>
-<p>前提是你能访问外网。</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/shellProxy/" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1018,7 +1004,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1031,7 +1017,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

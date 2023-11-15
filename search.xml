@@ -1425,7 +1425,7 @@
 </li>
 <li><h5 id="西部世界"><a href="#西部世界" class="headerlink" title="西部世界"></a>西部世界</h5><p>一键式傻瓜客户端：<a href="https://westworldss.com/">西部世界官网</a></p>
 <blockquote>
-<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#x69;&#x6e;&#102;&#111;&#x40;&#x77;&#x65;&#115;&#x74;&#119;&#x6f;&#x72;&#108;&#100;&#x73;&#115;&#46;&#x63;&#111;&#109;">&#x69;&#x6e;&#102;&#111;&#x40;&#x77;&#x65;&#115;&#x74;&#119;&#x6f;&#x72;&#108;&#100;&#x73;&#115;&#46;&#x63;&#111;&#109;</a> 即可获取最新地址</p>
+<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#x69;&#x6e;&#x66;&#111;&#64;&#x77;&#x65;&#x73;&#x74;&#x77;&#x6f;&#x72;&#x6c;&#x64;&#x73;&#115;&#x2e;&#99;&#111;&#109;">&#x69;&#x6e;&#x66;&#111;&#64;&#x77;&#x65;&#x73;&#x74;&#x77;&#x6f;&#x72;&#x6c;&#x64;&#x73;&#115;&#x2e;&#99;&#111;&#109;</a> 即可获取最新地址</p>
 </blockquote>
 </li>
 <li><h5 id="破解版V2rayN"><a href="#破解版V2rayN" class="headerlink" title="破解版V2rayN"></a>破解版V2rayN</h5><p>另外，v2rayssr网站提供了一个<a href="https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a>。缺点就是版本很老，但可用。 <a href="https://www.v2rayssr.com/trojanwin.html">具体使用教程在这</a>。</p>
@@ -1515,6 +1515,28 @@
         <tag>Ubuntu</tag>
         <tag>Trojan</tag>
         <tag>CentOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10/11 KMS激活</title>
+    <url>/blog/kms/</url>
+    <content><![CDATA[<h4 id="1-删除原有密钥"><a href="#1-删除原有密钥" class="headerlink" title="1. 删除原有密钥"></a>1. 删除原有密钥</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">slmgr.vbs /upk</span><br></pre></td></tr></table></figure>
+
+<p>会弹窗提示成功卸载密钥，刚装完的系统会提示找不到产品密钥。</p>
+<h4 id="2-安装密钥"><a href="#2-安装密钥" class="headerlink" title="2. 安装密钥"></a>2. 安装密钥</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX</span><br></pre></td></tr></table></figure>
+
+<p>密钥请在<a href="https://learn.microsoft.com/zh-cn/windows-server/get-started/kms-client-activation-keys">微软官方文档</a>中找自己对应版本的密钥，弹窗提示安装成功后进行下一步。</p>
+<h4 id="3-设置激活服务器"><a href="#3-设置激活服务器" class="headerlink" title="3. 设置激活服务器"></a>3. 设置激活服务器</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">slmgr /skms kms.ghxi.com</span><br></pre></td></tr></table></figure>
+
+<p>这里使用<a href="https://www.ghxi.com/kms.html">果核剥壳</a>提供的KMS服务器，弹窗提示设置成功后进行下一步。</p>
+<h4 id="4-开始激活"><a href="#4-开始激活" class="headerlink" title="4. 开始激活"></a>4. 开始激活</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">slmgr /ato</span><br></pre></td></tr></table></figure>
+
+<p>输入后回车，<strong>稍等一会</strong>，会弹窗提示激活成功。</p>
+<h4 id="数字激活"><a href="#数字激活" class="headerlink" title="数字激活"></a>数字激活</h4><p>此外，由<a href="https://github.com/zbezj">zbezj</a>提供的一键激活工具正在Github维护中，支持多种方式智能激活，<a href="https://github.com/zbezj/HEU_KMS_Activator">点击这里</a>下载并查看使用说明手册。</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+        <tag>KMS</tag>
       </tags>
   </entry>
 </search>
