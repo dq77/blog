@@ -538,7 +538,10 @@
   <entry>
     <title>键盘使用说明书</title>
     <url>/blog/jpsms/</url>
-    <content><![CDATA[<h4 id="狼蛛F87"><a href="#狼蛛F87" class="headerlink" title="狼蛛F87"></a>狼蛛F87</h4><table>
+    <content><![CDATA[<p>新旧键盘说明书</p>
+<span id="more"></span>
+
+<h4 id="狼蛛F87"><a href="#狼蛛F87" class="headerlink" title="狼蛛F87"></a>狼蛛F87</h4><table>
 <thead>
 <tr>
 <th>Fn+</th>
@@ -662,7 +665,7 @@
 <p><kbd>Fn</kbd> + 左<kbd>Win</kbd>锁定/打开左WIN窗口键(锁时灯常亮)。</p>
 <p><kbd>Fn</kbd> + <kbd>B</kbd>切换到电量模式，充电时流光，充满常亮绿色，5个灯一个代表20%电量。</p>
 <p>驱动教程及下载地址<a href="https://www.aulacn.com/product-detail/f87">在这里</a>，可音乐律动、颜色及按键自定义、宏定义。</p>
-<h5 id="2-4G对码"><a href="#2-4G对码" class="headerlink" title="2.4G对码"></a>2.4G对码</h5><p>开关拨至2.4G模式，<kbd><del></kbd> 键青色灯慢闪，然后长按3秒<kbd>Fn</kbd> + <kbd></del></kbd>青色灯快闪进入对码状态。此时插入接收器完成对码， <kbd>~</kbd>键青色灯亮2s，2.4G连接成功。</p>
+<h5 id="2-4G对码"><a href="#2-4G对码" class="headerlink" title="2.4G对码"></a>2.4G对码</h5><p>开关拨至2.4G模式，<kbd>~</kbd> 键青色灯慢闪，然后长按3秒<kbd>Fn</kbd> + <kbd>~</kbd>青色灯快闪进入对码状态。此时插入接收器完成对码， <kbd>~</kbd>键青色灯亮2s，2.4G连接成功。</p>
 <h5 id="蓝牙连接"><a href="#蓝牙连接" class="headerlink" title="蓝牙连接"></a>蓝牙连接</h5><p>设备名AULA-F87。</p>
 <p>开关拨至蓝牙模式，可连接三个设备。<kbd>Fn</kbd> + <kbd>1/2/3</kbd>通道广播时蓝灯快闪，连上亮2S。</p>
 <h4 id="黑爵AK35i"><a href="#黑爵AK35i" class="headerlink" title="黑爵AK35i"></a>黑爵AK35i</h4><p><kbd>Fn</kbd> + <kbd>Ins</kbd> ：整体键盘背光颜色统一变化</p>
@@ -673,7 +676,7 @@
 <blockquote>
 <p>1：涟漪模式    2：踏雪无痕    3：单行涟漪    4：六心连锁</p>
 </blockquote>
-<span id="more"></span>
+<!--more-->
 
 <p><kbd>Fn</kbd> + <kbd>PgUp</kbd> ：整个键盘背光快节奏的有规律的灯光变化</p>
 <blockquote>
