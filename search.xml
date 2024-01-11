@@ -1682,4 +1682,57 @@
         <tag>KMS</tag>
       </tags>
   </entry>
+  <entry>
+    <title>删除此电脑文件夹下面的3D对象、图片、视频、音乐等</title>
+    <url>/blog/regedit/</url>
+    <content><![CDATA[<p>win10下搜索注册表，打开注册表编辑器。</p>
+<p>打开如下路径：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace</span><br></pre></td></tr></table></figure>
+
+<p>在左侧文件夹中删除对应文件夹即可。</p>
+<p>具体文件夹与代码对应如下：</p>
+<table>
+<thead>
+<tr>
+<th>文件夹</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>3D对象</td>
+<td>{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}</td>
+</tr>
+<tr>
+<td>音乐</td>
+<td>{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}</td>
+</tr>
+<tr>
+<td>图片</td>
+<td>{24ad3ad4-a569-4530-98e1-ab02f9417aa8}</td>
+</tr>
+<tr>
+<td>视频</td>
+<td>{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}</td>
+</tr>
+<tr>
+<td>文档</td>
+<td>{d3162b92-9365-467a-956b-92703aca08af}</td>
+</tr>
+<tr>
+<td>桌面</td>
+<td>{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}</td>
+</tr>
+<tr>
+<td>下载</td>
+<td>{088e3905-0323-4b02-9826-5d99428e115f}</td>
+</tr>
+</tbody></table>
+<p>误删恢复也很简单，直接新建项，文件夹名称输入正确即可恢复对应文件夹。</p>
+]]></content>
+      <tags>
+        <tag>注册表</tag>
+      </tags>
+  </entry>
 </search>
