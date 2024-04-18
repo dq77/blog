@@ -1919,4 +1919,24 @@
 <p>网络是分层的，最左侧是输入层，最右侧是输出层，中间都为隐藏层。</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>vscode插件列表</title>
+    <url>/blog/vscodeExtent/</url>
+    <content><![CDATA[<h5 id="Chinese-Simplified-Language-Pack"><a href="#Chinese-Simplified-Language-Pack" class="headerlink" title="Chinese (Simplified) Language Pack"></a><a href="https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans">Chinese (Simplified) Language Pack</a></h5><p>首先就是简体中文包了，这个不必多说，可以让软件变为中文环境，看个人喜好选择是否安装。</p>
+<h5 id="JavaScript-ES6-code-snippets"><a href="#JavaScript-ES6-code-snippets" class="headerlink" title="JavaScript (ES6) code snippets"></a><a href="https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets">JavaScript (ES6) code snippets</a></h5><p>ES6的一个常用快捷键，非常好用，智能提醒基本覆盖了所有ES6的语法。个人最喜欢的还是他的clg自动转换为console.log(obj)。    对于写代码方便很多，常用的还有imp转import fs from ‘fs’、sto转setTimeOut(() &#x3D;&gt; {})等等。</p>
+<h5 id="Auto-Close-Tag"><a href="#Auto-Close-Tag" class="headerlink" title="Auto Close Tag"></a><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag">Auto Close Tag</a></h5><p>看名字就知道意思了。你写HTML标签，他自动帮你把闭合标签补上，非常方便。</p>
+<h5 id="Auto-Rename-Tag"><a href="#Auto-Rename-Tag" class="headerlink" title="Auto Rename Tag"></a><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag">Auto Rename Tag</a></h5><p>和上一个一样，你改标签名，和它配套的闭合标签名就自动改了。</p>
+<h5 id="Git-History"><a href="#Git-History" class="headerlink" title="Git History"></a><a href="https://marketplace.visualstudio.com/items?itemName=donjayamanne.githistory">Git History</a></h5><p>如果用Git，就装上这个，查看版本历史非常方便。</p>
+<h5 id="GitLens-—-Git-supercharged"><a href="#GitLens-—-Git-supercharged" class="headerlink" title="GitLens — Git supercharged"></a><a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens">GitLens — Git supercharged</a></h5><p>这个插件能够按行显示改动信息，这行是谁写的，啥时候写的，提交说明是什么，都会给你展示出来。</p>
+<h5 id="Live-Server"><a href="#Live-Server" class="headerlink" title="Live Server"></a><a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server</a></h5><p>在HTML文件中使用这个插件会自动开一个小服务，把当前文件以服务器环境加载出来，<strong><em>并且实时更新！！！</em>。</strong>非常方便调试。而且可以当成本地服务器使用。</p>
+<h5 id="Project-Manager"><a href="#Project-Manager" class="headerlink" title="Project Manager"></a><a href="https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager">Project Manager</a></h5><p>如果你需要调试多个项目，来回切换项目是个很头疼的事情。这个插件可以让你在一个窗口中一键切换项目，非常方便。</p>
+<h5 id="vscode-icons"><a href="#vscode-icons" class="headerlink" title="vscode-icons"></a><a href="https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons">vscode-icons</a></h5><p>一个很漂亮而且很全的图标系统，方便区分不同类型文件。</p>
+<h5 id="koroFileHeader"><a href="#koroFileHeader" class="headerlink" title="koroFileHeader"></a><a href="https://marketplace.visualstudio.com/items?itemName=OBKoro1.korofileheader">koroFileHeader</a></h5><p>一款自动添加文件头部信息的插件，包括文件作者，创建时间，最后编辑时间及文件路径等信息。</p>
+<h5 id="Image-preview"><a href="#Image-preview" class="headerlink" title="Image preview"></a><a href="https://marketplace.visualstudio.com/items?itemName=kisstkondoros.vscode-gutter-preview">Image preview</a></h5><p>一个实时显示你引用的图片的插件，确保你路径没写错，可预览你引入的图长什么样。</p>
+<h5 id="indent-rainbow"><a href="#indent-rainbow" class="headerlink" title="indent-rainbow"></a><a href="https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow">indent-rainbow</a></h5><p>帮助你检查自己的缩进是否正确，不用一个一个查了。</p>
+<h5 id="Vetur"><a href="#Vetur" class="headerlink" title="Vetur"></a><a href="https://marketplace.visualstudio.com/items?itemName=octref.vetur">Vetur</a></h5><p>调试Vue2应用时使用，支持Vue语法高亮及格式化等。</p>
+<h5 id="Lines-of-Code-LOC"><a href="#Lines-of-Code-LOC" class="headerlink" title="Lines of Code (LOC)"></a><a href="https://marketplace.visualstudio.com/items?itemName=lyzerk.linecounter">Lines of Code (LOC)</a></h5><p>计算代码行工具</p>
+<h5 id="One-Dark-Pro"><a href="#One-Dark-Pro" class="headerlink" title="One Dark Pro"></a><a href="https://marketplace.visualstudio.com/items?itemName=zhuangtongfa.Material-theme">One Dark Pro</a></h5><p>最受欢迎主题</p>
+<h5 id="Fira-Code-‘微软雅黑’-Menlo-Monaco-Consolas-‘Courier-New’-monospace-等字体"><a href="#Fira-Code-‘微软雅黑’-Menlo-Monaco-Consolas-‘Courier-New’-monospace-等字体" class="headerlink" title="Fira Code, ‘微软雅黑’, Menlo, Monaco, Consolas, ‘Courier New’, monospace 等字体"></a>Fira Code, ‘微软雅黑’, Menlo, Monaco, Consolas, ‘Courier New’, monospace 等字体</h5>]]></content>
+  </entry>
 </search>
