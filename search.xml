@@ -1923,6 +1923,8 @@
     <title>vscode插件列表</title>
     <url>/blog/vscodeExtent/</url>
     <content><![CDATA[<h5 id="Chinese-Simplified-Language-Pack"><a href="#Chinese-Simplified-Language-Pack" class="headerlink" title="Chinese (Simplified) Language Pack"></a><a href="https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans">Chinese (Simplified) Language Pack</a></h5><p>首先就是简体中文包了，这个不必多说，可以让软件变为中文环境，看个人喜好选择是否安装。</p>
+<span id="more"></span>
+
 <h5 id="JavaScript-ES6-code-snippets"><a href="#JavaScript-ES6-code-snippets" class="headerlink" title="JavaScript (ES6) code snippets"></a><a href="https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets">JavaScript (ES6) code snippets</a></h5><p>ES6的一个常用快捷键，非常好用，智能提醒基本覆盖了所有ES6的语法。个人最喜欢的还是他的clg自动转换为console.log(obj)。    对于写代码方便很多，常用的还有imp转import fs from ‘fs’、sto转setTimeOut(() &#x3D;&gt; {})等等。</p>
 <h5 id="Auto-Close-Tag"><a href="#Auto-Close-Tag" class="headerlink" title="Auto Close Tag"></a><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag">Auto Close Tag</a></h5><p>看名字就知道意思了。你写HTML标签，他自动帮你把闭合标签补上，非常方便。</p>
 <h5 id="Auto-Rename-Tag"><a href="#Auto-Rename-Tag" class="headerlink" title="Auto Rename Tag"></a><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag">Auto Rename Tag</a></h5><p>和上一个一样，你改标签名，和它配套的闭合标签名就自动改了。</p>
