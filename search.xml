@@ -147,43 +147,65 @@
       </tags>
   </entry>
   <entry>
-    <title>终端代理到外网配置</title>
+    <title>各类终端代理到外网配置</title>
     <url>/blog/shellProxy/</url>
-    <content><![CDATA[<h4 id="终端代理到外网配置"><a href="#终端代理到外网配置" class="headerlink" title="终端代理到外网配置"></a>终端代理到外网配置</h4><p>大家都知道部分仓库源在国外，墙挡着，Git需要配淘宝源才行，Maven也需要配阿里源，比较坑。</p>
-<p>本文记载终端怎么突破封锁，用原生的源最牛逼。</p>
+    <content><![CDATA[<h4 id="各类终端代理到外网配置"><a href="#各类终端代理到外网配置" class="headerlink" title="各类终端代理到外网配置"></a>各类终端代理到外网配置</h4><p>大家都知道部分仓库源在国外，墙挡着，Git需要配淘宝源才行，Maven也需要配阿里源，比较坑。</p>
+<p>本文记载各类终端怎么突破封锁，访问外部。</p>
 <blockquote>
 <p>前提是你能访问外网。</p>
 </blockquote>
 <span id="more"></span>
 
-<h4 id="添加代理方法"><a href="#添加代理方法" class="headerlink" title="添加代理方法"></a>添加代理方法</h4><p>打开配置文件</p>
-<p>Windows的路径为 <code>C:\Users\你的用户名\.bash_profile</code> 。</p>
+<h4 id="Bash添加代理方法"><a href="#Bash添加代理方法" class="headerlink" title="Bash添加代理方法"></a>Bash添加代理方法</h4><h5 id="打开配置文件"><a href="#打开配置文件" class="headerlink" title="打开配置文件"></a>打开配置文件</h5><p>Windows的路径为 <code>C:\Users\你的用户名\.bash_profile</code> 。</p>
 <p>Mac的路径为 <code>~/.bash_profile</code> 。</p>
 <blockquote>
 <p>如果没找到，就新建一个。</p>
 </blockquote>
 <p>然后在文件里添加以下两个方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function proxy_off()&#123;</span><br><span class="line">    unset http_proxy</span><br><span class="line">    unset https_proxy</span><br><span class="line">    unset ftp_proxy</span><br><span class="line">    unset rsync_proxy</span><br><span class="line">    echo -e &quot;已关闭代理&quot;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">function proxy_on() &#123;</span><br><span class="line">    export no_proxy&#x3D;&quot;localhost,127.0.0.1,localaddress,.localdomain.com&quot;</span><br><span class="line">    export http_proxy&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:10809&quot;</span><br><span class="line">    export https_proxy&#x3D;$http_proxy</span><br><span class="line">    export ftp_proxy&#x3D;$http_proxy</span><br><span class="line">    export rsync_proxy&#x3D;$http_proxy</span><br><span class="line">    export HTTP_PROXY&#x3D;$http_proxy</span><br><span class="line">    export HTTPS_PROXY&#x3D;$http_proxy</span><br><span class="line">    export FTP_PROXY&#x3D;$http_proxy</span><br><span class="line">    export RSYNC_PROXY&#x3D;$http_proxy</span><br><span class="line">    echo -e &quot;已开启代理&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function proxy_off()&#123;</span><br><span class="line">    unset http_proxy</span><br><span class="line">    unset https_proxy</span><br><span class="line">    unset ftp_proxy</span><br><span class="line">    unset rsync_proxy</span><br><span class="line">    echo -e &quot;已关闭代理&quot;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">function proxy_on() &#123;</span><br><span class="line">    export no_proxy=&quot;localhost,127.0.0.1,localaddress,.localdomain.com&quot;</span><br><span class="line">    export http_proxy=&quot;http://127.0.0.1:10809&quot;</span><br><span class="line">    export https_proxy=$http_proxy</span><br><span class="line">    export ftp_proxy=$http_proxy</span><br><span class="line">    export rsync_proxy=$http_proxy</span><br><span class="line">    export HTTP_PROXY=$http_proxy</span><br><span class="line">    export HTTPS_PROXY=$http_proxy</span><br><span class="line">    export FTP_PROXY=$http_proxy</span><br><span class="line">    export RSYNC_PROXY=$http_proxy</span><br><span class="line">    echo -e &quot;已开启代理&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 <p>注意其中的 <code>http_proxy</code> 字段 ，他是你自己设置的本地代理，不是我们买的外面的代理地址，一般都是如上面代码所示，一般不用改。</p>
-<p>端口的话 有可能不是10809，这个要看本地服务的HTTP代理端口了，一般Shadow Socket的默认端口是10809，如果你没改过的话。</p>
+<p>端口的话，有可能不是10809，这个要看本地服务的HTTP代理端口了，一般Shadow Socket的默认端口是10809，如果你没改过的话。</p>
 <p>如果你用的不是Shadow Socket，比如Trojan的Qv2ray的端口都是8889。如下图</p>
-<img src="/blog/shellProxy/qv2ray.png" class="qv2ray" width="800" title="Qv2ray首选项配置页">
+<img src="/blog/shellProxy/qv2ray.png" class="qv2ray" width="600" title="Qv2ray首选项配置页">
 
-<p>其他代理软件的HTTP端口是多少？在哪里设置HTTP端口？ 可以点击 <a href="https://www.baidu.com/s?wd=V2rayN%E5%9C%A8%E5%93%AA%E9%87%8C%E8%AE%BE%E7%BD%AEHTTP%E7%AB%AF%E5%8F%A3">这里</a> 查询。</p>
-<h4 id="使配置文件生效"><a href="#使配置文件生效" class="headerlink" title="使配置文件生效"></a>使配置文件生效</h4><p>在终端中执行 <code>source ~/.bash_profile</code> 使以上配置立即生效</p>
+<p>而clash的默认端口是7890，如下图。</p>
+<img src="/blog/shellProxy/clash.png" class="" width="600" title="clash首选项配置页">
+
+<p>其他代理软件的HTTP端口是多少？在哪里设置HTTP端口？ 可以点击 <a href="https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&tn=baidu&wd=ShadowsocksR%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%AB%AF%E5%8F%A3&oq=ShadowsocksR%25E5%25AE%25A2%25E6%2588%25B7%25E7%25AB%25AF%25E8%25AE%25BE%25E7%25BD%25AEHTTP%25E7%25AB%25AF%25E5%258F%25A3&rsv_pq=e289fa7000407eab&rsv_t=e2deWX9Jz5F3iuSd2sf782StltQVXoXTyy57GdI2dpTlObP1+1Nfv7j7Le4&rqlang=cn&rsv_dl=tb&rsv_enter=0&rsv_btype=t&inputT=885&rsv_sug3=13&rsv_sug1=1&rsv_sug7=100&rsv_sug4=896">这里</a> 查询，或者请我吃肯德基我教你啊。</p>
+<h5 id="使配置文件生效"><a href="#使配置文件生效" class="headerlink" title="使配置文件生效"></a>使配置文件生效</h5><p>在Bash终端中执行 <code>source ~/.bash_profile</code> 使以上配置立即生效</p>
 <blockquote>
 <p>众所周知windows不适合开发人员，有一说一，确实。</p>
-<p>在Windows下，部分shell无法使用代理，所以最好使用git自带的Bash。</p>
+<p>在Windows下，大部分终端无法使用Bash代理，本人亲测只有git自带的Bash可以使用。Windows自带的PowerShell和命令提示符CMD均不可使用Bash代理，不过可以看看下面的方法。</p>
 </blockquote>
+<h4 id="命令提示符CMD添加代理方法"><a href="#命令提示符CMD添加代理方法" class="headerlink" title="命令提示符CMD添加代理方法"></a>命令提示符CMD添加代理方法</h4><h5 id="新建配置文件"><a href="#新建配置文件" class="headerlink" title="新建配置文件"></a>新建配置文件</h5><p>首先新建两个脚本文件，分别命名为 <code>proxy_on.bat</code>和 <code>proxy_off.bat</code>。内容分别如下：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:: proxy_on</span><br><span class="line">@echo off</span><br><span class="line">chcp 65001 &gt; nul</span><br><span class="line">set http_proxy=http://127.0.0.1:10809</span><br><span class="line">set https_proxy=http://127.0.0.1:10809</span><br><span class="line">echo 已开启代理</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">:: proxy_off</span><br><span class="line">@echo off</span><br><span class="line">chcp 65001 &gt; nul</span><br><span class="line">set http_proxy=</span><br><span class="line">set https_proxy=</span><br><span class="line">echo 已关闭代理</span><br></pre></td></tr></table></figure>
+
+<p>注意其中的 <code>http_proxy</code> 字段 ，他是你自己设置的本地代理，不是我们买的外面的代理地址，一般都是如上面代码所示，一般不用改。</p>
+<p>端口的话，有可能不是10809，这个要看本地服务的HTTP代理端口了，一般Shadow Socket的默认端口是10809，如果你没改过的话。</p>
+<p>如果你用的不是Shadow Socket，比如Trojan的Qv2ray的端口都是8889。如下图</p>
+<img src="/blog/shellProxy/qv2ray.png" class="qv2ray" width="600" title="Qv2ray首选项配置页">
+
+<p>而clash的默认端口是7890，如下图。</p>
+<img src="/blog/shellProxy/clash.png" class="" width="600" title="clash首选项配置页">
+
+<p>其他代理软件的HTTP端口是多少？在哪里设置HTTP端口？ 可以点击 <a href="https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&tn=baidu&wd=ShadowsocksR%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%AB%AF%E5%8F%A3&oq=ShadowsocksR%25E5%25AE%25A2%25E6%2588%25B7%25E7%25AB%25AF%25E8%25AE%25BE%25E7%25BD%25AEHTTP%25E7%25AB%25AF%25E5%258F%25A3&rsv_pq=e289fa7000407eab&rsv_t=e2deWX9Jz5F3iuSd2sf782StltQVXoXTyy57GdI2dpTlObP1+1Nfv7j7Le4&rqlang=cn&rsv_dl=tb&rsv_enter=0&rsv_btype=t&inputT=885&rsv_sug3=13&rsv_sug1=1&rsv_sug7=100&rsv_sug4=896">这里</a> 查询，或者请我吃肯德基我教你啊。</p>
+<h5 id="使配置文件生效-1"><a href="#使配置文件生效-1" class="headerlink" title="使配置文件生效"></a>使配置文件生效</h5><p>打开高级系统设置 -&gt; 环境变量，在系统变量中找到Path。点击编辑，即可查看所有列入Path的文件夹路径。</p>
+<p>我们随便在这里找一个路径，把这俩脚本文件放在路径下即可。（我本人喜欢放在nodejs下面）</p>
 <h4 id="开启代理"><a href="#开启代理" class="headerlink" title="开启代理"></a>开启代理</h4><p>将你的代理软件设置为全局，然后打开终端，运行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxy_on</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxy_on</span><br></pre></td></tr></table></figure>
 
 <p>提示 “已开启代理” 则表示连接成功</p>
-<h4 id="判断终端是否走了代理服务器的方法"><a href="#判断终端是否走了代理服务器的方法" class="headerlink" title="判断终端是否走了代理服务器的方法"></a>判断终端是否走了代理服务器的方法</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl cip.cc</span><br></pre></td></tr></table></figure>
+<h4 id="判断终端是否走了代理服务器的方法"><a href="#判断终端是否走了代理服务器的方法" class="headerlink" title="判断终端是否走了代理服务器的方法"></a>判断终端是否走了代理服务器的方法</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl cip.cc</span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p>在PowerShell中请使用 curl.exe cip.cc</p>
+<p> 因为在powershell下curl是invoke-webrequest命令的别名。</p>
+</blockquote>
 <p>对比下设置前后是否有区别</p>
 <p>该设置仅对当前终端窗口生效，关闭窗口，下次需要再设置一次proxy_on</p>
 <h4 id="实际演示"><a href="#实际演示" class="headerlink" title="实际演示"></a>实际演示</h4><img src="/blog/shellProxy/panduan.png" class="panduan" title="代理实际效果演示">
@@ -194,7 +216,7 @@
         <category>代理</category>
       </categories>
       <tags>
-        <tag>nginx 代理使用</tag>
+        <tag>nginx 代理</tag>
       </tags>
   </entry>
   <entry>
@@ -254,7 +276,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Typora快捷键整理</title>
+    <title>Typora安装方式及快捷键整理</title>
     <url>/blog/typora/</url>
     <content><![CDATA[<h4 id="Typora安装"><a href="#Typora安装" class="headerlink" title="Typora安装"></a>Typora安装</h4><ol>
 <li><p>下载typora-0.11.18后直接安装，双击运行安装程序，最后会提示软件版本过期，无视掉。</p>
@@ -269,7 +291,7 @@
 </ol>
 <span id="more"></span>
 
-<img src="/blog/typora/1.png" class="" width="800" title="typora权限配置">
+<img src="/blog/typora/1.png" class="" width="400" title="typora权限配置">
 
 <ol start="4">
 <li>打开Typora软件（默认安装在C:\Program Files\Typora），左上角点击：文件 → 偏好设置 → 自动检查更新。取消前面的勾选。</li>
