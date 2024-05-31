@@ -195,7 +195,7 @@
 
 <p>其他代理软件的HTTP端口是多少？在哪里设置HTTP端口？ 可以点击 <a href="https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&tn=baidu&wd=ShadowsocksR%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%AB%AF%E5%8F%A3&oq=ShadowsocksR%25E5%25AE%25A2%25E6%2588%25B7%25E7%25AB%25AF%25E8%25AE%25BE%25E7%25BD%25AEHTTP%25E7%25AB%25AF%25E5%258F%25A3&rsv_pq=e289fa7000407eab&rsv_t=e2deWX9Jz5F3iuSd2sf782StltQVXoXTyy57GdI2dpTlObP1+1Nfv7j7Le4&rqlang=cn&rsv_dl=tb&rsv_enter=0&rsv_btype=t&inputT=885&rsv_sug3=13&rsv_sug1=1&rsv_sug7=100&rsv_sug4=896">这里</a> 查询，或者请我吃肯德基我教你啊。</p>
 <h5 id="使配置文件生效-1"><a href="#使配置文件生效-1" class="headerlink" title="使配置文件生效"></a>使配置文件生效</h5><p>打开高级系统设置 -&gt; 环境变量，在系统变量中找到Path。点击编辑，即可查看所有列入Path的文件夹路径。</p>
-<p>我们随便在这里找一个路径，把这俩脚本文件放在路径下即可。（我本人喜欢放在nodejs下面）</p>
+<p>我们随便在这里找一个路径，复制出来，在资源管理器中打开这个路径，把这俩脚本文件复制进来即可。（我本人喜欢放在nodejs下面）</p>
 <h4 id="开启代理"><a href="#开启代理" class="headerlink" title="开启代理"></a>开启代理</h4><p>将你的代理软件设置为全局，然后打开终端，运行</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxy_on</span><br></pre></td></tr></table></figure>
 
@@ -1969,5 +1969,163 @@
 <h5 id="Lines-of-Code-LOC"><a href="#Lines-of-Code-LOC" class="headerlink" title="Lines of Code (LOC)"></a><a href="https://marketplace.visualstudio.com/items?itemName=lyzerk.linecounter">Lines of Code (LOC)</a></h5><p>计算代码行工具</p>
 <h5 id="One-Dark-Pro"><a href="#One-Dark-Pro" class="headerlink" title="One Dark Pro"></a><a href="https://marketplace.visualstudio.com/items?itemName=zhuangtongfa.Material-theme">One Dark Pro</a></h5><p>最受欢迎主题</p>
 <h5 id="Fira-Code-‘微软雅黑’-Menlo-Monaco-Consolas-‘Courier-New’-monospace-等字体"><a href="#Fira-Code-‘微软雅黑’-Menlo-Monaco-Consolas-‘Courier-New’-monospace-等字体" class="headerlink" title="Fira Code, ‘微软雅黑’, Menlo, Monaco, Consolas, ‘Courier New’, monospace 等字体"></a>Fira Code, ‘微软雅黑’, Menlo, Monaco, Consolas, ‘Courier New’, monospace 等字体</h5>]]></content>
+  </entry>
+  <entry>
+    <title>常见的安乐死技术分析</title>
+    <url>/blog/euthanasia/</url>
+    <content><![CDATA[<p>当我在网上浏览一些关于注射死刑的讨论时，我惊讶地发现原来执行死刑所用的药物每一种我都有用过。在深入了解后，我不禁感叹注射死刑近乎一次没有复苏的全身麻醉，在某些步骤上死刑和全麻没有区别。</p>
+<span id="more"></span>
+
+<p>进入主题前我想先说明一下，本期视频所有细节均按照公安机关对外公开的资料和网宣内容整理而来，所有内容公开可查，没有涉密、泄密之嫌。咱做这个视频也不是为了猎奇，后面有一些我个人对于法理、人权乃至公益的认真思考，如果大家看到了最后，希望可以认真审慎的讨论。</p>
+<p>咱们进入主题。我对注射死刑最深刻的影响来自影片烈日灼心中邓超饰演的死刑犯最后被死亡执行时的片段，个人感觉这应该是邓超银幕上最好的表演之一，但在现实中死刑的执行恐怕要平静、安静得多。</p>
+<h3 id="1-执行方法"><a href="#1-执行方法" class="headerlink" title="1 执行方法"></a>1 执行方法</h3><p>在具体执行上，我国目前普遍采用<strong>三针法</strong>，即三种药物配合使用来执行死刑，部分地区仍存在两针法的方式。</p>
+<p>三针依次是镇静药、肌松药和含钾心脏去极液，三针一般间隔30秒左右。</p>
+<h4 id="1-1-镇静药"><a href="#1-1-镇静药" class="headerlink" title="1.1 镇静药"></a>1.1 镇静药</h4><h5 id="1-1-1-硫喷妥钠"><a href="#1-1-1-硫喷妥钠" class="headerlink" title="1.1.1 硫喷妥钠"></a>1.1.1 硫喷妥钠</h5><p>先说第一种镇静药一般是<strong>硫喷妥钠</strong>或丙泊酚，通过激活伽马氨基丁酸受体，抑制兴奋性神经递质和钠离子通道的开放，来抑制神经中枢的兴奋性，从而快速产生催眠镇静作用。</p>
+<p>这类药我几乎天天使用，是全身麻醉实行的基础，作用是让人快速昏睡，意识进入麻醉状态。其作用是非常快的，以硫酚妥钠这种瞬发性的<strong>巴比妥酸盐</strong>为例，足量注射后几秒内人体便失去了知觉。</p>
+<h5 id="1-1-2-丙泊酚"><a href="#1-1-2-丙泊酚" class="headerlink" title="1.1.2 丙泊酚"></a>1.1.2 丙泊酚</h5><p>根据资料，目前更常用的是<strong>丙泊酚</strong>，具体用量未知。临床上一般按照每公斤体重2<del>2.5毫克静脉注射，病人会在3</del>5秒内睡着，一般维持麻醉深度的浓度是50~150微克每公斤体重每分钟。</p>
+<p>在冲击剂量结束后的7~10分钟，也就是大概一次臂脑循环的时间，病人就会慢慢的苏醒。当然死刑犯是没有这个机会的，到这一步可以说死刑跟全麻没有什么区别，甚至在第二针也没有太大的区别。</p>
+<h4 id="1-2-肌松药"><a href="#1-2-肌松药" class="headerlink" title="1.2 肌松药"></a>1.2 肌松药</h4><p>第二针肌松药一般是盘库溴铵又称<strong>巴夫龙</strong>，一种双季铵类中长效<strong>非去极化肌松药</strong>。其作用机理是竞争性组织神经肌肉接头处的<strong>M型乙酰胆碱受体</strong>，但不激动它，竞争性阻断ach的去极化作用，导致完全、迅速而持久的<strong>骨骼肌麻痹</strong>，包括膈肌在内的呼吸肌失去作用。在这个状态下人体的呼吸是迅速停止掉的，不做机械通气会马上窒息。</p>
+<p>在我们日常全麻操作中，病人注射肌松剂以后会迅速的扣面罩做机械通气，随后接管插管，让麻醉机接管病人的呼吸。在这一步如果不去管呼吸，人体会迅速氧饱和度垮掉，并在15分钟内死于缺氧窒息。</p>
+<p>当然我们仍可以通过<strong>舒更葡萄糖</strong>等等肌松拮抗剂逆转肌松作用，也就是说到这一步操作仍然是可逆的，但注射了第三针后几乎没有任何医疗手段能够逆转死亡过程。</p>
+<h4 id="1-3-含钾心脏去极液"><a href="#1-3-含钾心脏去极液" class="headerlink" title="1.3 含钾心脏去极液"></a>1.3 含钾心脏去极液</h4><p>第三针是<strong>含钾心脏去极液</strong>，据信是<strong>高浓度的氯化钾</strong>。因为心肌起搏心电信号的传导，乃至人体细胞动作电位的发生基础之一，就是钠钾离子的膜内外流动分布。因此静脉注射高浓度的氯化钾后，会迅速摧毁心脏的心电传导系统的活性，打断心肌的正常起搏，造成不可逆转的心脏麻痹。在法医著作中常被称为闪电式的死亡。</p>
+<p>其实氯化钾在临床上几乎是随处可见的“大路货”。缺钾病人口服、静脉滴注氯化钾都是很常见的医疗操作，但浓度提高后，救人的药就立刻变为了杀人的毒。脱离计量谈毒性是真正的耍流氓。</p>
+<p>值得一提的是，在直视下心脏手术的外科操作中，让心脏停跳进行体外循环的基础药物之一就是<strong>含钾心脏停跳液</strong>。在早期制剂中是富含氯化钾的，三针打完死刑犯的生命便结束了。</p>
+<p>说到这里我不禁感叹，医疗工作重于千金。用的随随便便的药都是杀人的东西。</p>
+<h3 id="2-问答环节"><a href="#2-问答环节" class="headerlink" title="2 问答环节"></a>2 问答环节</h3><p>前期收集了一些朋友的提问，但这些问题我觉得脱离医生的专业形象，从一个老百姓的角度出发，更能够代表我的感受。</p>
+<h4 id="2-1-死刑和安乐死的药物有区别吗？"><a href="#2-1-死刑和安乐死的药物有区别吗？" class="headerlink" title="2.1 死刑和安乐死的药物有区别吗？"></a>2.1 死刑和安乐死的药物有区别吗？</h4><p>首先我要说我国法律中安乐死尚未合法化，任何施行或者协助安乐死均触犯刑法，涉嫌故意杀人。非要说的话，安乐死会根据病人的情况来调配药物的，一般要求安乐死的人都饱受疾病通过折磨。这个时候由于长期使用镇痛药对部分种类的处方药是<strong>不敏感</strong>的。</p>
+<p>安乐死的医生是看病，给药视病人的情况而定，药物组合多样，一般采用超量的氯丙嗪加非那根的<strong>复方冬眠灵合剂</strong>。</p>
+<p>因为要求安乐死的人<strong>一般都是饱受严重疾病折磨的</strong>，因此<strong>安乐死的处方也是结合病人的疾病类型来随机应变的</strong>，这就让安乐死的情况变得比较复杂，举个例子：</p>
+<p>一个患了严重<strong>肝硬化</strong>的病人，臀部长了无数的<strong>褥疮</strong>，下肢水肿、溃烂严重，生活不能自理，痛苦不堪，医生表示病情过重，已经不能治愈，于是<strong>病人及家属向医生要求安乐死。</strong></p>
+<p>这样的情况下，医生给出的安乐死处方就多半应该是这样的：</p>
+<p><strong>——肌注Xmg</strong>复方冬眠灵<strong>（氯丙嗪+非那根）</strong></p>
+<p>之所以给出这个处方，是因为<strong>复方冬眠灵毒理为对</strong>呼吸中枢<strong>有着很强抑制作用，还会引起血压下降</strong>，对于有着严重<strong>肝功能</strong>问题的人来说它更是<strong>可以通过降低脑对氨、 <strong>假神经递质</strong>等及缺氧的耐受力</strong>，进而<strong>加重脑细胞水肿</strong>，加深肝昏迷的程度，<strong>促进病人的死亡。</strong> </p>
+<p>和安乐死不一样，注射死刑有着比较常见的固定处方，比如现在最常用的一套三联用药物：</p>
+<p><strong>巴比妥类药物+肌肉松弛剂+KCl</strong></p>
+<p>巴比妥类属于最早期的静脉麻醉镇静药物，现在极少有医院还在使用，一般只存在于教科书里。但并不代表这种药效果不好，只是更廉价所以才被应用于此。<br>肌松药物分为<strong>去极化类</strong>和<strong>非去极化类</strong>药物。而去极化类的肌松药起效极快，例如<strong>氯化琥珀胆碱</strong>数十秒至一分钟以内即可起效。在正常麻醉过程中，麻醉医生要严格注意给要顺序<strong>以防肌松药于镇静药物之前起效</strong>，因为单纯肌松药起效后人会产生濒死感，即<strong>不能动不能呼吸意识清醒</strong>，这是非常非常难受且恐怖的感觉，也是为什么预防术中知晓如此重要。但是对于死刑犯来说，没必要那么仁慈，反正也要死的，濒死感也是理所应当吧。<br>最后是氯化钾。这是一种临床常用又廉价的治疗低钾血症及洋地黄中毒等引起的严重快速室性心律失常的药物。然而在上大学的时候老师就说过，杀人最廉价的方式就是静注大量氯化钾，不仅便宜，而且立刻引起心跳骤停。理论上会产生一瞬间的痛苦但是真的太快了。</p>
+<p>如果大家感兴趣，咱们以后再聊。</p>
+<p>链接：<a href="https://zhuanlan.zhihu.com/p/435048009">https://zhuanlan.zhihu.com/p/435048009</a><br>链接：<a href="https://www.zhihu.com/question/20990217/answer/764544808">https://www.zhihu.com/question/20990217/answer/764544808</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>体检参数指标记录</title>
+    <url>/blog/testRecords/</url>
+    <content><![CDATA[<p>记录各体检参数指标</p>
+<span id="more"></span>
+
+<h5 id="检测项目：性激素六项-解思瑶"><a href="#检测项目：性激素六项-解思瑶" class="headerlink" title="检测项目：性激素六项 - 解思瑶"></a>检测项目：性激素六项 - 解思瑶</h5><h5 id="检测时间：2022年11月19日-月经第三天"><a href="#检测时间：2022年11月19日-月经第三天" class="headerlink" title="检测时间：2022年11月19日 月经第三天"></a>检测时间：2022年11月19日 月经第三天</h5><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>结果</th>
+<th>参考值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>孕酮</td>
+<td>0.25(ng&#x2F;ml)</td>
+<td>卵泡期：0.057 - 0.892<br/>排卵期：0.121 - 11.963<br/>黄体期：1.827 - 23.83<br/>绝经期：&lt;0.05 - 0.126<br/>孕早期：10.99 - 44.274<br/>孕中期：25.37 - 82.89</td>
+</tr>
+<tr>
+<td>雌二醇</td>
+<td>36.72(pg&#x2F;ml)</td>
+<td>卵泡期：12.35 - 232.288<br/>排卵期：41.07 - 397.392<br/>黄体期：22.28 - 340.272<br/>绝经期：0.00 - 137.36</td>
+</tr>
+<tr>
+<td>促黄体生成素</td>
+<td>4.06(IU&#x2F;L)</td>
+<td>卵泡期：2.40 - 12.60<br/>排卵期：14.00 - 95.60<br/>黄体期：1.00 - 11.40<br/>绝经期：7.70 - 58.50</td>
+</tr>
+<tr>
+<td>泌乳素</td>
+<td>8.71(ng&#x2F;mL)</td>
+<td>4.79 - 23.3</td>
+</tr>
+<tr>
+<td>睾酮</td>
+<td>1.48(nmol&#x2F;L)</td>
+<td>0.29 - 1.67</td>
+</tr>
+<tr>
+<td>促卵泡刺激素</td>
+<td>4.82(IU&#x2F;L)</td>
+<td>卵泡期：3.50 - 12.50<br/>排卵期：4.70 - 21.50<br/>黄体期：1.70 - 7.70<br/>绝经期：25.80 - 134.80</td>
+</tr>
+</tbody></table>
+<h5 id="检测项目：胰岛素抵抗-解思瑶"><a href="#检测项目：胰岛素抵抗-解思瑶" class="headerlink" title="检测项目：胰岛素抵抗 - 解思瑶"></a>检测项目：胰岛素抵抗 - 解思瑶</h5><h5 id="检测时间：2024年5月30日"><a href="#检测时间：2024年5月30日" class="headerlink" title="检测时间：2024年5月30日"></a>检测时间：2024年5月30日</h5><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>结果</th>
+<th>参考值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总胆固醇</td>
+<td>6.81(nmol&#x2F;L)  ↑</td>
+<td>3.5 - 5.18</td>
+</tr>
+<tr>
+<td>甘油三酯</td>
+<td>1.74(nmol&#x2F;L)</td>
+<td>0.38 - 2.83</td>
+</tr>
+<tr>
+<td>高密度脂蛋白</td>
+<td>1.07(nmol&#x2F;L)</td>
+<td>0.95 - 1.95</td>
+</tr>
+<tr>
+<td>低密度脂蛋白</td>
+<td>5.10(nmol&#x2F;L)  ↑</td>
+<td>2.6 - 3.4</td>
+</tr>
+<tr>
+<td>糖化血红蛋白</td>
+<td>6%</td>
+<td>4 - 6</td>
+</tr>
+<tr>
+<td>葡萄糖(空腹)</td>
+<td>5.76(nmol&#x2F;L)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>胰岛素(空腹)</td>
+<td>11.86(ng&#x2F;mL)</td>
+<td>3 - 25</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>空腹</th>
+<th>30分钟</th>
+<th>1小时</th>
+<th>2小时</th>
+<th>3小时</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>葡萄糖</td>
+<td>5.76</td>
+<td>10.75</td>
+<td>11.97</td>
+<td>9.99</td>
+<td>8.24</td>
+</tr>
+<tr>
+<td>胰岛素</td>
+<td>11.86</td>
+<td>88.6</td>
+<td>97.87</td>
+<td>167.13</td>
+<td>159.69</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>口服葡萄糖注射液80g</p>
+</blockquote>
+]]></content>
   </entry>
 </search>
