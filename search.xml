@@ -223,14 +223,27 @@
     <title>火锅烧烤材料列表</title>
     <url>/blog/hgskcl/</url>
     <content><![CDATA[<h4 id="火锅材料列表"><a href="#火锅材料列表" class="headerlink" title="火锅材料列表"></a>火锅材料列表</h4><ul>
-<li>香菜 葱 姜 蒜 底料 鱼丸 油麦菜 肉片 蘸料</li>
+<li>香菜 葱 姜 蒜 底料 鱼丸 油麦菜 肉片</li>
 <li>干豆腐 麻酱 豆排 金针菇 生菜 藕片</li>
-<li>面条 甜蒜 海带丝 土豆<span id="more"></span></li>
+<li>面条 甜蒜 海带丝 土豆 蘸料<span id="more"></span></li>
 </ul>
 <h4 id="烧烤材料列表"><a href="#烧烤材料列表" class="headerlink" title="烧烤材料列表"></a>烧烤材料列表</h4><ul>
-<li>肉 水果刀 炉子 小桌子 酒精块 手套 打火机 塑料袋 纸巾 水</li>
-<li>盐盒 孜然 辣椒面 蒜蓉酱 木炭 瓶子 炉钩子 刷子</li>
-<li>报纸 生菜 饼 盘子 筷子 凳子 砖头 手电筒 扑克</li>
+<li>肉 水果刀 炉子 小桌子 酒精块 打火机</li>
+<li>盐盒 孜然 辣椒面 蒜蓉酱 木炭 塑料袋</li>
+<li>报纸 生菜 饼 盘子 筷子 凳子 湿巾 砖头</li>
+<li>刷子 炭夹 水 手电筒 手套 瓶子</li>
+</ul>
+<h4 id="野餐材料列表"><a href="#野餐材料列表" class="headerlink" title="野餐材料列表"></a>野餐材料列表</h4><ul>
+<li>帐篷 地布 防潮垫 桌子 椅子 小凳子</li>
+<li>卡式炉 气罐 烤盘 小锅 纸碗 纸盘 筷子</li>
+<li>菜板 水果刀 湿巾 水桶 塑料袋 打火机</li>
+<li>肉 饮料 矿泉水 风干肠 水果 油刷</li>
+<li>香菜 葱花 蒜末 糖 芝麻酱 蘸料</li>
+</ul>
+<h4 id="露营材料列表"><a href="#露营材料列表" class="headerlink" title="露营材料列表"></a>露营材料列表</h4><ul>
+<li>泡沫垫 露营灯 帐篷灯 串灯 灯杆 电池</li>
+<li>热水袋 取暖器 驱蚊水 毛毯 被子 拖鞋</li>
+<li>饮水袋 充电宝 纸巾 尿袋</li>
 </ul>
 ]]></content>
       <categories>
@@ -870,81 +883,84 @@
 
 <img src="/blog/psSeal/1.png" class="" width="800" title="新建文件">
 
-<p>然后新建一个图层，将背景图层删除，以实现透明背景。</p>
+<p>分辨率75，将背景内容设置为透明，点击确定。</p>
 <h4 id="创建参考线"><a href="#创建参考线" class="headerlink" title="创建参考线"></a>创建参考线</h4><p>新建水平和垂直两条参考线，都为300像素。目的是为了找到图片正中心，步骤如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">视图 -&gt; 新建参考线 -&gt; 水平/垂直 300像素</span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="绘制外轮廓"><a href="#绘制外轮廓" class="headerlink" title="绘制外轮廓"></a>绘制外轮廓</h4><p>新建一个图层，选择“椭圆选框工具”，将鼠标放置到文档的正中心，按住Shift+Alt键，绘制一个宽度540的正圆。</p>
-<p>然后选择编辑 -&gt; 描边，描边宽度为：12px，颜色为：#ff4258，位置为居外。</p>
+<h4 id="绘制外轮廓"><a href="#绘制外轮廓" class="headerlink" title="绘制外轮廓"></a>绘制外轮廓</h4><p>选择“椭圆选框工具”，鼠标点击图像的正中心，会弹出绘制椭圆的页面，输入宽度540，高度540，点击确定即可绘制圆形。</p>
+<p>然后在上方编辑栏修改配置，修改描边宽度为12px，颜色为：#ff4258，对齐方式为居外。</p>
 <img src="/blog/psSeal/2.png" class="" width="800" title="绘制外轮廓">
 
 
 
-<h4 id="绘制文字路径"><a href="#绘制文字路径" class="headerlink" title="绘制文字路径"></a>绘制文字路径</h4><p>选择“椭圆工具”，鼠标点击文档的正中心，会弹出绘制椭圆的页面，输入宽度360，高度360，点击确定即可绘制圆形。</p>
+<h4 id="绘制文字路径"><a href="#绘制文字路径" class="headerlink" title="绘制文字路径"></a>绘制文字路径</h4><p>选择“椭圆工具”，鼠标点击文档的正中心，会弹出绘制椭圆的页面，输入宽度380，高度380，点击确定即可绘制圆形。</p>
 <blockquote>
 <p>如果有描边的话记得在上方取消描边</p>
 </blockquote>
-<p>Ctrl+缩略图点击椭圆1，即可选择好选区</p>
-<h4 id="绘制文字"><a href="#绘制文字" class="headerlink" title="绘制文字"></a>绘制文字</h4><p>选择“横排文字工具”，字体：华文中宋，字号：56，字符间距：200，垂直缩放：180%，文字颜色：#ff4258。</p>
-<p>点击刚选择好的选区，开始输入文字</p>
+<h4 id="绘制文字"><a href="#绘制文字" class="headerlink" title="绘制文字"></a>绘制文字</h4><p>选择“横排文字工具”，字体：华文中宋，字号：56，字符间距：200，垂直缩放：150%，文字颜色：#ff4258。</p>
+<p>点击刚绘制好的圆形，开始输入文字</p>
 <blockquote>
-<p>如果文字不正，先全选全部图层然后 ctrl + T 旋转一定角度把文字扶正。</p>
+<p>如果文字不正，按住不放即可出现旋转功能，鼠标拖动旋转一定角度把文字扶正。</p>
 </blockquote>
 <img src="/blog/psSeal/3.png" class="" width="800" title="绘制文字">
 
-
-
-<h4 id="绘制五角星"><a href="#绘制五角星" class="headerlink" title="绘制五角星"></a>绘制五角星</h4><p>选择“多边形工具”，填充颜色：#ff4258，描边颜色：无，边：5边，缩进边依据：50%</p>
-<p>鼠标从文档中心往外拖，绘制大概宽度180px，高170px的五角星即可。</p>
+<p>如果文字过多可适当缩小字号和字符间距以及垂直缩放</p>
+<h4 id="绘制五角星"><a href="#绘制五角星" class="headerlink" title="绘制五角星"></a>绘制五角星</h4><p>选择“多边形工具”，填充颜色：#ff4258，描边颜色：无。</p>
+<p>点击文档正中心，弹出创建多边形弹窗。宽度：180，高度170，边数5，星形比例50%，点击确定。</p>
 <img src="/blog/psSeal/4.png" class="" width="800" title="绘制五角星">
 
 
 
-<h4 id="盖印图层"><a href="#盖印图层" class="headerlink" title="盖印图层"></a>盖印图层</h4><p>按Ctrl+Alt+Shift+E盖印图层，即可创建新的图层3。</p>
+<h4 id="可选：添加备案号"><a href="#可选：添加备案号" class="headerlink" title="可选：添加备案号"></a>可选：添加备案号</h4><p>选择“椭圆选框工具”，鼠标点击图像的正中心，输入宽度530，高度530，选择“横排文字工具”，字体：微软雅黑，字号：28，字符间距：100，垂直缩放：100%，文字颜色：#ff4258，开始输入数字。输入后按住Ctrl往圆内拖动，就会变为内凹路径文字。按住Ctrl可将文字扶正。</p>
+<h4 id="盖印图层"><a href="#盖印图层" class="headerlink" title="盖印图层"></a>盖印图层</h4><p>按Ctrl+Alt+Shift+E盖印图层，即可创建新的图层1。</p>
 <blockquote>
 <p>注意：选择盖印图层时，必须选中当前面板中最上面一个图层</p>
 </blockquote>
-<h4 id="载入全部选区"><a href="#载入全部选区" class="headerlink" title="载入全部选区"></a>载入全部选区</h4><p>隐藏图层3以下所有图层。</p>
-<p>按住Ctrl键，点击图层3的左侧小缩略图，即可载入图层3选区。</p>
-<img src="/blog/psSeal/5.png" class="" width="800" title="载入图层3选区">
+<h4 id="载入全部选区"><a href="#载入全部选区" class="headerlink" title="载入全部选区"></a>载入全部选区</h4><p>选中图层1。按住Ctrl键，点击图层1的左侧小缩略图，即可载入图层1选区。</p>
+<img src="/blog/psSeal/5.png" class="" width="800" title="载入图层1选区">
 
 
 
 <h4 id="新建通道"><a href="#新建通道" class="headerlink" title="新建通道"></a>新建通道</h4><p>选择通道面板，点击“创建新通道”按钮，创建通道。</p>
-<img src="/blog/psSeal/6.png" class="" width="800" title="创建图层3通道">
+<img src="/blog/psSeal/6.png" class="" width="800" title="创建图层1通道">
 
 
 
 <p>选择 <code>编辑 -&gt; 填充</code> ，将选区填充为白色。</p>
-<h4 id="添加模糊效果"><a href="#添加模糊效果" class="headerlink" title="添加模糊效果"></a>添加模糊效果</h4><p>选择菜单栏的 <code>滤镜 -&gt; 像素化 -&gt; 铜版雕刻</code> ，类型选择：粗网点。</p>
+<h4 id="添加模糊效果"><a href="#添加模糊效果" class="headerlink" title="添加模糊效果"></a>添加模糊效果</h4><p>选择菜单栏的 <code>滤镜 -&gt; 像素化 -&gt; 铜版雕刻</code> ，类型选择：粗网点，点击确定。</p>
+<p>一共操作五次。</p>
 <blockquote>
-<p>为了可以使效果更逼真，可以多次操作（四次差不多）</p>
+<p>次数可动态调整</p>
 </blockquote>
 <img src="/blog/psSeal/7.png" class="" width="800" title="铜版雕刻">
 
 
 
 <p>涂抹五角星</p>
-<p>选择画笔工具，画笔大小为4px，前景色：黑色。</p>
-<p>画笔的形状动态：大小抖动：44%，最小直径：26%，圆度抖动：25%。</p>
-<p>画笔的散布：两轴 1000%，数量：1。</p>
+<p>选择画笔工具，前景色改为黑色。</p>
+<p>画笔笔尖形状：柔角30，大小为4px，圆度：100%，间距25%。</p>
+<p>形状动态：大小抖动：44%，最小直径：26%，圆度抖动：25%，最小圆度：25%。</p>
+<p>散布：两轴 1000%，数量：1。</p>
+<p>其余不勾选。</p>
 <img src="/blog/psSeal/8.png" class="" width="800" title="画笔设置">
 
-<p>涂抹文件五角星区域（将白色部分设置为不均匀），效果如图</p>
+<p>斜着涂抹中央五角星区域（将白色部分涂抹成不均匀），然后图章外圈也涂抹两圈。效果如图：</p>
 <img src="/blog/psSeal/9.png" class="" width="800" title="涂抹五角星">
 
 
 
+
+
 <h4 id="切换RGB通道"><a href="#切换RGB通道" class="headerlink" title="切换RGB通道"></a>切换RGB通道</h4><p>按住 <code>Ctrl</code> 键，点击 Alpha1 通道左侧的缩略图，即可载入Alpha1通道选区。</p>
-<p>然后返回图层面板，别按 <code>Ctrl</code> ，直接点击图层3的缩略图，即可切换回RGB通道，如下图。</p>
+<p>然后返回图层面板，别按 <code>Ctrl</code> ，直接点击图层1的缩略图，即可切换回RGB通道，如下图。</p>
 <img src="/blog/psSeal/10.png" class="" width="800" title="切换回RGB通道">
 
 
 
-<h4 id="复制新图层"><a href="#复制新图层" class="headerlink" title="复制新图层"></a>复制新图层</h4><p>按 <code>Ctrl + J</code> ，即可通过选区复制一个新的图层4，然后隐藏旧的图层3</p>
-<img src="/blog/psSeal/11.png" class="" width="800" title="隐藏图层3">
+<h4 id="复制新图层"><a href="#复制新图层" class="headerlink" title="复制新图层"></a>复制新图层</h4><p>按 <code>Ctrl + J</code> ，即可通过选区复制一个新的图层2，然后隐藏旧的图层1及以下。</p>
+<img src="/blog/psSeal/11.png" class="" width="800" title="隐藏图层1">
 
 
 
@@ -957,12 +973,12 @@
 <img src="/blog/psSeal/13.png" class="" width="800" title="最终效果">
 
 <blockquote>
-<p>如果上纸效果不好，可以保留图层3，回到 “载入全部选区” 步骤重新再来一遍。</p>
+<p>如果上纸效果不好，可以保留图层1，回到 “载入全部选区” 步骤重新再来一遍。</p>
 </blockquote>
 <h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>至此公章制作步骤结束，可以保存psd文件方便打印后根据情况微调。</p>
 <p>制作公章的方法有很多，以上制作步骤和设置数据只作为参考。</p>
 <p>灵活使用各种快捷键，会做到事半功倍。</p>
-<p>普通公章的直径为4.21到4.27厘米。</p>
+<p>普通公章的直径为4.2厘米，但本教程做出的公章周围含有透明边边，故在Word软件中设置图片宽度高度均为4.6厘米即可。</p>
 ]]></content>
       <tags>
         <tag>PhotoShop</tag>
@@ -2126,6 +2142,61 @@
 <blockquote>
 <p>口服葡萄糖注射液80g</p>
 </blockquote>
+<h5 id="检测项目：性激素六项-解思瑶-1"><a href="#检测项目：性激素六项-解思瑶-1" class="headerlink" title="检测项目：性激素六项 - 解思瑶"></a>检测项目：性激素六项 - 解思瑶</h5><h5 id="检测时间：2024年6月27日-月经第二天"><a href="#检测时间：2024年6月27日-月经第二天" class="headerlink" title="检测时间：2024年6月27日 月经第二天"></a>检测时间：2024年6月27日 月经第二天</h5><h5 id="检测地点：医大二院滑翔院区"><a href="#检测地点：医大二院滑翔院区" class="headerlink" title="检测地点：医大二院滑翔院区"></a>检测地点：医大二院滑翔院区</h5><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>结果</th>
+<th>参考值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>孕酮<br/>[P]</td>
+<td>0.46(ng&#x2F;ml)</td>
+<td>卵泡期：0.31 - 1.52<br/>排卵期： - <br/>黄体期：5.16 - 18.56<br/>绝经期：0.01 - 0.78<br/>孕期：4.73 - 50.74</td>
+</tr>
+<tr>
+<td>雌二醇<br/>[E2]</td>
+<td>24.32(pg&#x2F;ml)</td>
+<td>卵泡期：15.16 - 148.13<br/>排卵期：29.42 - 442.62<br/>黄体期：30.34 - 274.24<br/>绝经期：0.00 - 38.9</td>
+</tr>
+<tr>
+<td>促黄体生成素<br/>[LH]</td>
+<td>1.47(mIU&#x2F;ml)</td>
+<td>卵泡期：2.12 - 10.89<br/>排卵期：19.18 - 103.03<br/>黄体期：1.2 - 12.86<br/>绝经期：10.87 - 58.64</td>
+</tr>
+<tr>
+<td>泌乳素<br/>[PRL]</td>
+<td>4.61(ng&#x2F;ml)</td>
+<td>3.34 - 26.72</td>
+</tr>
+<tr>
+<td>睾酮<br/>[T]</td>
+<td>0.7(ng&#x2F;ml)</td>
+<td>0 - 0.75</td>
+</tr>
+<tr>
+<td>促卵泡生成素<br/>[FSH]</td>
+<td>2.6(mIU&#x2F;ml)</td>
+<td>卵泡期：3.85 - 8.78<br/>排卵期：4.54 - 22.51<br/>黄体期：1.79 - 5.12<br/>绝经期：16.74 - 113.59</td>
+</tr>
+<tr>
+<td>性激素结合球蛋白<br/>[SHBG]</td>
+<td>12.3(nmol&#x2F;L)</td>
+<td>18.2 - 135.5</td>
+</tr>
+<tr>
+<td>游离雄激素指数<br/>[FAI]</td>
+<td>19.75(%)</td>
+<td>0.65 - 10.93</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注:游离雄激素指数的计算公式: FAI(%) &#x3D; [Testo] × 3.47 ÷ [SHBG] × 100</p>
+</blockquote>
+<p><strong>促卵泡生成素FSH</strong>帮助卵泡发育，<strong>促黄体生成素</strong>就是在卵泡成熟时，<strong>阻止</strong>卵泡继续无休止长大，促黄就是这个STOP，所以促黄升高，促卵泡就会一定程度下降，排卵开始。</p>
+<p>但如果平时卵泡期促黄就高高的，会让垂体降低促卵泡生成素FSH的值，影响卵泡发育起来。</p>
+<p>作者：菲比的PCOS<br>链接：<a href="https://zhuanlan.zhihu.com/p/702703717">https://zhuanlan.zhihu.com/p/702703717</a><br>来源：知乎</p>
 ]]></content>
   </entry>
 </search>
