@@ -2304,4 +2304,73 @@
         <tag>内网</tag>
       </tags>
   </entry>
+  <entry>
+    <title>通过Cloudflare Worker、Pages部署免费的VLESS节点</title>
+    <url>/blog/workerVless/</url>
+    <content><![CDATA[<p><a href="https://github.com/zizifn/edgetunnel">zizifn</a> 大佬的一个开源项目<a href="https://github.com/zizifn/edgetunnel">edgetunnel</a>，使得我们可以免费的在 Cloudflare 上面通过部署 Worker ，来创建一个免费 VLESS 节点！</p>
+<p><a href="https://github.com/cmliu">cmliu</a> 基于 <a href="https://github.com/zizifn/edgetunnel">zizifn</a> 的项目进行了二次创作，GitHub 地址：<a href="https://github.com/cmliu/edgetunnel">点击访问</a> 。其实和原版相比大同小异，道理是一样的，只是多了很多功能，比如自动生成 SUB CLASH，SURGE订阅地址、自动优选 IP 等。</p>
+<span id="more"></span>
+
+<p>准备工作：</p>
+<ul>
+<li><p>购买域名一个，推荐 <a href="https://www.namesilo.com/">Namesilo</a> ，6位数字的xyz域名单价 1$ &#x2F; 年，续费也是。</p>
+</li>
+<li><p>注册 <a href="https://dash.cloudflare.com/">Cloudflare</a> 账号并登录。</p>
+</li>
+<li><p>下载 <a href="https://github.com/cmliu">cmliu</a> 大佬开源的 <a href="https://raw.githubusercontent.com/cmliu/edgetunnel/main/worker.zip">worker.zip</a></p>
+<blockquote>
+<p>国内备份： <a href="https://gitee.com/diaoqi/static/releases/download/v1.0.2/worker.zip">worker.zip</a></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="域名托管至-Cloudflare"><a href="#域名托管至-Cloudflare" class="headerlink" title="域名托管至 Cloudflare"></a>域名托管至 <a href="https://dash.cloudflare.com/">Cloudflare</a></h4><blockquote>
+<p>详细的域名托管教程请自行搜索，此处只做简单讲解</p>
+</blockquote>
+<p>账号：qq邮箱      密码：d6-</p>
+<p>点击左侧 <code>网站</code>  → <code>添加域</code> 输入购买的域名 <code>domain.com</code></p>
+<p>点击免费计划，下一步，它会自动获取域名信息。</p>
+<p>然后到Namesilo后台更改名称服务器如下。</p>
+<blockquote>
+<p>meiling.ns.cloudflare.com</p>
+<p>tosana.ns.cloudflare.com</p>
+</blockquote>
+<p>等待十几分钟，域名就会成功托管到Cloudflare了。</p>
+<h4 id="Pages-部署-VLESS"><a href="#Pages-部署-VLESS" class="headerlink" title="Pages 部署 VLESS"></a>Pages 部署 VLESS</h4><p>回到Cloudflare首页，点击左侧 <code>Workers 和 Pages</code>，点击创建按钮，点击切换到 <code>Pages</code> 标签页。</p>
+<p>点击下面的 <code>上传资产</code> ，选择之前下载的 <code>worker.zip</code> 文件。</p>
+<img src="/blog/workerVless/1.png" class="" width="800" title="使用直接上传创建">
+
+<p>为我们的项目创建一个名字，点击创建项目。</p>
+<blockquote>
+<p>方便演示，我这里给项目起名叫 kejixinwen</p>
+</blockquote>
+<h4 id="设置自定义域"><a href="#设置自定义域" class="headerlink" title="设置自定义域"></a>设置自定义域</h4><p>进入刚刚创建的项目，找到 <code>自定义域</code> → <code>设置自定义域</code> 。</p>
+<p>设置一个合适的二级域名，名字随意，如 <code>mingzi.domain.com</code> 。</p>
+<blockquote>
+<p>此处二级域名以后会在节点上使用，建议使用合法字母拼音。</p>
+</blockquote>
+<p>输入完成，若是输入框变为绿色，证明格式正确。若你是按照刚才注册域名的操作，并已经把域名托管到了 CF，那么请直接点击 <code>激活域</code> 按钮。一般情况下，几十秒就激活完成了！</p>
+<h4 id="设置-UUID"><a href="#设置-UUID" class="headerlink" title="设置 UUID"></a>设置 UUID</h4><p><a href="https://1024tools.com/uuid">点击这里</a> ，生成一个 UUID ，或是在 V2rayN 中生成一个！</p>
+<p>回到刚才的项目，找到 <code>设置</code> → <code>环境变量</code> → <code>添加变量</code> ，变量名称：<code>UUID</code> ，变量值为刚才生成的 UUID ，点击保存！</p>
+<img src="/blog/workerVless/2.png" class="" width="800" title="配置UUID">
+
+
+
+<h4 id="重新部署-Pages"><a href="#重新部署-Pages" class="headerlink" title="重新部署 Pages"></a>重新部署 Pages</h4><p>回到项目，找到 <code>部署</code> Tab页，点击下面的 <code>创建新部署</code> 按钮，再次上传刚才的 <a href="https://raw.githubusercontent.com/cmliu/edgetunnel/main/worker.zip">worker.zip</a> 文件，保存并部署！</p>
+<img src="/blog/workerVless/3.png" class="" width="800" title="重新部署">
+
+<p>等待一分钟后，我们点击上图中右上角的 <code>访问</code> 按钮，若是有JSON内容出现，证明部署成功。</p>
+<p>我们可以访问 <code>https://域名/UUID</code> ，来查看我们的节点。例：刚才生成的 UUID 为 <code>7a1a374f-286f-4807-9756-ee3f90227bb0</code> ，</p>
+<p>按照上图，我们访问 <code>https://mingzi.domain.com/7a1a374f-286f-4807-9756-ee3f90227bb0</code> ，可以看到详细的节点情况！</p>
+<img src="/blog/workerVless/4.png" class="" width="800" title="节点详情">
+
+<p>至此，节点部署完毕，我们导入上图中的 <code>快速自适应订阅地址</code> 到客户端软件，进行节点的订阅。</p>
+<p>各个客户端软件的订阅流程不同，请自行按照各软件的方式配置订阅链接。</p>
+<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>到这里，部署就结束了。大概率上，worker.zip里面的自动 IP 优选，已经会满足绝大数人的需求了，当然有自建 VPS 节点，或是机场节点的，也是可以使用这个节点进行调配使用。感谢 <a href="https://github.com/zizifn">zizifn</a> ，感谢 <a href="https://github.com/cmliu">cmliu</a> !</p>
+]]></content>
+      <tags>
+        <tag>CloudFlare</tag>
+        <tag>Worker</tag>
+        <tag>vless</tag>
+      </tags>
+  </entry>
 </search>
