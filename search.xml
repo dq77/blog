@@ -793,10 +793,10 @@
 <p>Select Operating System: 选择 Red Hat ，CentOS 是基于红帽的，Select OS Version: 选择 linux 8，如下图所示。</p>
 <span id="more"></span>
 
-<img src="/blog/mysqlCentOS8/1.png" class="" width="800" title="官网页面">
+<img src="/blog/mysqlCentOS8/1.png" class="" width="600" title="官网页面">
 
 <p>点击 <code>RPM Bundle</code> 右侧的 Download 按钮，进入下载页。</p>
-<img src="/blog/mysqlCentOS8/2.png" class="" width="800" title="官网下载页">
+<img src="/blog/mysqlCentOS8/2.png" class="" width="600" title="官网下载页">
 
 <p><strong>右键点击</strong>下面那行小字： <code>No thanks, just start my download.</code> 复制链接地址。</p>
 <p>SSH进入你的服务器，然后</p>
@@ -831,7 +831,7 @@
 <p>至此模块安装完成</p>
 <h5 id="查看安装结果"><a href="#查看安装结果" class="headerlink" title="查看安装结果"></a>查看安装结果</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rpm -qa | grep mysql</span><br></pre></td></tr></table></figure>
 
-<img src="/blog/mysqlCentOs8/3.png" class="" width="800" title="安装成功">
+<img src="/blog/mysqlCentOs8/3.png" class="" width="600" title="安装成功">
 
 
 
@@ -875,7 +875,7 @@
 
 <h5 id="更新root用户的Host字段"><a href="#更新root用户的Host字段" class="headerlink" title="更新root用户的Host字段"></a>更新root用户的Host字段</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update user set host = &#x27;%&#x27; where user = &#x27;root&#x27; and host=&#x27;localhost&#x27;;</span><br><span class="line">select User,Host from user;</span><br></pre></td></tr></table></figure>
 
-<img src="/blog/mysqlCentOs8/5.png" class="" width="800" title="更新后结果">
+<img src="/blog/mysqlCentOs8/5.png" class="" width="600" title="更新后结果">
 
 <h5 id="为root用户授权"><a href="#为root用户授权" class="headerlink" title="为root用户授权"></a>为root用户授权</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GRANT ALL ON *.* TO &#x27;root&#x27;@&#x27;%&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line">select host,user,plugin from user;</span><br></pre></td></tr></table></figure>
 
@@ -897,7 +897,7 @@
     <content><![CDATA[<h4 id="打开Photoshop软件"><a href="#打开Photoshop软件" class="headerlink" title="打开Photoshop软件"></a>打开Photoshop软件</h4><p>新建一个600px*600px的文件，如下图所示</p>
 <span id="more"></span>
 
-<img src="/blog/psSeal/1.png" class="" width="800" title="新建文件">
+<img src="/blog/psSeal/1.png" class="" width="600" title="新建文件">
 
 <p>分辨率75，将背景内容设置为透明，点击确定。</p>
 <h4 id="创建参考线"><a href="#创建参考线" class="headerlink" title="创建参考线"></a>创建参考线</h4><p>新建水平和垂直两条参考线，都为300像素。目的是为了找到图片正中心，步骤如下：</p>
@@ -907,7 +907,7 @@
 
 <h4 id="绘制外轮廓"><a href="#绘制外轮廓" class="headerlink" title="绘制外轮廓"></a>绘制外轮廓</h4><p>选择“椭圆选框工具”，鼠标点击图像的正中心，会弹出绘制椭圆的页面，输入宽度540，高度540，点击确定即可绘制圆形。</p>
 <p>然后在上方编辑栏修改配置，修改描边宽度为12px，颜色为：#ff4258，对齐方式为居外。</p>
-<img src="/blog/psSeal/2.png" class="" width="800" title="绘制外轮廓">
+<img src="/blog/psSeal/2.png" class="" width="600" title="绘制外轮廓">
 
 
 
@@ -920,12 +920,12 @@
 <blockquote>
 <p>如果文字不正，按住不放即可出现旋转功能，鼠标拖动旋转一定角度把文字扶正。</p>
 </blockquote>
-<img src="/blog/psSeal/3.png" class="" width="800" title="绘制文字">
+<img src="/blog/psSeal/3.png" class="" width="600" title="绘制文字">
 
 <p>如果文字过多可适当缩小字号和字符间距以及垂直缩放</p>
 <h4 id="绘制五角星"><a href="#绘制五角星" class="headerlink" title="绘制五角星"></a>绘制五角星</h4><p>选择“多边形工具”，填充颜色：#ff4258，描边颜色：无。</p>
 <p>点击文档正中心，弹出创建多边形弹窗。宽度：180，高度170，边数5，星形比例50%，点击确定。</p>
-<img src="/blog/psSeal/4.png" class="" width="800" title="绘制五角星">
+<img src="/blog/psSeal/4.png" class="" width="600" title="绘制五角星">
 
 
 
@@ -935,12 +935,12 @@
 <p>注意：选择盖印图层时，必须选中当前面板中最上面一个图层</p>
 </blockquote>
 <h4 id="载入全部选区"><a href="#载入全部选区" class="headerlink" title="载入全部选区"></a>载入全部选区</h4><p>选中图层1。按住Ctrl键，点击图层1的左侧小缩略图，即可载入图层1选区。</p>
-<img src="/blog/psSeal/5.png" class="" width="800" title="载入图层1选区">
+<img src="/blog/psSeal/5.png" class="" width="600" title="载入图层1选区">
 
 
 
 <h4 id="新建通道"><a href="#新建通道" class="headerlink" title="新建通道"></a>新建通道</h4><p>选择通道面板，点击“创建新通道”按钮，创建通道。</p>
-<img src="/blog/psSeal/6.png" class="" width="800" title="创建图层1通道">
+<img src="/blog/psSeal/6.png" class="" width="600" title="创建图层1通道">
 
 
 
@@ -950,7 +950,7 @@
 <blockquote>
 <p>次数可动态调整</p>
 </blockquote>
-<img src="/blog/psSeal/7.png" class="" width="800" title="铜版雕刻">
+<img src="/blog/psSeal/7.png" class="" width="600" title="铜版雕刻">
 
 
 
@@ -960,10 +960,10 @@
 <p>形状动态：大小抖动：44%，最小直径：26%，圆度抖动：25%，最小圆度：25%。</p>
 <p>散布：两轴 1000%，数量：1。</p>
 <p>其余不勾选。</p>
-<img src="/blog/psSeal/8.png" class="" width="800" title="画笔设置">
+<img src="/blog/psSeal/8.png" class="" width="600" title="画笔设置">
 
 <p>斜着涂抹中央五角星区域（将白色部分涂抹成不均匀），然后图章外圈也涂抹两圈。效果如图：</p>
-<img src="/blog/psSeal/9.png" class="" width="800" title="涂抹五角星">
+<img src="/blog/psSeal/9.png" class="" width="600" title="涂抹五角星">
 
 
 
@@ -971,22 +971,22 @@
 
 <h4 id="切换RGB通道"><a href="#切换RGB通道" class="headerlink" title="切换RGB通道"></a>切换RGB通道</h4><p>按住 <code>Ctrl</code> 键，点击 Alpha1 通道左侧的缩略图，即可载入Alpha1通道选区。</p>
 <p>然后返回图层面板，别按 <code>Ctrl</code> ，直接点击图层1的缩略图，即可切换回RGB通道，如下图。</p>
-<img src="/blog/psSeal/10.png" class="" width="800" title="切换回RGB通道">
+<img src="/blog/psSeal/10.png" class="" width="600" title="切换回RGB通道">
 
 
 
 <h4 id="复制新图层"><a href="#复制新图层" class="headerlink" title="复制新图层"></a>复制新图层</h4><p>按 <code>Ctrl + J</code> ，即可通过选区复制一个新的图层2，然后隐藏旧的图层1及以下。</p>
-<img src="/blog/psSeal/11.png" class="" width="800" title="隐藏图层1">
+<img src="/blog/psSeal/11.png" class="" width="600" title="隐藏图层1">
 
 
 
 <h4 id="设置滤镜"><a href="#设置滤镜" class="headerlink" title="设置滤镜"></a>设置滤镜</h4><p>使用 <code>滤镜 -&gt; 模糊 -&gt; 动感模糊</code> ，设置模糊效果，距离设置为2。</p>
-<img src="/blog/psSeal/12.png" class="" width="800" title="动感模糊">
+<img src="/blog/psSeal/12.png" class="" width="600" title="动感模糊">
 
 
 
 <p>也可以使用橡皮擦工具，擦除部分区域，最终效果如下。</p>
-<img src="/blog/psSeal/13.png" class="" width="800" title="最终效果">
+<img src="/blog/psSeal/13.png" class="" width="600" title="最终效果">
 
 <blockquote>
 <p>如果上纸效果不好，可以保留图层1，回到 “载入全部选区” 步骤重新再来一遍。</p>
@@ -1520,22 +1520,22 @@
 <p>购买支付以后，切换域名的DNS服务器</p>
 <span id="more"></span>
 
-<img src="/blog/troojan/1.png" class="" width="800" title="namesilo官网">
+<img src="/blog/troojan/1.png" class="" width="600" title="namesilo官网">
 
 <p>首先左侧勾选域名，然后点击上面的 <code>Change Nameservers</code> 按钮。</p>
 <p>切换域名服务器至DNSpod：<code>melon.dnspod.net</code> 和 <code>clam.dnspod.net</code></p>
 <p>切换后要等大概一小时才能进入下一步</p>
 <h4 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h4><p>域名解析选择<a href="https://www.dnspod.cn/">dnspod</a>  账号 QQ邮箱 密码 d-</p>
-<img src="/blog/troojan/2.png" class="" width="800" title="解析结果">
+<img src="/blog/troojan/2.png" class="" width="600" title="解析结果">
 
 <p>添加域名以后 先加上www的解析 如下图</p>
-<img src="/blog/troojan/3.png" class="" width="800" title="第一条解析">
+<img src="/blog/troojan/3.png" class="" width="600" title="第一条解析">
 
 <p>等待解析灯变绿色以后 测试解析结果</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping www.domainabcdefg.com</span><br></pre></td></tr></table></figure>
 
 <h4 id="SSL证书选择"><a href="#SSL证书选择" class="headerlink" title="SSL证书选择"></a>SSL证书选择</h4><p>申请SSL证书选择<a href="https://console.cloud.tencent.com/ssl">腾讯云</a>  账号 QQ邮箱 密码 d-</p>
-<img src="/blog/troojan/4.png" class="" width="800" title="证书列表 - 腾讯云">
+<img src="/blog/troojan/4.png" class="" width="600" title="证书列表 - 腾讯云">
 
 <blockquote>
 <p>Trojan代理下的二级域名不能使用HTTPS服务，所以不要给二级域名申请证书</p>
@@ -1543,7 +1543,7 @@
 <p>申请证书的时候选择自动DNS验证，无需手动更改任何东西，一直点下一步，证书颁发后下载Nginx版本即可，本步骤到此即可结束。</p>
 <p>另外也可选择手动DNS验证，手动为域名添加一条解析记录，操作如下：</p>
 <p>在 “证书列表” 页面，选择待查看证书详情的域名型证书 ID，进入 “证书详情” 页面。如下图所示：</p>
-<img src="/blog/troojan/5.png" class="" width="800" title="证书详情">
+<img src="/blog/troojan/5.png" class="" width="600" title="证书详情">
 
 <p>按操作 去DNSpod那里添加一条TXT类型的解析即可 最终结果可以看上上面的解析图</p>
 <p>只要上面的域名解析没问题 这里也没问题 直接等待CA扫描然后颁发证书即可</p>
@@ -1655,7 +1655,7 @@
 </li>
 <li><h5 id="西部世界"><a href="#西部世界" class="headerlink" title="西部世界"></a>西部世界</h5><p>一键式傻瓜客户端：<a href="https://westworldss.com/">西部世界官网</a></p>
 <blockquote>
-<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#x69;&#x6e;&#102;&#x6f;&#64;&#119;&#x65;&#115;&#x74;&#119;&#111;&#x72;&#x6c;&#100;&#115;&#115;&#46;&#99;&#x6f;&#109;">&#x69;&#x6e;&#102;&#x6f;&#64;&#119;&#x65;&#115;&#x74;&#119;&#111;&#x72;&#x6c;&#100;&#115;&#115;&#46;&#99;&#x6f;&#109;</a> 即可获取最新地址</p>
+<p>国内备份：<a href="https://xbww9988.xyz/">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#x69;&#110;&#102;&#x6f;&#x40;&#119;&#x65;&#x73;&#x74;&#x77;&#x6f;&#x72;&#108;&#x64;&#115;&#x73;&#46;&#99;&#111;&#x6d;">&#x69;&#110;&#102;&#x6f;&#x40;&#119;&#x65;&#x73;&#x74;&#x77;&#x6f;&#x72;&#108;&#x64;&#115;&#x73;&#46;&#99;&#111;&#x6d;</a> 即可获取最新地址</p>
 </blockquote>
 </li>
 <li><h5 id="破解版V2rayN"><a href="#破解版V2rayN" class="headerlink" title="破解版V2rayN"></a>破解版V2rayN</h5><p>另外，v2rayssr网站提供了一个<a href="https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a>。缺点就是版本很老，但可用。 <a href="https://www.v2rayssr.com/trojanwin.html">具体使用教程在这</a>。</p>
@@ -2337,7 +2337,7 @@
 <p>等待十几分钟，域名就会成功托管到Cloudflare了。</p>
 <h4 id="Pages-部署-VLESS"><a href="#Pages-部署-VLESS" class="headerlink" title="Pages 部署 VLESS"></a>Pages 部署 VLESS</h4><p>回到Cloudflare首页，点击左侧 <code>Workers 和 Pages</code>，点击创建按钮，点击切换到 <code>Pages</code> 标签页。</p>
 <p>点击下面的 <code>上传资产</code> ，选择之前下载的 <code>worker.zip</code> 文件。</p>
-<img src="/blog/workerVless/1.png" class="" width="800" title="使用直接上传创建">
+<img src="/blog/workerVless/1.png" class="" width="600" title="使用直接上传创建">
 
 <p>为我们的项目创建一个名字，点击创建项目。</p>
 <blockquote>
@@ -2351,17 +2351,17 @@
 <p>输入完成，若是输入框变为绿色，证明格式正确。若你是按照刚才注册域名的操作，并已经把域名托管到了 CF，那么请直接点击 <code>激活域</code> 按钮。一般情况下，几十秒就激活完成了！</p>
 <h4 id="设置-UUID"><a href="#设置-UUID" class="headerlink" title="设置 UUID"></a>设置 UUID</h4><p><a href="https://1024tools.com/uuid">点击这里</a> ，生成一个 UUID ，或是在 V2rayN 中生成一个！</p>
 <p>回到刚才的项目，找到 <code>设置</code> → <code>环境变量</code> → <code>添加变量</code> ，变量名称：<code>UUID</code> ，变量值为刚才生成的 UUID ，点击保存！</p>
-<img src="/blog/workerVless/2.png" class="" width="800" title="配置UUID">
+<img src="/blog/workerVless/2.png" class="" width="600" title="配置UUID">
 
 
 
 <h4 id="重新部署-Pages"><a href="#重新部署-Pages" class="headerlink" title="重新部署 Pages"></a>重新部署 Pages</h4><p>回到项目，找到 <code>部署</code> Tab页，点击下面的 <code>创建新部署</code> 按钮，再次上传刚才的 <a href="https://raw.githubusercontent.com/cmliu/edgetunnel/main/worker.zip">worker.zip</a> 文件，保存并部署！</p>
-<img src="/blog/workerVless/3.png" class="" width="800" title="重新部署">
+<img src="/blog/workerVless/3.png" class="" width="600" title="重新部署">
 
 <p>等待一分钟后，我们点击上图中右上角的 <code>访问</code> 按钮，若是有JSON内容出现，证明部署成功。</p>
 <p>我们可以访问 <code>https://域名/UUID</code> ，来查看我们的节点。例：刚才生成的 UUID 为 <code>7a1a374f-286f-4807-9756-ee3f90227bb0</code> ，</p>
 <p>按照上图，我们访问 <code>https://mingzi.domain.com/7a1a374f-286f-4807-9756-ee3f90227bb0</code> ，可以看到详细的节点情况！</p>
-<img src="/blog/workerVless/4.png" class="" width="800" title="节点详情">
+<img src="/blog/workerVless/4.png" class="" width="600" title="节点详情">
 
 <p>至此，节点部署完毕，我们导入上图中的 <code>快速自适应订阅地址</code> 到客户端软件，进行节点的订阅。</p>
 <p>各个客户端软件的订阅流程不同，请自行按照各软件的方式配置订阅链接。</p>
