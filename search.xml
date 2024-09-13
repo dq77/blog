@@ -2314,9 +2314,9 @@
 </li>
 <li><p>注册 <a href="https://dash.cloudflare.com/">Cloudflare</a> 账号并登录。</p>
 </li>
-<li><p>下载 <a href="https://github.com/cmliu">cmliu</a> 大佬开源的 <a href="https://raw.githubusercontent.com/cmliu/edgetunnel/main/worker.zip">worker.zip</a></p>
+<li><p>下载 <a href="https://github.com/cmliu">cmliu</a> 大佬开源的 <a href="https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip">main.zip</a></p>
 <blockquote>
-<p>国内备份： <a href="https://gitee.com/diaoqi/static/releases/download/v1.0.2/worker.zip">worker.zip</a></p>
+<p>国内备份： <a href="https://gitee.com/diaoqi/static/releases/download/v1.0.2/main.zip">main.zip</a></p>
 </blockquote>
 </li>
 </ul>
@@ -2333,10 +2333,10 @@
 </blockquote>
 <p>等待十几分钟，域名就会成功托管到Cloudflare了。</p>
 <h4 id="Pages-部署-VLESS"><a href="#Pages-部署-VLESS" class="headerlink" title="Pages 部署 VLESS"></a>Pages 部署 VLESS</h4><p>回到Cloudflare首页，点击左侧 <code>Workers 和 Pages</code>，点击创建按钮，点击切换到 <code>Pages</code> 标签页。</p>
-<p>点击下面的 <code>上传资产</code> ，选择之前下载的 <code>worker.zip</code> 文件。</p>
+<p>点击下面的 <code>上传资产</code> ，为我们的项目创建一个名字。</p>
+<p>选择之前下载的 <code>main.zip</code> 文件，上传压缩文件。成功后点击 <code>部署站点</code>。</p>
 <img src="/blog/workerVless/1.png" class="" width="600" title="使用直接上传创建">
 
-<p>为我们的项目创建一个名字，点击创建项目。</p>
 <blockquote>
 <p>方便演示，我这里给项目起名叫 kejixinwen</p>
 </blockquote>
@@ -2347,12 +2347,12 @@
 </blockquote>
 <p>输入完成，若是输入框变为绿色，证明格式正确。若你是按照刚才注册域名的操作，并已经把域名托管到了 CF，那么请直接点击 <code>激活域</code> 按钮。一般情况下，几十秒就激活完成了！</p>
 <h4 id="设置-UUID"><a href="#设置-UUID" class="headerlink" title="设置 UUID"></a>设置 UUID</h4><p><a href="https://1024tools.com/uuid">点击这里</a> ，生成一个 UUID ，或是在 V2rayN 中生成一个！</p>
-<p>回到刚才的项目，找到 <code>设置</code> → <code>环境变量</code> → <code>添加变量</code> ，变量名称：<code>UUID</code> ，变量值为刚才生成的 UUID ，点击保存！</p>
+<p>回到刚才的项目，找到 <code>设置</code> → <code>环境变量</code> → <code>制作</code> → <code>添加变量</code> ，变量名称：<code>UUID</code> ，变量值为刚才生成的 UUID ，点击保存！</p>
 <img src="/blog/workerVless/2.png" class="" width="600" title="配置UUID">
 
 
 
-<h4 id="重新部署-Pages"><a href="#重新部署-Pages" class="headerlink" title="重新部署 Pages"></a>重新部署 Pages</h4><p>回到项目，找到 <code>部署</code> Tab页，点击下面的 <code>创建新部署</code> 按钮，再次上传刚才的 <a href="https://raw.githubusercontent.com/cmliu/edgetunnel/main/worker.zip">worker.zip</a> 文件，保存并部署！</p>
+<h4 id="重新部署-Pages"><a href="#重新部署-Pages" class="headerlink" title="重新部署 Pages"></a>重新部署 Pages</h4><p>回到项目，找到 <code>部署</code> Tab页，点击下面的 <code>创建新部署</code> 按钮，再次上传刚才的 <a href="https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip">main.zip</a> 文件，保存并部署！</p>
 <img src="/blog/workerVless/3.png" class="" width="600" title="重新部署">
 
 <p>等待一分钟后，我们点击上图中右上角的 <code>访问</code> 按钮，若是有JSON内容出现，证明部署成功。</p>
@@ -2362,7 +2362,7 @@
 
 <p>至此，节点部署完毕，我们导入上图中的 <code>快速自适应订阅地址</code> 到客户端软件，进行节点的订阅。</p>
 <p>各个客户端软件的订阅流程不同，请自行按照各软件的方式配置订阅链接。</p>
-<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>到这里，部署就结束了。大概率上，worker.zip里面的自动 IP 优选，已经会满足绝大数人的需求了，当然有自建 VPS 节点，或是机场节点的，也是可以使用这个节点进行调配使用。感谢 <a href="https://github.com/zizifn">zizifn</a> ，感谢 <a href="https://github.com/cmliu">cmliu</a> !</p>
+<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>到这里，部署就结束了。大概率上，main.zip里面的自动 IP 优选，已经会满足绝大数人的需求了，当然有自建 VPS 节点，或是机场节点的，也是可以使用这个节点进行调配使用。感谢 <a href="https://github.com/zizifn">zizifn</a> ，感谢 <a href="https://github.com/cmliu">cmliu</a> !</p>
 ]]></content>
       <tags>
         <tag>CloudFlare</tag>
