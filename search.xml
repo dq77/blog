@@ -1612,7 +1612,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/src  #进入该目录</span><br><span class="line">wget https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz    #下载官方 Trojan 服务器</span><br><span class="line">tar xf trojan-1.*   #解压该文件</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>国内备份：<a href="https://ghproxy.com/https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz">trojan-1.16.0-linux-amd64.tar.xz</a></p>
+<p>国内备份：<a href="https://ghp.ci/https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz">trojan-1.16.0-linux-amd64.tar.xz</a></p>
 </blockquote>
 </li>
 <li><h5 id="创建-Trojan-服务器配置文件"><a href="#创建-Trojan-服务器配置文件" class="headerlink" title="创建 Trojan 服务器配置文件"></a>创建 Trojan 服务器配置文件</h5><p>找到 <code>/usr/src/trojan/</code> 目录，创建并打开<code>server.conf</code>文件</p>
@@ -1645,7 +1645,7 @@
 <li><h4 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h4><ul>
 <li><h5 id="Clash-Verge"><a href="#Clash-Verge" class="headerlink" title="Clash Verge"></a>Clash Verge</h5><p>一端配置，多端通用。配置好了之后，安卓、IOS、Mac都可以开箱即用，非常好用。点击访问<a href="https://www.clashverge.dev/install.html#__tabbed_1_1">官方网站</a>，客户端<a href="https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v1.7.7/Clash.Verge_1.7.7_x64-setup.exe">下载地址</a>。</p>
 <blockquote>
-<p>国内备份：<a href="https://ghproxy.com/https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v1.7.7/Clash.Verge_1.7.7_x64-setup.exe">Clash Verge</a>    <a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/troojan/Clash.for.Windows%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8F%8A%E6%95%99%E7%A8%8B.zip">配置订阅文件及教程</a></p>
+<p>国内备份：<a href="https://ghp.ci/https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v1.7.7/Clash.Verge_1.7.7_x64-setup.exe">Clash Verge</a>    <a href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/troojan/Clash.for.Windows%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8F%8A%E6%95%99%E7%A8%8B.zip">配置订阅文件及教程</a></p>
 </blockquote>
 </li>
 <li><h5 id="西部世界"><a href="#西部世界" class="headerlink" title="西部世界"></a>西部世界</h5><p>一键式傻瓜客户端：<a href="https://westworldss.com/">西部世界官网</a></p>
@@ -1655,12 +1655,12 @@
 </li>
 </ul>
 <blockquote>
-<p>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#x69;&#110;&#x66;&#111;&#x40;&#119;&#101;&#115;&#x74;&#119;&#x6f;&#114;&#x6c;&#100;&#115;&#x73;&#x2e;&#x63;&#x6f;&#109;">&#x69;&#110;&#x66;&#111;&#x40;&#119;&#101;&#115;&#x74;&#119;&#x6f;&#114;&#x6c;&#100;&#115;&#x73;&#x2e;&#x63;&#x6f;&#109;</a> 即可获取最新地址</p>
+<p>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#x69;&#x6e;&#102;&#111;&#64;&#119;&#101;&#115;&#x74;&#x77;&#111;&#x72;&#108;&#100;&#115;&#115;&#x2e;&#x63;&#x6f;&#109;">&#x69;&#x6e;&#102;&#111;&#64;&#119;&#101;&#115;&#x74;&#x77;&#111;&#x72;&#108;&#100;&#115;&#115;&#x2e;&#x63;&#x6f;&#109;</a> 即可获取最新地址</p>
 </blockquote>
 </li>
 <li><h5 id="破解版V2rayN"><a href="#破解版V2rayN" class="headerlink" title="破解版V2rayN"></a>破解版V2rayN</h5><p>另外，v2rayssr网站提供了一个<a href="https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a>。缺点就是版本很老，但可用。 <a href="https://www.v2rayssr.com/trojanwin.html">具体使用教程在这</a>。</p>
 <blockquote>
-<p>国内备份：<a href="https://ghproxy.com/https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a></p>
+<p>国内备份：<a href="https://ghp.ci/https://raw.githubusercontent.com/V2RaySSR/Trojan_Panel/master/v2rayN-win-with-trojan-v2.zip">一键连接版V2rayN</a></p>
 </blockquote>
 <ul>
 <li><h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5>其他的好用客户端，都在<a href="https://tlanyan.me/trojan-clients-download/">这里</a>。</li>
@@ -1678,14 +1678,14 @@
 </ul>
 <p>  这个是官方的原版安卓客户端 <a href="https://github.com/trojan-gfw/igniter/releases">igniter</a>，可放心使用。</p>
 <blockquote>
-<p>国内备份：<a href="https://ghproxy.com/https://github.com/trojan-gfw/igniter/releases/download/v0.10.2-beta/io.github.trojan_gfw.igniter-v0.10.2-beta-230001002-arm64-v8a-release.apk">igniter</a></p>
+<p>国内备份：<a href="https://ghp.ci/https://github.com/trojan-gfw/igniter/releases/download/v0.10.2-beta/io.github.trojan_gfw.igniter-v0.10.2-beta-230001002-arm64-v8a-release.apk">igniter</a></p>
 </blockquote>
 <ul>
 <li><h5 id="Clash-Meta"><a href="#Clash-Meta" class="headerlink" title="Clash Meta"></a>Clash Meta</h5></li>
 </ul>
 <p>  需要先把配置文件弄好，手机下载<a href="https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.10.1/cmfa-2.10.1-meta-universal-release.apk">Clash Meta</a>，然后导入URL或者文件即可使用。</p>
 <blockquote>
-<p>国内备份：<a href="https://ghproxy.com/https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.10.1/cmfa-2.10.1-meta-universal-release.apk">Clash</a></p>
+<p>国内备份：<a href="https://ghp.ci/https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.10.1/cmfa-2.10.1-meta-universal-release.apk">Clash Meta</a></p>
 </blockquote>
 </li>
 <li><h4 id="IOS客户端"><a href="#IOS客户端" class="headerlink" title="IOS客户端"></a>IOS客户端</h4><ul>
