@@ -2376,8 +2376,10 @@
   <entry>
     <title>CentOS下基于X-UI搭建Vless + Reality协议</title>
     <url>/blog/reality/</url>
-    <content><![CDATA[<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>我们都知道， 普通的 <code>TLS</code> 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。</p>
+    <content><![CDATA[<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>我们都知道， 普通的 <code>TLS</code> 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。</p>
 <p>那若是发现这个特征，是的，那 <code>TLS</code> 的代理也就不太安全了。</p>
+<span id="more"></span>
+
 <p>想当初，<code>RPRX</code> 发布了 <code>XTLS</code>，而 <code>XTLS</code> 其主要原因就是为了减少额外的加密，在 <code>TLS</code> 代理的特征被暴露以后，<code>Xray-core 1.8.0</code> 马上推出了新的流控 —— <code>Vision</code>，至此，当使用 <code>Vision</code> 传输 <code>TLS1.3</code> 的数据时，<code>99%</code> 的数据包，几乎拥有完美的流量特征，因为他是原始数据，没有经过任何的加工。</p>
 <p>然而在此之外，2023年3月，<code>Xray-core 1.8.0</code> 又进一步推出了 <code>Reality</code> 协议来取代传统的 TLS 服务，这样可以消除服务端 TLS 的指纹特征，仍然具有前向保密性，而且证书链也是攻击无效，那这样安全性的确就超越了常规的 TLS，关键可以指向别人的网站，所以无须自己购置域名，布置证书等，而且，不必使用 VPS 的 <code>443</code> 端口，所以，的确是方便和安全了不少。甚至，在我自己长达半年的使用过程中 <code>Reality + Vision</code>，没有出现任何问题，延迟、速率也是很不错。</p>
 <h4 id="服务端搭建"><a href="#服务端搭建" class="headerlink" title="服务端搭建"></a>服务端搭建</h4><p>首先准备一台VPS，配置好CentOS系统。</p>
@@ -2452,7 +2454,7 @@
 
 <h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>有了 <code>X-ui</code> 面板，可视化的搭建 <code>Reality</code> ，也是极为方便，而且这种协议也是目前来说比较安全的代理方式之一，不需要自己购买的域名，可以有效的去除普通 <code>TLS</code> 代理过程中的一些特征。</p>
 <p>但是互联网没有绝对，无非也就是矛与盾之间的较量，只是在目前来说不容易被封 IP 和端口。</p>
-<p>若是你问我，是不是推荐所有人都来使用它，其实我不推荐，这只是一种方法，若是你自创的一种方式能长期稳定的使用，那么我不推荐你进行更换，就和 <code>XTLS</code> 官方所说：“把所有的鸡蛋都放在一个篮子里是十分危险的，我们鼓励大家善用每个工具的特性，分散特征”。</p>
+<p>若是你问我，是不是推荐所有人都来使用它，其实我不推荐，这只是一种方法，若是你自创的一种方式能长期稳定的使用，那么我不推荐你进行更换，就像 <code>XTLS</code> 官方所说：“把所有的鸡蛋都放在一个篮子里是十分危险的，我们鼓励大家善用每个工具的特性，分散特征”。</p>
 <p>比如：<code>NaiveProxy</code>、魔改的 <code>Shadowsocks</code>，<code>MITM</code> 代理 等等。我个人觉得，越少冷门越好。</p>
 ]]></content>
       <tags>
@@ -2460,6 +2462,59 @@
         <tag>CentOS</tag>
         <tag>Vless</tag>
         <tag>Reality</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Clash系列客户端订阅地址配置教程</title>
+    <url>/blog/clash/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>与大多数直接使用节点信息二维码或者链接的客户端不同，Clash只支持订阅的方式导入节点信息。</p>
+<p>本文将以我自己的理解，详细讲讲Clash订阅链接相关知识。</p>
+<span id="more"></span>
+
+<p>clash客户端使用一个订阅链接来导入节点信息，这个链接其实是一个yaml配置文件的直链，我们打开链接即可下载该yaml配置文件。</p>
+<p>下面就是这个配置文件的大概样子。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">port: 7890</span><br><span class="line">socks-port: 7891</span><br><span class="line">redir-port: 7892</span><br><span class="line">allow-lan: false</span><br><span class="line">mode: rule</span><br><span class="line">log-level: silent</span><br><span class="line">external-controller: &#x27;0.0.0.0:9090&#x27;</span><br><span class="line">secret: &#x27;&#x27;</span><br><span class="line">proxies:</span><br><span class="line">  - &#123;name: 香港节点, type: ss, server: www.fanfanke.com, port: 3609, cipher: rc4-md5, password: passwd, udp: true, plugin: obfs&#125;</span><br><span class="line">  - &#123;name: 美国节点, type: ss, server: www.fanfanke.com, port: 5607, cipher: rc4-md5, password: passwd, udp: true, plugin: obfs&#125;</span><br><span class="line"></span><br><span class="line">proxy-groups:</span><br><span class="line">  - name: &#x27;油管&#x27;</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - 香港节点</span><br><span class="line">      - 美国节点</span><br><span class="line">  - name: &#x27;国外媒体&#x27;</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - 美国节点</span><br><span class="line">      - 香港节点</span><br><span class="line">  - name: &#x27;国内媒体&#x27;</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - DIRECT</span><br><span class="line">      - 香港节点</span><br><span class="line">      - 美国节点</span><br><span class="line">  - name: &#x27;苹果服务&#x27;</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - DIRECT</span><br><span class="line">      - 香港节点</span><br><span class="line">      - 美国节点</span><br><span class="line"></span><br><span class="line">rules:</span><br><span class="line"> - DOMAIN-KEYWORD,youtube,油管</span><br><span class="line"> - DOMAIN-SUFFIX,google.com,国外媒体</span><br><span class="line"> - DOMAIN-SUFFIX,reuters.com,国外媒体</span><br><span class="line"> - DOMAIN-SUFFIX,youku.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,baidu.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,qq.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,apple.com,苹果服务</span><br><span class="line"> - DOMAIN-SUFFIX,icloud.com,苹果服务</span><br><span class="line"> - MATCH,DIRECT</span><br></pre></td></tr></table></figure>
+
+
+
+<p>配置文件中有许多字段，本文讲讲其中几个比较有用的。</p>
+<h4 id="rules"><a href="#rules" class="headerlink" title="rules"></a>rules</h4><p>首先是规则集字段。当你访问不同的网站，使用的其实是不同的规则集。</p>
+<p>大家都知道我们的外部服务器不可能代理所有的数据流量，比如百度啊、微信啊之类的流量，如果统统都走国外的代理，那不仅绕远、速度慢不说，对服务器的压力也是比较大的。</p>
+<p>所以规则集字段是为了，在你访问不同的网站时，决定是否使用代理，以及使用哪个代理。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rules:</span><br><span class="line"> - DOMAIN-KEYWORD,youtube,油管</span><br><span class="line"> - DOMAIN-SUFFIX,google.com,国外媒体</span><br><span class="line"> - DOMAIN-SUFFIX,reuters.com,国外媒体</span><br><span class="line"> - DOMAIN-SUFFIX,youku.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,baidu.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,qq.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,apple.com,苹果服务</span><br><span class="line"> - DOMAIN-SUFFIX,icloud.com,苹果服务</span><br><span class="line"> - MATCH,DIRECT</span><br></pre></td></tr></table></figure>
+
+<p>比如你访问 <code>youtube.com</code> ，其实命中的规则集中的第一条：<code>油管</code> 。</p>
+<p>访问 <code>baidu.com</code> ，其实命中的规则集中的第五条：<code>国内媒体</code></p>
+<h4 id="proxy-groups"><a href="#proxy-groups" class="headerlink" title="proxy-groups"></a>proxy-groups</h4><p>那么这个叫 <code>油管</code> 的代理是什么呢，我们一起看一下。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxy-groups:</span><br><span class="line">  - name: &#x27;油管&#x27;</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - 香港节点</span><br><span class="line">      - 美国节点</span><br><span class="line">  - name: &#x27;国内媒体&#x27;</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - DIRECT</span><br><span class="line">      - 香港节点</span><br><span class="line">      - 美国节点</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，“油管”中有两个代理选项可选，第一个为默认，默认是走“香港节点”的，也可以手动切换到“美国节点”。</p>
+<p>而“国内媒体”中有三个代理选项可选，默认是走“DIRECT”，也就是无需使用代理，当然你也可以手动切换成“香港节点”或者“美国节点”，使用代理访问百度。(装成外国人)</p>
+<h4 id="proxies"><a href="#proxies" class="headerlink" title="proxies"></a>proxies</h4><p>那么“香港节点”、“美国节点”是什么呢，如下代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxies:</span><br><span class="line">  - &#123;name: 香港节点, type: ss, server: www.fanfanke.com, port: 3609, cipher: rc4-md5, password: passwd, udp: true, plugin: obfs&#125;</span><br><span class="line">  - &#123;name: 美国节点, type: ss, server: www.dongdongle.com, port: 5607, cipher: rc4-md5, password: passwd, udp: true, plugin: obfs&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在proxies字段我们能看到，这里有两台搭建好的节点服务器，类型均为ss，其端口分别为3609和5607，密码均为passwd。 其他参数不做讲解。</p>
+<p>不同类型的服务器的字段也不同，可以在 <a href="https://suburl.v1.mk/">地址转换工具</a> 中自动生成clash的配置参数。</p>
+<blockquote>
+<p>地址转换工具是用来把其他类型的服务器，比如vless、vmess、trojan、ss、ssr、Hysteria等等………</p>
+<p>这些节点服务器都能够生成节点信息链接或者二维码用于专用客户端使用，链接中包含服务器地址、密码、IP地址、加密方式等详细信息。</p>
+<p>而地址转换工具可以把这些链接转换成clash使用的订阅链接，由于链接中有很多敏感信息，所以使用时建议更改一下密码、IP地址等信息再去转换，转换成clash后再更换回真实的密码。如忘记更换，那你服务器被当成免费节点贡献出去了别来找我……</p>
+</blockquote>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>假如我们开启代理后，浏览器访问apple.com，那么我们走的是哪个代理呢？</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rules:</span><br><span class="line"> - DOMAIN-KEYWORD,youtube,油管</span><br><span class="line"> - DOMAIN-SUFFIX,google.com,国外媒体</span><br><span class="line"> - DOMAIN-SUFFIX,reuters.com,国外媒体</span><br><span class="line"> - DOMAIN-SUFFIX,youku.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,baidu.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,qq.com,国内媒体</span><br><span class="line"> - DOMAIN-SUFFIX,apple.com,苹果服务</span><br><span class="line"> - DOMAIN-SUFFIX,icloud.com,苹果服务</span><br><span class="line"> - MATCH,DIRECT</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，apple.com命中了 <code>苹果服务</code> 规则集。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxy-groups:</span><br><span class="line">  - name: &#x27;苹果服务&#x27;</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - DIRECT</span><br><span class="line">      - 香港节点</span><br><span class="line">      - 美国节点</span><br></pre></td></tr></table></figure>
+
+<p> <code>苹果服务</code> 规则集默认是“DIRECT”，即直连，不走任何代理。当然也可以手动切换成 <code>美国节点</code> ，这样就使用美国的代理了。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>以上就是clash订阅文件的规则了，掌握这些知识就可以手搓订阅文件了。你搓完之后直接导入到电脑端的clash客户端即可使用了。</p>
+<p>但移动端不可以，移动端需要一个链接，使用链接下载配置文件。</p>
+<p>所以我们需要把写好的配置文件上传到网络上，你有服务器最好，没有的话我推荐 <a href="http://www.gitee.com/">www.gitee.com</a> 。</p>
+<p>作为开发者肯定会使用发布release吧？你把规则文件上传到release里面，就能获取规则集的直链了，把直链粘贴到移动端clash客户端就可以使用了。</p>
+]]></content>
+      <tags>
+        <tag>代理</tag>
+        <tag>Clash</tag>
       </tags>
   </entry>
 </search>

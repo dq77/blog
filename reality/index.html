@@ -21,15 +21,15 @@
     var CONFIG = {"hostname":"dq77.github.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="准备工作我们都知道， 普通的 TLS 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。 那若是发现这个特征，是的，那 TLS 的代理也就不太安全了。 想当初，RPRX 发布了 XTLS，而 XTLS 其主要原因">
+  <meta name="description" content="准备工作我们都知道， 普通的 TLS 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。 那若是发现这个特征，是的，那 TLS 的代理也就不太安全了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS下基于X-UI搭建Vless + Reality协议">
 <meta property="og:url" content="https://dq77.github.io/blog/reality/index.html">
 <meta property="og:site_name" content="萝卜小站">
-<meta property="og:description" content="准备工作我们都知道， 普通的 TLS 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。 那若是发现这个特征，是的，那 TLS 的代理也就不太安全了。 想当初，RPRX 发布了 XTLS，而 XTLS 其主要原因">
+<meta property="og:description" content="准备工作我们都知道， 普通的 TLS 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。 那若是发现这个特征，是的，那 TLS 的代理也就不太安全了。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-01T06:04:59.000Z">
-<meta property="article:modified_time" content="2024-11-01T08:42:52.012Z">
+<meta property="article:published_time" content="2024-09-06T06:04:59.000Z">
+<meta property="article:modified_time" content="2024-11-01T09:04:19.365Z">
 <meta property="article:author" content="掉漆的标题">
 <meta property="article:tag" content="代理">
 <meta property="article:tag" content="CentOS">
@@ -225,10 +225,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-11-01 14:04:59 / 修改时间：16:42:52" itemprop="dateCreated datePublished" datetime="2024-11-01T14:04:59+08:00">2024-11-01</time>
+              <time title="创建时间：2024-09-06 14:04:59" itemprop="dateCreated datePublished" datetime="2024-09-06T14:04:59+08:00">2024-09-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-01 17:04:19" itemprop="dateModified" datetime="2024-11-01T17:04:19+08:00">2024-11-01</time>
+              </span>
 
           
 
@@ -241,8 +247,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>我们都知道， 普通的 <code>TLS</code> 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。</p>
+        <h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>我们都知道， 普通的 <code>TLS</code> 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。</p>
 <p>那若是发现这个特征，是的，那 <code>TLS</code> 的代理也就不太安全了。</p>
+<span id="more"></span>
+
 <p>想当初，<code>RPRX</code> 发布了 <code>XTLS</code>，而 <code>XTLS</code> 其主要原因就是为了减少额外的加密，在 <code>TLS</code> 代理的特征被暴露以后，<code>Xray-core 1.8.0</code> 马上推出了新的流控 —— <code>Vision</code>，至此，当使用 <code>Vision</code> 传输 <code>TLS1.3</code> 的数据时，<code>99%</code> 的数据包，几乎拥有完美的流量特征，因为他是原始数据，没有经过任何的加工。</p>
 <p>然而在此之外，2023年3月，<code>Xray-core 1.8.0</code> 又进一步推出了 <code>Reality</code> 协议来取代传统的 TLS 服务，这样可以消除服务端 TLS 的指纹特征，仍然具有前向保密性，而且证书链也是攻击无效，那这样安全性的确就超越了常规的 TLS，关键可以指向别人的网站，所以无须自己购置域名，布置证书等，而且，不必使用 VPS 的 <code>443</code> 端口，所以，的确是方便和安全了不少。甚至，在我自己长达半年的使用过程中 <code>Reality + Vision</code>，没有出现任何问题，延迟、速率也是很不错。</p>
 <h4 id="服务端搭建"><a href="#服务端搭建" class="headerlink" title="服务端搭建"></a>服务端搭建</h4><p>首先准备一台VPS，配置好CentOS系统。</p>
@@ -317,7 +325,7 @@
 
 <h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>有了 <code>X-ui</code> 面板，可视化的搭建 <code>Reality</code> ，也是极为方便，而且这种协议也是目前来说比较安全的代理方式之一，不需要自己购买的域名，可以有效的去除普通 <code>TLS</code> 代理过程中的一些特征。</p>
 <p>但是互联网没有绝对，无非也就是矛与盾之间的较量，只是在目前来说不容易被封 IP 和端口。</p>
-<p>若是你问我，是不是推荐所有人都来使用它，其实我不推荐，这只是一种方法，若是你自创的一种方式能长期稳定的使用，那么我不推荐你进行更换，就和 <code>XTLS</code> 官方所说：“把所有的鸡蛋都放在一个篮子里是十分危险的，我们鼓励大家善用每个工具的特性，分散特征”。</p>
+<p>若是你问我，是不是推荐所有人都来使用它，其实我不推荐，这只是一种方法，若是你自创的一种方式能长期稳定的使用，那么我不推荐你进行更换，就像 <code>XTLS</code> 官方所说：“把所有的鸡蛋都放在一个篮子里是十分危险的，我们鼓励大家善用每个工具的特性，分散特征”。</p>
 <p>比如：<code>NaiveProxy</code>、魔改的 <code>Shadowsocks</code>，<code>MITM</code> 代理 等等。我个人觉得，越少冷门越好。</p>
 
     </div>
@@ -361,7 +369,10 @@
     <a href="/blog/workerVless/" rel="prev" title="通过Cloudflare Worker、Pages部署免费的VLESS节点">
       <i class="fa fa-chevron-left"></i> 通过Cloudflare Worker、Pages部署免费的VLESS节点
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/blog/clash/" rel="next" title="Clash系列客户端订阅地址配置教程">
+      Clash系列客户端订阅地址配置教程 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -420,7 +431,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">服务端搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">Windows客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#V2rayN"><span class="nav-number">1.2.1.</span> <span class="nav-text">V2rayN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clash-Verge-Rev"><span class="nav-number">1.2.2.</span> <span class="nav-text">Clash Verge Rev</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">Android客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#v2rayNG"><span class="nav-number">1.3.1.</span> <span class="nav-text">v2rayNG</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clash-Meta"><span class="nav-number">1.3.2.</span> <span class="nav-text">Clash Meta</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-BBR-%E5%8A%A0%E9%80%9F%EF%BC%88%E9%80%89%E4%BF%AE%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">开启 BBR 加速（选修）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">1.5.</span> <span class="nav-text">后记</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">服务端搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">Windows客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#V2rayN"><span class="nav-number">3.1.</span> <span class="nav-text">V2rayN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clash-Verge-Rev"><span class="nav-number">3.2.</span> <span class="nav-text">Clash Verge Rev</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">Android客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#v2rayNG"><span class="nav-number">4.1.</span> <span class="nav-text">v2rayNG</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clash-Meta"><span class="nav-number">4.2.</span> <span class="nav-text">Clash Meta</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-BBR-%E5%8A%A0%E9%80%9F%EF%BC%88%E9%80%89%E4%BF%AE%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">开启 BBR 加速（选修）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -436,7 +447,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -449,7 +460,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
