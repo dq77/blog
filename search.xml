@@ -795,10 +795,10 @@
 <p>Select Operating System: 选择 Red Hat ，CentOS 是基于红帽的，Select OS Version: 选择 linux 8，如下图所示。</p>
 <span id="more"></span>
 
-<img src="/blog/mysqlCentOS8/1.png" class="" width="600" title="官网页面">
+<img src="/blog/mysqlCentOs8/1.png" class="" width="600" title="官网页面截图">
 
 <p>点击 <code>RPM Bundle</code> 右侧的 Download 按钮，进入下载页。</p>
-<img src="/blog/mysqlCentOS8/2.png" class="" width="600" title="官网下载页">
+<img src="/blog/mysqlCentOs8/2.png" class="" width="600" title="官网下载页截图">
 
 <p><strong>右键点击</strong>下面那行小字： <code>No thanks, just start my download.</code> 复制链接地址。</p>
 <p>SSH进入你的服务器，然后</p>
