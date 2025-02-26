@@ -18,44 +18,44 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"dq77.github.io","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"767766.xyz","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="AI编程助手目前已经悄然走进我们的开发环境，成为我们开发路上的得力伙伴。本文详细记录Cursor与Cline的使用体验，并提出意见与建议。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AI帮你写代码 - 浅谈Cursor与Cline的使用体验">
-<meta property="og:url" content="https://dq77.github.io/blog/aiCode/index.html">
+<meta property="og:url" content="https://767766.xyz/blog/aiCode/index.html">
 <meta property="og:site_name" content="萝卜小站">
 <meta property="og:description" content="AI编程助手目前已经悄然走进我们的开发环境，成为我们开发路上的得力伙伴。本文详细记录Cursor与Cline的使用体验，并提出意见与建议。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/1.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/7.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/8.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/2.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/3.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/4.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/5.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/6.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/9.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/10.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/11.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/12.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/13.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/14.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/15.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/20.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/16.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/17.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/18.png">
-<meta property="og:image" content="https://dq77.github.io/blog/aiCode/19.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/1.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/7.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/8.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/2.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/3.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/4.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/5.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/6.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/9.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/10.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/11.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/12.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/13.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/14.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/15.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/20.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/16.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/17.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/18.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/19.png">
 <meta property="article:published_time" content="2025-02-26T06:51:14.000Z">
 <meta property="article:modified_time" content="2025-02-26T09:10:16.791Z">
 <meta property="article:author" content="掉漆的标题">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dq77.github.io/blog/aiCode/1.png">
+<meta name="twitter:image" content="https://767766.xyz/blog/aiCode/1.png">
 
-<link rel="canonical" href="https://dq77.github.io/blog/aiCode/">
+<link rel="canonical" href="https://767766.xyz/blog/aiCode/">
 
 
 <script id="page-configurations">
@@ -221,7 +221,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dq77.github.io/blog/aiCode/">
+    <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/aiCode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/huluobo.png">
@@ -385,7 +385,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://dq77.github.io/blog/aiCode/" title="AI帮你写代码 - 浅谈Cursor与Cline的使用体验">https://dq77.github.io/blog/aiCode/</a>
+    <a href="https://767766.xyz/blog/aiCode/" title="AI帮你写代码 - 浅谈Cursor与Cline的使用体验">https://767766.xyz/blog/aiCode/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
