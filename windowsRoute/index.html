@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/huluobo.png">
+  <link rel="mask-icon" href="/blog/images/huluobo.png" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//static.767766.xyz/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"767766.xyz","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="公司内网与外网存在隔离，由于业务需要，大家需要频繁手动切换内外网。每天数次这种繁琐操作，不如一劳永逸，让电脑自动识别内外网，做到用户无感切换。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows配置路由实现外网内网同时访问">
+<meta property="og:url" content="https://767766.xyz/blog/windowsRoute/index.html">
+<meta property="og:site_name" content="萝卜小站">
+<meta property="og:description" content="公司内网与外网存在隔离，由于业务需要，大家需要频繁手动切换内外网。每天数次这种繁琐操作，不如一劳永逸，让电脑自动识别内外网，做到用户无感切换。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://767766.xyz/blog/windowsRoute/1.png">
+<meta property="og:image" content="https://767766.xyz/blog/windowsRoute/2.png">
+<meta property="article:published_time" content="2023-02-24T07:21:40.000Z">
+<meta property="article:modified_time" content="2023-05-12T09:05:42.175Z">
+<meta property="article:author" content="掉漆的标题">
+<meta property="article:tag" content="路由">
+<meta property="article:tag" content="网卡">
+<meta property="article:tag" content="内网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://767766.xyz/blog/windowsRoute/1.png">
+
+<link rel="canonical" href="https://767766.xyz/blog/windowsRoute/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>windows配置路由实现外网内网同时访问 | 萝卜小站</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?24e42885e03a4dd98233c3e192e54dd2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">萝卜小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">要做所有萝卜中最胡的一条</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/windowsRoute/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/huluobo.png">
+      <meta itemprop="name" content="掉漆的标题">
+      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          windows配置路由实现外网内网同时访问
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-24 15:21:40" itemprop="dateCreated datePublished" datetime="2023-02-24T15:21:40+08:00">2023-02-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-12 17:05:42" itemprop="dateModified" datetime="2023-05-12T17:05:42+08:00">2023-05-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>公司内网与外网存在隔离，由于业务需要，大家需要频繁手动切换内外网。每天数次这种繁琐操作，不如一劳永逸，让电脑自动识别内外网，做到用户无感切换。</p>
+<span id="more"></span>
+
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>一根内网的网线，一个稳定的外网WiFi。</p>
+<p>你需要电脑同时插网线和连接WiFi，内网走网线，外网走WiFi。</p>
+<h4 id="查看网关"><a href="#查看网关" class="headerlink" title="查看网关"></a>查看网关</h4><p>打开cmd:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig</span><br></pre></td></tr></table></figure>
+
+<p>会返显两个内外网络的IP地址、子网编码、默认网关。</p>
+<p>窗口不要关，另外<strong>用管理员身份运行</strong>一个cmd继续下面的操作。</p>
+<h4 id="查看本地路由设置"><a href="#查看本地路由设置" class="headerlink" title="查看本地路由设置"></a>查看本地路由设置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route print -4</span><br></pre></td></tr></table></figure>
+
+<p>会返显一个IPv4 路由表。</p>
+<p>其中</p>
+<p>接口列表：是你当前电脑可用网卡的列表，一定要分清楚哪个卡走内网，哪个走外网，<strong>记住对应的网卡前面最左侧省略号左边的数字</strong>，也就是网卡的序号。</p>
+<p>活动路由：是可变的，临时的路由配置。重启后失效。</p>
+<p>永久路由：是固定的，永久的路由配置。重启后仍然生效。</p>
+<p>活动路由中应当有网络目标为0.0.0.0的一行（默认）。</p>
+<p>还记得你第一步显示的ipconfig的本地网关吗？那里面有一个内网的网关，还有一个外网的网关。</p>
+<p>这俩网关和网卡的序号记住，后面要用。此处最好截个图，万一改坏了还能改回来。</p>
+<img src="/blog/windowsRoute/1.png" class="" width="658" title="更改之前的路由表 已脱敏">
+
+
+
+<h4 id="配置网络路由"><a href="#配置网络路由" class="headerlink" title="配置网络路由"></a>配置网络路由</h4><p>首先删除掉默认的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route delete 0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<p>然后新增外网的路由（只需选择一行执行）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">route add 0.0.0.0 mask 0.0.0.0 xxxxxx IF xx // 临时路由，重启失效</span><br><span class="line">route add 0.0.0.0 mask 0.0.0.0 xxxxxx IF xx -p // 永久路由，重启不失效</span><br></pre></td></tr></table></figure>
+
+<p>上述的xxxxxx是你在第一步里看到的外网网关，第一行与第二行的区别就在于最后面那个-p，不带-p的设置为临时路由，带-p的是设置为永久路由。<strong>（第一次配置建议先配成临时的）</strong></p>
+<p>上述的xx就是外网的网卡序号，如果外网的网卡有多个序号那就挨个都要加上。</p>
+<p>如果操作失败可以使用管理员方式运行cmd。</p>
+<p>加好之后看一下是否加成功了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route print -4</span><br></pre></td></tr></table></figure>
+
+
+
+<p>接着我们新增内网的路由</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">route add xxx.xxx.xxx.xxx mask 255.255.0.0 xxxxxxxx IF xx</span><br><span class="line">route add xxx.xxx.xxx.xxx mask 255.255.0.0 xxxxxxxx IF xx -p</span><br></pre></td></tr></table></figure>
+
+<p>与上面的外网路由一致，第一行是临时路由，第二行为永久路由。</p>
+<p>这里写的xxx.xxx.xxx.xxx是你需要通过内网访问的服务器ip地址或网段。</p>
+<p>假如你访问的ip网段为192.168.0.0,那么mask后面跟的子网掩码为255.255.0.0。</p>
+<p>如果是想访问某个ip。假如为192.168.1.103，那么子网掩码为255.255.255.255。</p>
+<p>这里写的xxxxxxx仍然是你第一步查询出来的网关，此时应改为内网的网关。</p>
+<p>后面的xx就是内网的网卡序号，别加错卡了。</p>
+<p>现在我们都配置完了，然后查询一下我们配置好的路由</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route print -4</span><br></pre></td></tr></table></figure>
+
+<p>现在会返显你配置好的两行路由配置在里面。</p>
+<img src="/blog/windowsRoute/2.png" class="" width="666" title="更改之后的路由表">
+
+<p>如果你还有其他内网就再继续加路由。</p>
+<p>教程到此结束。这个时候你就可以在访问外网的同时，也能同时访问内网的服务器了。</p>
+<p>如果你改坏了路由，那就把刚才新加的路由删掉，再把原来删掉的初始路由再加回去就好了。</p>
+<h4 id="附录：公司常用内网网段列表"><a href="#附录：公司常用内网网段列表" class="headerlink" title="附录：公司常用内网网段列表"></a>附录：公司常用内网网段列表</h4><p>以下网段掩码均为255.255.0.0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">10.10.0.0</span><br><span class="line">10.30.0.0</span><br><span class="line">10.170.0.0</span><br><span class="line">202.107.0.0</span><br><span class="line">192.168.0.0</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="附录：其他相关知识点"><a href="#附录：其他相关知识点" class="headerlink" title="附录：其他相关知识点"></a>附录：其他相关知识点</h4><p>一般来讲，设置完后即可实现内外网同时使用不同的网关，即无需任何配置开关即可同时访问内外网，做到用户无感知。</p>
+<p>但如果你的WiFi不稳定或者你需要经常切换回到原来的配置，那么你最好编写一个bat批量脚本，来执行开启和关闭双网卡的操作。我试了一下感觉还不错挺方便，<a target="_blank" rel="noopener" href="https://gitee.com/diaoqi/blog-source/raw/master/source/asset/%E5%86%85%E5%A4%96%E7%BD%91%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE.bat">放在这了</a>（需管理员权限运行）。</p>
+<h5 id="跃点数："><a href="#跃点数：" class="headerlink" title="跃点数："></a>跃点数：</h5><p>关于路由表中的跃点数，可以理解为路由跳转的路径点，路径点越少代表路径越短，优先级越高。所以你也可以通过配置跃点数的方式来实现随时调节两个路由的优先级，这样在某些场景下可能会更方便一些，跃点数的调节方法如下。</p>
+<blockquote>
+<ol>
+<li>打开“控制面板 \ 网络和 Internet \ 网络连接”窗口，可以看到当前电脑的所有网络连接及使用的网络适配器（网卡）。</li>
+<li>在你要修改的网络连接上点击右键，选择“属性”打开“以太网属性”窗口。</li>
+<li>在此连接使用的项目列表中选中“Internet协议版本4(TCP&#x2F;IPv4)”，点击右下方的“属性”打开“Internet协议版本4(TCP&#x2F;IPv4)属性”窗口。</li>
+<li>点击右下角的“高级”按钮打开“高级TCP&#x2F;IP设置”窗口。</li>
+<li>取消勾选“自动跃点”，下面的“接口跃点数”即变成可编辑状态，输入20 - 500跃点数。</li>
+</ol>
+</blockquote>
+<h4 id="附录：参考文章"><a href="#附录：参考文章" class="headerlink" title="附录：参考文章"></a>附录：参考文章</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45097417/article/details/123925153">https://blog.csdn.net/weixin_45097417/article/details/123925153</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34049032/article/details/89899487">https://blog.csdn.net/weixin_34049032/article/details/89899487</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>掉漆的标题
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://767766.xyz/blog/windowsRoute/" title="windows配置路由实现外网内网同时访问">https://767766.xyz/blog/windowsRoute/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/blog/tags/%E8%B7%AF%E7%94%B1/" rel="tag"><i class="fa fa-tag"></i> 路由</a>
+              <a href="/blog/tags/%E7%BD%91%E5%8D%A1/" rel="tag"><i class="fa fa-tag"></i> 网卡</a>
+              <a href="/blog/tags/%E5%86%85%E7%BD%91/" rel="tag"><i class="fa fa-tag"></i> 内网</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/webAttack/" rel="prev" title="常见WEB攻击模式鉴赏">
+      <i class="fa fa-chevron-left"></i> 常见WEB攻击模式鉴赏
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/kms/" rel="next" title="Windows10/11 Office激活">
+      Windows10/11 Office激活 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">查看网关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E8%B7%AF%E7%94%B1%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">查看本地路由设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E8%B7%AF%E7%94%B1"><span class="nav-number">4.</span> <span class="nav-text">配置网络路由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%84%E5%BD%95%EF%BC%9A%E5%85%AC%E5%8F%B8%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%91%E7%BD%91%E6%AE%B5%E5%88%97%E8%A1%A8"><span class="nav-number">5.</span> <span class="nav-text">附录：公司常用内网网段列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%84%E5%BD%95%EF%BC%9A%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">附录：其他相关知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B7%83%E7%82%B9%E6%95%B0%EF%BC%9A"><span class="nav-number">6.1.</span> <span class="nav-text">跃点数：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%84%E5%BD%95%EF%BC%9A%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">7.</span> <span class="nav-text">附录：参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="掉漆的标题"
+      src="/blog/images/huluobo.png">
+  <p class="site-author-name" itemprop="name">掉漆的标题</p>
+  <div class="site-description" itemprop="description">这个家伙很懒，什么也没有留下</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dq77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dq77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:diaoqi7@gmail.com" title="E-Mail → mailto:diaoqi7@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/qdtho" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;qdtho" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.767766.xyz/" title="Home → https:&#x2F;&#x2F;www.767766.xyz" rel="noopener" target="_blank"><i class="fa fa-home fa-fw"></i>Home</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">掉漆的标题</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="//static.767766.xyz/jquery.min.js"></script>
+  <script src="//static.767766.xyz/jquery.fancybox.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

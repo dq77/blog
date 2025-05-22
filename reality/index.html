@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/huluobo.png">
+  <link rel="mask-icon" href="/blog/images/huluobo.png" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//static.767766.xyz/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"767766.xyz","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="准备工作我们都知道， 普通的 TLS 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。 那若是发现这个特征，是的，那 TLS 的代理也就不太安全了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS下基于X-UI搭建Vless + Reality协议">
+<meta property="og:url" content="https://767766.xyz/blog/reality/index.html">
+<meta property="og:site_name" content="萝卜小站">
+<meta property="og:description" content="准备工作我们都知道， 普通的 TLS 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。 那若是发现这个特征，是的，那 TLS 的代理也就不太安全了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-06T06:04:59.000Z">
+<meta property="article:modified_time" content="2024-11-01T09:04:19.365Z">
+<meta property="article:author" content="掉漆的标题">
+<meta property="article:tag" content="代理">
+<meta property="article:tag" content="CentOS">
+<meta property="article:tag" content="Vless">
+<meta property="article:tag" content="Reality">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://767766.xyz/blog/reality/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CentOS下基于X-UI搭建Vless + Reality协议 | 萝卜小站</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?24e42885e03a4dd98233c3e192e54dd2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">萝卜小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">要做所有萝卜中最胡的一条</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/reality/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/huluobo.png">
+      <meta itemprop="name" content="掉漆的标题">
+      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS下基于X-UI搭建Vless + Reality协议
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-06 14:04:59" itemprop="dateCreated datePublished" datetime="2024-09-06T14:04:59+08:00">2024-09-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-01 17:04:19" itemprop="dateModified" datetime="2024-11-01T17:04:19+08:00">2024-11-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>我们都知道， 普通的 <code>TLS</code> 代理的一个重要弱点就是各种加密进行套娃，虽然加密包的外观让防火墙无法进行分辨，但是加密套娃无可避免的一个点就在于，它会在每个包都增加一个数据包头，那加密的层数越多，包的头也会越多，这个增量虽然不大，但这个数据可能具有某些统计学的一些特征。</p>
+<p>那若是发现这个特征，是的，那 <code>TLS</code> 的代理也就不太安全了。</p>
+<span id="more"></span>
+
+<p>想当初，<code>RPRX</code> 发布了 <code>XTLS</code>，而 <code>XTLS</code> 其主要原因就是为了减少额外的加密，在 <code>TLS</code> 代理的特征被暴露以后，<code>Xray-core 1.8.0</code> 马上推出了新的流控 —— <code>Vision</code>，至此，当使用 <code>Vision</code> 传输 <code>TLS1.3</code> 的数据时，<code>99%</code> 的数据包，几乎拥有完美的流量特征，因为他是原始数据，没有经过任何的加工。</p>
+<p>然而在此之外，2023年3月，<code>Xray-core 1.8.0</code> 又进一步推出了 <code>Reality</code> 协议来取代传统的 TLS 服务，这样可以消除服务端 TLS 的指纹特征，仍然具有前向保密性，而且证书链也是攻击无效，那这样安全性的确就超越了常规的 TLS，关键可以指向别人的网站，所以无须自己购置域名，布置证书等，而且，不必使用 VPS 的 <code>443</code> 端口，所以，的确是方便和安全了不少。甚至，在我自己长达半年的使用过程中 <code>Reality + Vision</code>，没有出现任何问题，延迟、速率也是很不错。</p>
+<h4 id="服务端搭建"><a href="#服务端搭建" class="headerlink" title="服务端搭建"></a>服务端搭建</h4><p>首先准备一台VPS，配置好CentOS系统。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum update -y </span><br><span class="line">yum install curl wget -y</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>因为原版的 X-UI 已经很久没有更新和维护了，以下的 X-UI 为改版，来自 GitHub ：<a target="_blank" rel="noopener" href="https://github.com/FranzKafkaYu/x-ui/">点击访问</a></p>
+<p>更新频率更高，推荐大家使用。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
+
+<p>根据提示设置好账号密码，端口输入 <code>18650</code> 即可。</p>
+<p>设置完成后，根据VPS的IP地址和端口号，在浏览器中打开页面，输入用户名密码登录。</p>
+<p>若打不开则排查防火墙，使用命令开放18650端口。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=18650/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<p>开放后重启防火墙生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p>登录后点击 <code>切换版本</code> 按钮，将X-ray的内核切换为最新版本。只有v1.8.0以上才支持Reality协议。</p>
+<p>点击左侧面板设置，会提示根路径为空，点击确定就会为我们自动分配一个根路径，可以自己修改成方便记的路径，后续我们登录面板都需要在端口号后面拼上根路径。</p>
+<blockquote>
+<p>若是忘记了根路径，可以在VPS上使用 x-ui 命令查看</p>
+</blockquote>
+<p>点击 <code>入站列表</code> → <code>添加入站</code> ，备注输入 <code>reality</code> ，协议选择 <code>vless</code> ，端口可以不用动。</p>
+<p>点击 <code>添加用户</code> 右边的加号，可以设置到期时间和流量限制，也可以不动保持默认。</p>
+<p>然后打开下面的 <code>reality</code> 开关，打开以后回到上面用户那里有个 <code>flow</code> 选项，我们选择 <code>xtls-rprx-vision</code> ，回到下面填写 <code>目标网站</code> 字段。</p>
+<p>这里会给我们默认输入了一个网址，我们要换掉。最好换成和我们的VPS的IP相近或者更冷门的网址。</p>
+<blockquote>
+<p>目标网站最低标准：国外网站，支持 TLSv1.3 与 H2，域名非跳转用</p>
+<p>加分项：IP 相近（更像，且延迟低），Server Hello 后的握手消息一起加密（如 dl.google.com），有 OCSP Stapling</p>
+<p>配置加分项：禁回国流量，TCP&#x2F;80、UDP&#x2F;443 也转发（REALITY 对外表现即为端口转发，目标 IP 冷门或许更好）</p>
+</blockquote>
+<p>可以使用 <a target="_blank" rel="noopener" href="https://www.ssllabs.com/projects/index.html">这个网站</a>  来寻找 <code>TLS1.3 / X25519 / H2</code> 的指向站点，打开网站后，点击下面的 <code>SSL Server Test</code> ，可以看到有很多 <code>A+</code> 的网站，如果没有的话多刷新几次网页。</p>
+<p>我们随便点击一个 <code>A+</code> 的网站，打开后往下翻，查看 <code>TLS 1.3</code> 字段是否为 <code>Yes</code> ，如果不是的话换一个网站。</p>
+<blockquote>
+<p> 如果打开后是一个IP地址列表，点击其中的IPv4地址即可。</p>
+</blockquote>
+<p>如果网站支持 <code>TLS 1.3</code> ，那我们就回到顶部，复制这个网站的网址，在新页面打开。</p>
+<p>打开F12开发者工具，点击 <code>安全</code> 选项卡。</p>
+<blockquote>
+<p>没有 <code>安全</code> 选项卡的，点击右侧三个点 → 更多工具 → 安全。</p>
+</blockquote>
+<p>查看该网站的安全连接设置，如果看到 <code>TLS 1.3</code> 、 <code>X25519</code> 字样即可。</p>
+<p>还是F12开发者工具，点击 <code>网络</code> 选项卡，然后刷新网页，查看请求的 <code>协议</code> 字段。</p>
+<blockquote>
+<p>没有协议字段的，在表头点击右键可以勾选。</p>
+</blockquote>
+<p>如果看到 <code>h2</code> 字样即可，证明这个网站是符合我们要求的，我们记住这个网站的网址，不带 <code>https://</code> 的。</p>
+<p>回到我们的x-ui面板填写 <code>目标网站</code> 字段，粘贴我们找到的网址，后面的 <code>:443</code> 也要保留，不要删了。</p>
+<p>填写 <code>可选域名</code> 字段，也是粘贴我们找到的网址，此处不带  <code>:443</code> 了。</p>
+<blockquote>
+<p>这俩字段都不要带https:&#x2F;&#x2F;</p>
+</blockquote>
+<p>全部填写完毕，点击右下角 <code>添加</code> 按钮，这个节点就搭好了。</p>
+<p>点击这个节点左侧的 <code>操作</code> 按钮，选择 <code>二维码</code> ，然后点击 <code>复制</code> 按钮即可把节点信息复制到剪切板，先粘贴到别处，客户端会用到。</p>
+<h4 id="Windows客户端配置"><a href="#Windows客户端配置" class="headerlink" title="Windows客户端配置"></a>Windows客户端配置</h4><h5 id="V2rayN"><a href="#V2rayN" class="headerlink" title="V2rayN"></a><a target="_blank" rel="noopener" href="https://github.com/2dust/v2rayN">V2rayN</a></h5><p>在客户端 <code>V2rayN</code> 首页直接 <code>Ctrl + V</code> 就可以把节点信息粘贴过来。</p>
+<p>粘贴过来后，右键点击该节点，点击 <code>编辑服务器</code> 按钮，然后点击下面的 <code>确定</code> 按钮。</p>
+<p>下面选择 <code>自动配置系统代理</code> 就翻好了，浏览器打开谷歌测试一下。</p>
+<h5 id="Clash-Verge-Rev"><a href="#Clash-Verge-Rev" class="headerlink" title="Clash Verge Rev"></a><a target="_blank" rel="noopener" href="https://github.com/clash-verge-rev/clash-verge-rev">Clash Verge Rev</a></h5><p><strong>新手不推荐</strong></p>
+<p>所有clash系的客户端都需要把配置链接转换为订阅地址，具体转换方式此处不赘述，后续我会专门出一个订阅地址转换的教程。新手别折腾，我在这里只贴一下 Vless+Reality 的 clash 规则文件样式，新手或者看不懂的绕过。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proxies:</span><br><span class="line">  - &#123;name: Reality, server: 192.168.111.111, port: 27563, reality-opts: &#123;public-key: 5gOVGnI5gZfSx0dL4iFXP1f1wLjimLGUVoiepOPJe14&#125;, client-fingerprint: chrome, type: vless, uuid: 3d091f5c-b5cd-4931-00c4-f9ff1d21bbe9, tls: true, tfo: false, flow: xtls-rprx-vision, skip-cert-verify: false, servername: www.domain.com, network: tcp&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此处按照你实际的内容替换对应字段即可。支持X-ray和Vless内核的Clash系客户端都可以使用，包括安卓端的Clash Meta。</p>
+<p>此处贴一个 <a target="_blank" rel="noopener" href="https://suburl.v1.mk/">订阅转换的网站</a> ，使用时请注意，这类网站都有节点信息泄露的风险，想好了再用。</p>
+<h4 id="Android客户端配置"><a href="#Android客户端配置" class="headerlink" title="Android客户端配置"></a>Android客户端配置</h4><h5 id="v2rayNG"><a href="#v2rayNG" class="headerlink" title="v2rayNG"></a><a target="_blank" rel="noopener" href="https://github.com/2dust/v2rayNG">v2rayNG</a></h5><p>我没用过，应该也是把节点信息粘贴过来就好了。</p>
+<h5 id="Clash-Meta"><a href="#Clash-Meta" class="headerlink" title="Clash Meta"></a><a target="_blank" rel="noopener" href="https://github.com/MetaCubeX/ClashMetaForAndroid">Clash Meta</a></h5><p>和电脑端一样，不推荐新手使用。</p>
+<p>导入订阅链接即可使用。</p>
+<h4 id="开启-BBR-加速（选修）"><a href="#开启-BBR-加速（选修）" class="headerlink" title="开启 BBR 加速（选修）"></a>开启 BBR 加速（选修）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate &quot;https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh&quot; &amp;&amp; chmod +x tcp.sh &amp;&amp; ./tcp.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>有了 <code>X-ui</code> 面板，可视化的搭建 <code>Reality</code> ，也是极为方便，而且这种协议也是目前来说比较安全的代理方式之一，不需要自己购买的域名，可以有效的去除普通 <code>TLS</code> 代理过程中的一些特征。</p>
+<p>但是互联网没有绝对，无非也就是矛与盾之间的较量，只是在目前来说不容易被封 IP 和端口。</p>
+<p>若是你问我，是不是推荐所有人都来使用它，其实我不推荐，这只是一种方法，若是你自创的一种方式能长期稳定的使用，那么我不推荐你进行更换，就像 <code>XTLS</code> 官方所说：“把所有的鸡蛋都放在一个篮子里是十分危险的，我们鼓励大家善用每个工具的特性，分散特征”。</p>
+<p>比如：<code>NaiveProxy</code>、魔改的 <code>Shadowsocks</code>，<code>MITM</code> 代理 等等。我个人觉得，越少冷门越好。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>掉漆的标题
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://767766.xyz/blog/reality/" title="CentOS下基于X-UI搭建Vless + Reality协议">https://767766.xyz/blog/reality/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/blog/tags/%E4%BB%A3%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 代理</a>
+              <a href="/blog/tags/CentOS/" rel="tag"><i class="fa fa-tag"></i> CentOS</a>
+              <a href="/blog/tags/Vless/" rel="tag"><i class="fa fa-tag"></i> Vless</a>
+              <a href="/blog/tags/Reality/" rel="tag"><i class="fa fa-tag"></i> Reality</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/workerVless/" rel="prev" title="通过Cloudflare Worker、Pages部署免费的VLESS节点">
+      <i class="fa fa-chevron-left"></i> 通过Cloudflare Worker、Pages部署免费的VLESS节点
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/clash/" rel="next" title="Clash系列客户端订阅地址配置教程">
+      Clash系列客户端订阅地址配置教程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%90%AD%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">服务端搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">Windows客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#V2rayN"><span class="nav-number">3.1.</span> <span class="nav-text">V2rayN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clash-Verge-Rev"><span class="nav-number">3.2.</span> <span class="nav-text">Clash Verge Rev</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">Android客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#v2rayNG"><span class="nav-number">4.1.</span> <span class="nav-text">v2rayNG</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clash-Meta"><span class="nav-number">4.2.</span> <span class="nav-text">Clash Meta</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-BBR-%E5%8A%A0%E9%80%9F%EF%BC%88%E9%80%89%E4%BF%AE%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">开启 BBR 加速（选修）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="掉漆的标题"
+      src="/blog/images/huluobo.png">
+  <p class="site-author-name" itemprop="name">掉漆的标题</p>
+  <div class="site-description" itemprop="description">这个家伙很懒，什么也没有留下</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dq77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dq77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:diaoqi7@gmail.com" title="E-Mail → mailto:diaoqi7@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/qdtho" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;qdtho" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.767766.xyz/" title="Home → https:&#x2F;&#x2F;www.767766.xyz" rel="noopener" target="_blank"><i class="fa fa-home fa-fw"></i>Home</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">掉漆的标题</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="//static.767766.xyz/jquery.min.js"></script>
+  <script src="//static.767766.xyz/jquery.fancybox.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

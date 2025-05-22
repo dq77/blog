@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/huluobo.png">
+  <link rel="mask-icon" href="/blog/images/huluobo.png" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//static.767766.xyz/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"767766.xyz","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="下载 MySQL 所需要的安装包 官网下载地址  Select Operating System: 选择 Red Hat ，CentOS 是基于红帽的，Select OS Version: 选择 linux 8，如下图所示。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS8安装MySql8.0教程">
+<meta property="og:url" content="https://767766.xyz/blog/mysqlCentOs8/index.html">
+<meta property="og:site_name" content="萝卜小站">
+<meta property="og:description" content="下载 MySQL 所需要的安装包 官网下载地址  Select Operating System: 选择 Red Hat ，CentOS 是基于红帽的，Select OS Version: 选择 linux 8，如下图所示。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://767766.xyz/blog/mysqlCentOs8/1.png">
+<meta property="og:image" content="https://767766.xyz/blog/mysqlCentOs8/2.png">
+<meta property="og:image" content="https://767766.xyz/blog/mysqlCentOs8/3.png">
+<meta property="og:image" content="https://767766.xyz/blog/mysqlCentOs8/4.png">
+<meta property="og:image" content="https://767766.xyz/blog/mysqlCentOs8/5.png">
+<meta property="og:image" content="https://767766.xyz/blog/mysqlCentOs8/6.png">
+<meta property="article:published_time" content="2021-08-17T11:49:24.000Z">
+<meta property="article:modified_time" content="2024-12-25T02:50:08.149Z">
+<meta property="article:author" content="掉漆的标题">
+<meta property="article:tag" content="CentOS">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://767766.xyz/blog/mysqlCentOs8/1.png">
+
+<link rel="canonical" href="https://767766.xyz/blog/mysqlCentOs8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CentOS8安装MySql8.0教程 | 萝卜小站</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?24e42885e03a4dd98233c3e192e54dd2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">萝卜小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">要做所有萝卜中最胡的一条</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/mysqlCentOs8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/huluobo.png">
+      <meta itemprop="name" content="掉漆的标题">
+      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS8安装MySql8.0教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-17 19:49:24" itemprop="dateCreated datePublished" datetime="2021-08-17T19:49:24+08:00">2021-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-12-25 10:50:08" itemprop="dateModified" datetime="2024-12-25T10:50:08+08:00">2024-12-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="下载-MySQL-所需要的安装包"><a href="#下载-MySQL-所需要的安装包" class="headerlink" title="下载 MySQL 所需要的安装包"></a>下载 MySQL 所需要的安装包</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">官网下载地址</a></p>
+</blockquote>
+<p>Select Operating System: 选择 Red Hat ，CentOS 是基于红帽的，Select OS Version: 选择 linux 8，如下图所示。</p>
+<span id="more"></span>
+
+<img src="/blog/mysqlCentOs8/1.png" class="" width="600" title="官网页面截图">
+
+<p>点击 <code>RPM Bundle</code> 右侧的 Download 按钮，进入下载页。</p>
+<img src="/blog/mysqlCentOs8/2.png" class="" width="600" title="官网下载页截图">
+
+<p><strong>右键点击</strong>下面那行小字： <code>No thanks, just start my download.</code> 复制链接地址。</p>
+<p>SSH进入你的服务器，然后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">mkdir mysql</span><br><span class="line">cd ./mysql</span><br><span class="line">wget https://dev.mysql.co...pm-bundle.tar   # 此处为在官网复制的地址</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>也可以使用左键点击那行小字，直接下载到电脑上，然后再拖到服务器里面去，随你。</p>
+</blockquote>
+<h4 id="卸载原装的mariadb"><a href="#卸载原装的mariadb" class="headerlink" title="卸载原装的mariadb"></a>卸载原装的mariadb</h4><p>首先查看本机是否安装了mariadb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mariadb</span><br></pre></td></tr></table></figure>
+
+<p>如果没有任何返回，证明没安装mariadb，可以跳过此步骤。</p>
+<p>如果返回了 <code>mariadb-libs-5.5.56-2.el7.x86_64</code> 之类的，表示安装了，则需要先卸载。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e mariadb-libs-5.5.56-2.el7.x86_64 --nodeps</span><br></pre></td></tr></table></figure>
+
+<p>卸载后记得再次查看本机是否安装mariadb，直至没有任何返回值。</p>
+<h4 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h4><h5 id="解压安装包"><a href="#解压安装包" class="headerlink" title="解压安装包"></a>解压安装包</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf mysql-8.0.11-1.el7.x86_64.rpm-bundle.tar</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>具体文件名自行更改，别直接复制，如无特别说明，本文后面全都是如此</p>
+<p>如果没有tar则需要先安装tar：yum -y install tar</p>
+</blockquote>
+<p>然后通过 <code>clear</code> 命令清一下屏 <strong>(必要)</strong></p>
+<h5 id="安装common模块"><a href="#安装common模块" class="headerlink" title="安装common模块"></a>安装common模块</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-common-8.0.11-1.el7.x86_64.rpm --nodeps --force</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装libs模块"><a href="#安装libs模块" class="headerlink" title="安装libs模块"></a>安装libs模块</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-libs-8.0.11-1.el7.x86_64.rpm --nodeps --force</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装client模块"><a href="#安装client模块" class="headerlink" title="安装client模块"></a>安装client模块</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-client-8.0.11-1.el7.x86_64.rpm --nodeps --force</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装server模块"><a href="#安装server模块" class="headerlink" title="安装server模块"></a>安装server模块</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-server-8.0.11-1.el7.x86_64.rpm --nodeps --force</span><br></pre></td></tr></table></figure>
+
+<p>至此模块安装完成</p>
+<h5 id="查看安装结果"><a href="#查看安装结果" class="headerlink" title="查看安装结果"></a>查看安装结果</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql</span><br></pre></td></tr></table></figure>
+
+<img src="/blog/mysqlCentOs8/3.png" class="" width="600" title="安装成功">
+
+
+
+<h4 id="数据库初始化"><a href="#数据库初始化" class="headerlink" title="数据库初始化"></a>数据库初始化</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --initialize;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果报错 error while loading shared libraries: libaio.so.1</p>
+<p>则安装libaio：yum install -y libaio</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown mysql:mysql /var/lib/mysql -R;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld.service;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable mysqld;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看数据库的密码"><a href="#查看数据库的密码" class="headerlink" title="查看数据库的密码"></a>查看数据库的密码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysqld.log | grep password</span><br></pre></td></tr></table></figure>
+
+<p><code> ...password is generated for root@localhost: xxxxxx</code></p>
+<p>冒号后面的是密码，复制粘贴记一下。</p>
+<h4 id="登录数据库"><a href="#登录数据库" class="headerlink" title="登录数据库"></a>登录数据库</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<p>粘贴刚才的密码就行，此处粘贴是不会显示密码的。</p>
+<h5 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h5><blockquote>
+<p>此处用 <code>xxxxx</code> 代替你的密码</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED WITH mysql_native_password BY &#x27;xxxxx&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>exit;</code> 命令退出 MySQL，然后通过新密码再次登录。</p>
+<h4 id="远程访问的授权"><a href="#远程访问的授权" class="headerlink" title="远程访问的授权"></a>远程访问的授权</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create user &#x27;root&#x27;@&#x27;%&#x27; identified with mysql_native_password by &#x27;xxxxxxx&#x27;;</span><br><span class="line">grant all privileges on *.* to &#x27;root&#x27;@&#x27;%&#x27; with grant option;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>xxxxxxx</code> 为远程登录密码，为了防止忘记建议和root用户密码保持一致。</p>
+<p>记得去防火墙打开3306端口，至此授权结束，可以用工具连接试试了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=3306/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="远程授权备用方法（选修）"><a href="#远程授权备用方法（选修）" class="headerlink" title="远程授权备用方法（选修）"></a>远程授权备用方法（选修）</h4><p>如果上述授权方法无效，可以使用以下方法，换种方式授权。</p>
+<h5 id="查看当前用户及权限列表"><a href="#查看当前用户及权限列表" class="headerlink" title="查看当前用户及权限列表"></a>查看当前用户及权限列表</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">select User,Host from user;</span><br></pre></td></tr></table></figure>
+
+<img src="/blog/mysqlCentOs8/4.png" class="" width="400" title="权限列表">
+
+<h5 id="更新root用户的Host字段"><a href="#更新root用户的Host字段" class="headerlink" title="更新root用户的Host字段"></a>更新root用户的Host字段</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">update user set host = &#x27;%&#x27; where user = &#x27;root&#x27; and host=&#x27;localhost&#x27;;</span><br><span class="line">select User,Host from user;</span><br></pre></td></tr></table></figure>
+
+<img src="/blog/mysqlCentOs8/5.png" class="" width="600" title="更新后结果">
+
+<h5 id="为root用户授权"><a href="#为root用户授权" class="headerlink" title="为root用户授权"></a>为root用户授权</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL ON *.* TO &#x27;root&#x27;@&#x27;%&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line">select host,user,plugin from user;</span><br></pre></td></tr></table></figure>
+
+<img src="/blog/mysqlCentOs8/6.png" class="" width="500" title="授权结果">
+
+<p>确保root用户的 <code>plugin</code> 字段为 <code>mysql_native_password</code> ，则可以使用老的连接工具连接。</p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42266606/article/details/80879571">CentOS7安装MySQL8.0图文教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mxskymx/article/details/88765072">mysql 8 设置允许远程连接</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a270778319/article/details/90644880">解决远程连接MySQL失败报错的问题</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>掉漆的标题
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://767766.xyz/blog/mysqlCentOs8/" title="CentOS8安装MySql8.0教程">https://767766.xyz/blog/mysqlCentOs8/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/blog/tags/CentOS/" rel="tag"><i class="fa fa-tag"></i> CentOS</a>
+              <a href="/blog/tags/Mysql/" rel="tag"><i class="fa fa-tag"></i> Mysql</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/RSA/" rel="prev" title="RSA算法详解">
+      <i class="fa fa-chevron-left"></i> RSA算法详解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/psSeal/" rel="next" title="使用PhotoShop制作公章">
+      使用PhotoShop制作公章 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-MySQL-%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">下载 MySQL 所需要的安装包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E5%8E%9F%E8%A3%85%E7%9A%84mariadb"><span class="nav-number">2.</span> <span class="nav-text">卸载原装的mariadb</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Mysql"><span class="nav-number">3.</span> <span class="nav-text">安装Mysql</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">3.1.</span> <span class="nav-text">解压安装包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85common%E6%A8%A1%E5%9D%97"><span class="nav-number">3.2.</span> <span class="nav-text">安装common模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85libs%E6%A8%A1%E5%9D%97"><span class="nav-number">3.3.</span> <span class="nav-text">安装libs模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85client%E6%A8%A1%E5%9D%97"><span class="nav-number">3.4.</span> <span class="nav-text">安装client模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85server%E6%A8%A1%E5%9D%97"><span class="nav-number">3.5.</span> <span class="nav-text">安装server模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%89%E8%A3%85%E7%BB%93%E6%9E%9C"><span class="nav-number">3.6.</span> <span class="nav-text">查看安装结果</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">数据库初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AF%86%E7%A0%81"><span class="nav-number">4.1.</span> <span class="nav-text">查看数据库的密码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">登录数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">5.1.</span> <span class="nav-text">修改密码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE%E7%9A%84%E6%8E%88%E6%9D%83"><span class="nav-number">6.</span> <span class="nav-text">远程访问的授权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%8E%88%E6%9D%83%E5%A4%87%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88%E9%80%89%E4%BF%AE%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">远程授权备用方法（选修）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E5%8F%8A%E6%9D%83%E9%99%90%E5%88%97%E8%A1%A8"><span class="nav-number">7.1.</span> <span class="nav-text">查看当前用户及权限列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0root%E7%94%A8%E6%88%B7%E7%9A%84Host%E5%AD%97%E6%AE%B5"><span class="nav-number">7.2.</span> <span class="nav-text">更新root用户的Host字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BAroot%E7%94%A8%E6%88%B7%E6%8E%88%E6%9D%83"><span class="nav-number">7.3.</span> <span class="nav-text">为root用户授权</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="掉漆的标题"
+      src="/blog/images/huluobo.png">
+  <p class="site-author-name" itemprop="name">掉漆的标题</p>
+  <div class="site-description" itemprop="description">这个家伙很懒，什么也没有留下</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dq77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dq77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:diaoqi7@gmail.com" title="E-Mail → mailto:diaoqi7@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/qdtho" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;qdtho" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.767766.xyz/" title="Home → https:&#x2F;&#x2F;www.767766.xyz" rel="noopener" target="_blank"><i class="fa fa-home fa-fw"></i>Home</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">掉漆的标题</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="//static.767766.xyz/jquery.min.js"></script>
+  <script src="//static.767766.xyz/jquery.fancybox.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

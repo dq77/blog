@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/huluobo.png">
+  <link rel="mask-icon" href="/blog/images/huluobo.png" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//static.767766.xyz/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"767766.xyz","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="AI编程助手目前已经悄然走进我们的开发环境，成为我们开发路上的得力伙伴。本文详细记录Cursor与Cline的使用体验，并提出意见与建议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI帮你写代码 - 浅谈Cursor与Cline的使用体验">
+<meta property="og:url" content="https://767766.xyz/blog/aiCode/index.html">
+<meta property="og:site_name" content="萝卜小站">
+<meta property="og:description" content="AI编程助手目前已经悄然走进我们的开发环境，成为我们开发路上的得力伙伴。本文详细记录Cursor与Cline的使用体验，并提出意见与建议。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/1.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/7.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/8.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/2.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/3.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/4.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/5.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/6.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/9.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/10.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/11.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/12.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/13.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/14.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/15.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/21.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/20.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/16.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/17.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/22.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/18.png">
+<meta property="og:image" content="https://767766.xyz/blog/aiCode/19.png">
+<meta property="article:published_time" content="2025-02-26T06:51:14.000Z">
+<meta property="article:modified_time" content="2025-02-27T02:21:07.244Z">
+<meta property="article:author" content="掉漆的标题">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://767766.xyz/blog/aiCode/1.png">
+
+<link rel="canonical" href="https://767766.xyz/blog/aiCode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>AI帮你写代码 - 浅谈Cursor与Cline的使用体验 | 萝卜小站</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?24e42885e03a4dd98233c3e192e54dd2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">萝卜小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">要做所有萝卜中最胡的一条</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/aiCode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/huluobo.png">
+      <meta itemprop="name" content="掉漆的标题">
+      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI帮你写代码 - 浅谈Cursor与Cline的使用体验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-02-26 14:51:14" itemprop="dateCreated datePublished" datetime="2025-02-26T14:51:14+08:00">2025-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-27 10:21:07" itemprop="dateModified" datetime="2025-02-27T10:21:07+08:00">2025-02-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>AI编程助手目前已经悄然走进我们的开发环境，成为我们开发路上的得力伙伴。本文详细记录Cursor与Cline的使用体验，并提出意见与建议。</p>
+<span id="more"></span>
+
+
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于 <code>vscode + DeepSeek</code> 插件目前在开发环境下无法与代码进行交互，故本文不再提及此种方式。</p>
+<p>下文只对比 <code>Cursor</code> 与 <code>Cline + DeepSeek</code> 。</p>
+<h2 id="通用功能"><a href="#通用功能" class="headerlink" title="通用功能"></a>通用功能</h2><p>在 <code>Cursor</code> 与 <code>Cline + DeepSeek</code> 中，有一些双方都支持的基础功能。</p>
+<h3 id="代码自动补全"><a href="#代码自动补全" class="headerlink" title="代码自动补全"></a>代码自动补全</h3><p>目前市面上的  <code>Tab</code> 键联想功能大差不差。都已经达到了能用的级别。</p>
+<blockquote>
+<p>Tab代码联想功能好用程度排名（数据来源于我的个人经验总结，不一定对）</p>
+<p>Github copilot &gt; 通义灵码 &gt; Cline DeepSeek &gt; MarsCode</p>
+</blockquote>
+<p>Cursor 我猜可能是由于对国内代码了解的不够多，很多代码联想的并没有通义灵码准确。</p>
+<img src="/blog/aiCode/1.png" class="" width="600" title="通义灵码代码联想">
+
+
+
+<h3 id="代码识别及修改"><a href="#代码识别及修改" class="headerlink" title="代码识别及修改"></a>代码识别及修改</h3><p>回到主题，本文主要对比Cursor与Cline。这两款产品的上下文均已经支持到了项目级别，只要是项目内，都能处理。</p>
+<p>这里以添加一个字段为要求，分别让Cursor与Cline执行，结果如下。</p>
+<img src="/blog/aiCode/7.png" class="" width="600" title="Cline+DeepSeek添加新字段">
+
+<p>可以看到并没有遗漏需要改动的地方，所有需要加字段的地方都处理了，加字段后的页面如下</p>
+<img src="/blog/aiCode/8.png" class="" width="600" title="添加通称名后的页面">
+
+<p>目前Cursor与Cline均能做到根据提示语修改局部代码，且准确度很高。</p>
+<h3 id="代码文件生成"><a href="#代码文件生成" class="headerlink" title="代码文件生成"></a>代码文件生成</h3><p>这里以创建一个新页面为提示词，分别让Cursor与Cline执行，结果如下。</p>
+<img src="/blog/aiCode/2.png" class="" width="600" title="Cline+DeepSeek创建的代码文件">
+
+<p>Cline+DeepSeek的思路非常清晰，他先查看了项目里其他列表页的写发与层级关系以及页面样式，然后仿造写了订单列表页，同样的对应API层与路由层也都写了，页面如下。</p>
+<img src="/blog/aiCode/3.png" class="" width="600" title="Cline+DeepSeek订单列表页">
+
+<p>可以看到与其他页面布局基本一致。但是少了表头排序功能。</p>
+<blockquote>
+<p>虽然我没提这个事儿，<strong>但这功能其他页面都有</strong>。</p>
+</blockquote>
+<p>而在Cursor这边，同样的提示词，做的却有一些不一样。</p>
+<img src="/blog/aiCode/4.png" class="" width="600" title="Cursor创建的代码文件">
+
+<p>Cursor并没有写api层，在我的二次提示下才补全了这一部分。</p>
+<p>另外，Cursor生成的路由也有问题：</p>
+<img src="/blog/aiCode/5.png" class="" width="600" title="Cursor生成的路由">
+
+<p>Cursor在这里并没有按照其他页面保持一致的公共路径，而且 <code>meta</code> 字段也少了一些属性。</p>
+<p>将这些问题手动改正后，页面如下。</p>
+<img src="/blog/aiCode/6.png" class="" width="600" title="Cursor订单列表页">
+
+<p>这里有项目排序功能，经过测试是好用的。</p>
+<h3 id="开放式编码"><a href="#开放式编码" class="headerlink" title="开放式编码"></a>开放式编码</h3><p>我在这里并没有做任何要求，只是让他们随意发挥，做一个简易计算器出来。</p>
+<img src="/blog/aiCode/9.png" class="" width="600" title="Cline+DeepSeek计算器代码">
+
+<p>可以看到DeepSeek是有自己的考量，它看了一圈整个项目，决定把计算器放在组件目录下。</p>
+<p>我并没有对计算器做任何功能和任何样式上的描述，最终结果如下。</p>
+<img src="/blog/aiCode/10.png" class="" width="400" title="Cline+DeepSeek计算器页面">
+
+<p>经过简单测试，还是有许多BUG的，但确实已经达到了能用的地步，基本四则运算都能算对。</p>
+<p>另外一边，同样的，Cursor生成的代码如下：</p>
+<img src="/blog/aiCode/11.png" class="" width="600" title="Cursor计算器代码">
+
+<p>Cursor也把代码放在了组件目录下，同时他还顺手帮我做了组件引入操作，虽然我并没有要求他这么做。</p>
+<p>下面是Cursor生成的计算器，同样的，我并没有对计算器做任何功能和任何样式上的描述。</p>
+<img src="/blog/aiCode/12.png" class="" width="400" title="Cursor计算器页面">
+
+<blockquote>
+<p>我们至今仍未知道Cursor把数字顺序打乱的目的是什么。</p>
+</blockquote>
+<p>和DeepSeek一样，已经达到了能用的地步，基本四则运算都能算对。</p>
+<h2 id="语言支持情况"><a href="#语言支持情况" class="headerlink" title="语言支持情况"></a>语言支持情况</h2><p>这里使用 <code>python</code> 项目进行测试，在一个“数字图像识别”神经网络训练集当中，使用代码自动补全，结果如下：</p>
+<img src="/blog/aiCode/13.png" class="" width="600" title="Cline+DeepSeek模型拟合代码补全">
+
+<p>这里可以看到，DeepSeek默认将神经网络分为三层，并自动创建了激活函数，与实际开发基本一致。</p>
+<p>而在Cursor这边则简化了一些操作：</p>
+<img src="/blog/aiCode/14.png" class="" width="600" title="Cursor简化了代码逻辑">
+
+<p>Cursor并没有自作主张给神经网络分层，只是将输入维度从512映射到10，生成的代码本来就少，还要删去一半没用的。可见它并不理解这个代码到底要干什么。</p>
+<p>接下来看 <code>SQL</code> ，我让它生成查询的SQL语句。这里<code>Cursor</code> 与 <code>Cline + DeepSeek</code> 均能做到准确定位，并编写符合业务逻辑的SQL。</p>
+<img src="/blog/aiCode/15.png" class="" width="600" title="生成SQL查询语句">
+
+
+
+<h2 id="模型支持情况"><a href="#模型支持情况" class="headerlink" title="模型支持情况"></a>模型支持情况</h2><p>理论上来讲，如果使用相同的模型，<code>Cursor</code> 与 <code>Cline</code> 是没有任何区别的。目前 <code>Cusor</code> 支持的模型如下：</p>
+<img src="/blog/aiCode/21.png" class="" width="600" title="Cursor模型与价格">
+
+<p>但 <code>Cursor</code> 相比于 <code>Cline</code> 多了许多 <a target="_blank" rel="noopener" href="https://docs.cursor.com/agent">魔改功能</a> 与 <a target="_blank" rel="noopener" href="https://docs.cursor.com/kbd">快捷键</a> ，对于开发人员更加友好。</p>
+<p><code>Cline</code> 作为开源插件，市面上的替代品较多，理论上支持任何兼容 <code>openAI</code> 的API调用模型。开源社区氛围较为活跃。</p>
+<h2 id="其他注意事项"><a href="#其他注意事项" class="headerlink" title="其他注意事项"></a>其他注意事项</h2><ol>
+<li><p>众所周知，由于不同的开发语言、不同的开发者都会选择不同的代码编辑器，而目前 <code>Cursor</code> 与 <code>Cline + DeepSeek</code> 都是基于 <code>VSCode</code>  魔改的版本，其与前端开发使用的 <code>javascript/typescript</code> 的结合具有天然优势。这里给微软点个赞。</p>
+<p>而目前大多数 <code>JAVA</code> 开发者使用的还是 <code>jetbrains</code> 公司出品的 <code>IntelliJ IDEA</code> ，同时使用 <code>Cursor</code> 的话，来回切换就会非常麻烦，这也是目前 <code>Cursor</code> 的一个缺点。</p>
+<p>同样的 <code>pycharm</code> 与 <code>微信IDE</code> 也都有同样的问题。</p>
+</li>
+<li><p>目前 <code>Cursor</code> 的使用稳定性还是依赖网络环境的波动，在168骨干网环境下，国内主要使用Anycast提供的 <code>IPLC</code> 进行网络中继，这也是一个风险点。</p>
+<img src="/blog/aiCode/20.png" class="" width="600" title="全球各地区Cursor网络情况">
+
+<p>而另一方面，DeepSeek由于过于火爆导致服务器无响应也是常有的事，这也是一个风险点。</p>
+<img src="/blog/aiCode/16.png" class="" width="600" title="DeepSeek又崩了">
+</li>
+<li><p>接下来谈到价格，目前很多基础的AI助手都是免费的。但他们没有高级功能，譬如代码文件生成、开放式编码等。</p>
+<p>Cursor太贵了，毕竟按美元算钱。</p>
+<img src="/blog/aiCode/17.png" class="" width="600" title="Cursor价格（美元）">
+
+<p>相比之下，国产的 <code>通义灵码</code> 都要便宜不少。</p>
+<img src="/blog/aiCode/22.png" class="" width="600" title="通义灵码价格（人民币）">
+
+<p>而 <code>Cline</code> 是免费的，<code>DeepSeek</code> 价格如下：</p>
+<img src="/blog/aiCode/18.png" class="" width="600" title="DeepSeek价格（人民币）">
+
+<p>也许你对DeepSeek的定价看不太懂，我这里给你直观的解释一下：</p>
+<p><strong>本篇文章涉及的所有DeepSeek操作，总价格约为0.3元人民币。</strong></p>
+<img src="/blog/aiCode/19.png" class="" width="400" title="Token使用情况">
+
+<blockquote>
+<p><del>谁来给我报销一下</del></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于WEB开发，建议使用 <code>MarsCode</code> + <code>DeepSeek</code> 的方式。或者单纯使用 <code>Cursor</code> ，具体看侧重点与个人习惯以及需求。两者都差不多。</p>
+<p>对于JAVA开发，建议使用 <code>IntelliJ IDEA</code> +  <code>通义灵码</code> 的方式，更加符合国内开发习惯。</p>
+<p>对于Python开发，建议使用 <code>Continue</code> + <code>DeepSeek</code> 的方式，或者与WEB开发相同。</p>
+<p>对于C++开发，建议使用 <code>Visual Studio</code>  +  <code>通义灵码</code> 的方式，目前这方面可用的产品较少。</p>
+<p>对于Android开发，建议使用 <code>CodeGpt</code> + <code>DeepSeek</code> 的方式，这种方式完美适配 <code>Android Studio</code> 。</p>
+<p>目前免费的AI助手已经能满足大多数辅助开发的功能，但功能并不强大。</p>
+<p>强大的功能都收费，不过效果还不错，能节约一小部分开发时间。</p>
+<p>我建议免费的和收费的都一起用，各取所长。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>掉漆的标题
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://767766.xyz/blog/aiCode/" title="AI帮你写代码 - 浅谈Cursor与Cline的使用体验">https://767766.xyz/blog/aiCode/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/blog/tags/AI/" rel="tag"><i class="fa fa-tag"></i> AI</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/japanEco/" rel="prev" title="如何应对失去的三十年——日本平成时代经济研究概论">
+      <i class="fa fa-chevron-left"></i> 如何应对失去的三十年——日本平成时代经济研究概论
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">通用功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8"><span class="nav-number">2.1.</span> <span class="nav-text">代码自动补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%86%E5%88%AB%E5%8F%8A%E4%BF%AE%E6%94%B9"><span class="nav-number">2.2.</span> <span class="nav-text">代码识别及修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">2.3.</span> <span class="nav-text">代码文件生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%BC%8F%E7%BC%96%E7%A0%81"><span class="nav-number">2.4.</span> <span class="nav-text">开放式编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81%E6%83%85%E5%86%B5"><span class="nav-number">3.</span> <span class="nav-text">语言支持情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%94%AF%E6%8C%81%E6%83%85%E5%86%B5"><span class="nav-number">4.</span> <span class="nav-text">模型支持情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">其他注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="掉漆的标题"
+      src="/blog/images/huluobo.png">
+  <p class="site-author-name" itemprop="name">掉漆的标题</p>
+  <div class="site-description" itemprop="description">这个家伙很懒，什么也没有留下</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dq77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dq77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:diaoqi7@gmail.com" title="E-Mail → mailto:diaoqi7@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/qdtho" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;qdtho" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.767766.xyz/" title="Home → https:&#x2F;&#x2F;www.767766.xyz" rel="noopener" target="_blank"><i class="fa fa-home fa-fw"></i>Home</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">掉漆的标题</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="//static.767766.xyz/jquery.min.js"></script>
+  <script src="//static.767766.xyz/jquery.fancybox.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

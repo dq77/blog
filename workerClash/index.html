@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/huluobo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/huluobo.png">
+  <link rel="mask-icon" href="/blog/images/huluobo.png" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//static.767766.xyz/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"767766.xyz","root":"/blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="我们可以在 Cloudflare 上面通过部署 Worker ，来模拟一个Clash订阅服务器。支持模拟流量限制和时间限制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过Cloudflare Worker部署Clash订阅文件">
+<meta property="og:url" content="https://767766.xyz/blog/workerClash/index.html">
+<meta property="og:site_name" content="萝卜小站">
+<meta property="og:description" content="我们可以在 Cloudflare 上面通过部署 Worker ，来模拟一个Clash订阅服务器。支持模拟流量限制和时间限制。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-06T02:21:03.000Z">
+<meta property="article:modified_time" content="2024-11-05T05:24:50.402Z">
+<meta property="article:author" content="掉漆的标题">
+<meta property="article:tag" content="CloudFlare">
+<meta property="article:tag" content="Worker">
+<meta property="article:tag" content="clash">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://767766.xyz/blog/workerClash/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>通过Cloudflare Worker部署Clash订阅文件 | 萝卜小站</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?24e42885e03a4dd98233c3e192e54dd2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">萝卜小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">要做所有萝卜中最胡的一条</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/workerClash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/huluobo.png">
+      <meta itemprop="name" content="掉漆的标题">
+      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          通过Cloudflare Worker部署Clash订阅文件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-06 10:21:03" itemprop="dateCreated datePublished" datetime="2024-03-06T10:21:03+08:00">2024-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-05 13:24:50" itemprop="dateModified" datetime="2024-11-05T13:24:50+08:00">2024-11-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我们可以在 Cloudflare 上面通过部署 Worker ，来模拟一个Clash订阅服务器。支持模拟流量限制和时间限制。</p>
+<span id="more"></span>
+
+<h4 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h4><p>首先要自己搭建好节点服务器，具体教程可以参考：<a href="https://767766.xyz/blog/troojan/">Trojan搭建具体流程</a> 或者 <a href="https://767766.xyz/blog/reality/">CentOS下基于X-UI搭建Vless + Reality协议</a> 。</p>
+<p>搭建成功后，并且节点使用无问题，再继续本教程。</p>
+<p>在 Cloudflare 上需要配置好域名解析</p>
+<blockquote>
+<p>本教程默认你已经熟悉Clash的订阅文件规则，且熟悉javascript语言。</p>
+<p>不熟悉的可以参考 <a href="https://767766.xyz/blog/clash/">Clash系列客户端订阅地址配置教程</a> ，完全不会的建议别折腾本教程。</p>
+</blockquote>
+<p>无论是搭建 Trojan 节点还是搭建 Vless 节点亦或是其他节点，对于Clash来说不过是 proxy 不同而已，在部署的时候按需更改即可。</p>
+<h4 id="Worker-部署"><a href="#Worker-部署" class="headerlink" title="Worker 部署"></a>Worker 部署</h4><p>在Cloudflare首页，点击左侧 <code>Workers 和 Pages</code>，点击创建按钮，点击 <code>创建Worker</code> 按钮。</p>
+<p>标题输入 <code>clash</code> 即可，内容不用动，然后直接点击右下角的 <code>部署</code> ，稍等几秒进行全球部署。</p>
+<p>成功后点击右上角的 <code>编辑代码</code> 按钮，进入编辑界面，先清空左侧代码，然后粘贴如下代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const vlessConfig = `</span><br><span class="line"># 白名单模式，国内直连命中规则走直连，其他全部走代理</span><br><span class="line"># 规则集来自https://github.com/Loyalsoldier/clash-rules</span><br><span class="line"># 规则文件使用https://ghp.ci。加速访问</span><br><span class="line">allow-lan: true</span><br><span class="line">mode: Rule</span><br><span class="line">log-level: info</span><br><span class="line">proxies:</span><br><span class="line">  - &#123;name: 美国24, server: 172.245.156.24, port: 27818, reality-opts: &#123;public-key: g1f1wLjim5gOVGnI5LGUV0dL4iFXPoiepOPZfSxJe14&#125;, client-fingerprint: chrome, type: vless, uuid: 391fd05c-00c4-4931-b5cd-d21bf9ff1be9, tls: true, tfo: false, flow: xtls-rprx-vision, skip-cert-verify: false, servername: www.faketeams.com, network: tcp&#125;</span><br><span class="line">proxy-groups:</span><br><span class="line">  - name: 外网</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - 美国24</span><br><span class="line">      - DIRECT</span><br><span class="line">  - name: 直连</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - DIRECT</span><br><span class="line">      - 美国24</span><br><span class="line">  - name: 广告</span><br><span class="line">    type: select</span><br><span class="line">    proxies:</span><br><span class="line">      - REJECT</span><br><span class="line">      - DIRECT</span><br><span class="line">rule-providers:</span><br><span class="line">  reject:</span><br><span class="line">    type: http</span><br><span class="line">    behavior: domain</span><br><span class="line">    url: &quot;https://ghp.ci/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt&quot;</span><br><span class="line">    path: ./ruleset/reject.yaml</span><br><span class="line">    interval: 86400</span><br><span class="line"></span><br><span class="line">  direct:</span><br><span class="line">    type: http</span><br><span class="line">    behavior: domain</span><br><span class="line">    url: &quot;https://ghp.ci/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt&quot;</span><br><span class="line">    path: ./ruleset/direct.yaml</span><br><span class="line">    interval: 86400</span><br><span class="line"></span><br><span class="line">  icloud:</span><br><span class="line">    type: http</span><br><span class="line">    behavior: domain</span><br><span class="line">    url: &quot;https://ghp.ci/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt&quot;</span><br><span class="line">    path: ./ruleset/icloud.yaml</span><br><span class="line">    interval: 86400</span><br><span class="line"></span><br><span class="line">  apple:</span><br><span class="line">    type: http</span><br><span class="line">    behavior: domain</span><br><span class="line">    url: &quot;https://ghp.ci/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt&quot;</span><br><span class="line">    path: ./ruleset/apple.yaml</span><br><span class="line">    interval: 86400</span><br><span class="line"></span><br><span class="line">  private:</span><br><span class="line">    type: http</span><br><span class="line">    behavior: domain</span><br><span class="line">    url: &quot;https://ghp.ci/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt&quot;</span><br><span class="line">    path: ./ruleset/private.yaml</span><br><span class="line">    interval: 86400</span><br><span class="line"></span><br><span class="line">  applications:</span><br><span class="line">    type: http</span><br><span class="line">    behavior: classical</span><br><span class="line">    url: &quot;https://ghp.ci/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt&quot;</span><br><span class="line">    path: ./ruleset/applications.yaml</span><br><span class="line">    interval: 86400</span><br><span class="line"></span><br><span class="line">  lancidr:</span><br><span class="line">    type: http</span><br><span class="line">    behavior: ipcidr</span><br><span class="line">    url: &quot;https://ghp.ci/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt&quot;</span><br><span class="line">    path: ./ruleset/lancidr.yaml</span><br><span class="line">    interval: 86400</span><br><span class="line"></span><br><span class="line">  cncidr:</span><br><span class="line">    type: http</span><br><span class="line">    behavior: ipcidr</span><br><span class="line">    url: &quot;https://ghp.ci/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt&quot;</span><br><span class="line">    path: ./ruleset/cncidr.yaml</span><br><span class="line">    interval: 86400</span><br><span class="line">rules:</span><br><span class="line">  - RULE-SET,reject,广告</span><br><span class="line">  - RULE-SET,direct,直连</span><br><span class="line">  - RULE-SET,icloud,直连</span><br><span class="line">  - RULE-SET,apple,直连</span><br><span class="line">  - RULE-SET,private,直连</span><br><span class="line">  - RULE-SET,applications,直连</span><br><span class="line">  - RULE-SET,lancidr,直连</span><br><span class="line">  - RULE-SET,cncidr,直连</span><br><span class="line">  - GEOIP,LAN,直连</span><br><span class="line">  - GEOIP,CN,直连</span><br><span class="line">  - MATCH,外网</span><br><span class="line">`;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line"></span><br><span class="line">  async fetch(request, env, ctx) &#123;</span><br><span class="line">    const url = new URL(request.url);</span><br><span class="line">    const UA = request.headers.get(&#x27;User-Agent&#x27;) || &#x27;null&#x27;;</span><br><span class="line">    const userAgent = UA.toLowerCase();</span><br><span class="line">    switch (url.pathname.toLowerCase()) &#123;</span><br><span class="line">      case &#x27;/&#x27;:</span><br><span class="line">        return new Response(&#x27;&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;body&gt;&lt;h1&gt;别尝试访问这里，这里没有你想要的。&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#x27;, &#123;</span><br><span class="line">          headers: &#123; &quot;content-type&quot;: &quot;text/html;charset=UTF-8&quot; &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      case `/$&#123;env.UUID&#125;`:</span><br><span class="line">        // if (userAgent &amp;&amp; userAgent.includes(&#x27;mozilla&#x27;))&#123;</span><br><span class="line">        //   return new Response(`请将地址填入客户端中使用，不会用来问我。\nhttps://diaoqi.767766.xyz/$&#123;env.UUID&#125;`);</span><br><span class="line">        // &#125;</span><br><span class="line">        const today = new Date();</span><br><span class="line">        const end = new Date(today.getFullYear(), 11, 31)</span><br><span class="line">        const expire = Math.floor(end.getTime() / 1000) // 今年最后一天时间戳（到秒）</span><br><span class="line">        let FileName = &#x27;Diaoqi Cloud&#x27;;</span><br><span class="line"></span><br><span class="line">        const haveDays = (end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24) // 还剩多少天</span><br><span class="line">        const UD = Math.floor((365 - haveDays) * 1073741824 / 2); // 一天算1G</span><br><span class="line">        let total = 400 * 1073741824; // GB</span><br><span class="line">        </span><br><span class="line">        return new Response(`$&#123;vlessConfig&#125;`, &#123;</span><br><span class="line">          status: 200,</span><br><span class="line">          headers: &#123;</span><br><span class="line">            &quot;Content-Disposition&quot;: `attachment; filename=$&#123;FileName&#125;`,</span><br><span class="line">            &quot;Content-Type&quot;: &quot;text/plain;charset=utf-8&quot;,</span><br><span class="line">            &quot;Profile-Update-Interval&quot;: &quot;6&quot;,</span><br><span class="line">            &quot;Content-Encoding&quot;: &quot;gzip&quot;,</span><br><span class="line">            &quot;Subscription-Userinfo&quot;: `upload=$&#123;UD&#125;; download=$&#123;UD&#125;; total=$&#123;total&#125;; expire=$&#123;expire&#125;`,</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      default:</span><br><span class="line">        return new Response(&#x27;Not found&#x27;, &#123; status: 404 &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>脚本先定义了一个叫 vlessConfig 的长字符串，后面js代码先不看，我们先看这个长字符串。</p>
+<p>这个字符串就是我们的 Worker服务器 将要返回给客户端的订阅内容。</p>
+<p>这里需要注意 proxies 字段，<strong>一定要替换成你自己的节点信息</strong>，且其中的 name 字段要和 proxy-groups 中的名字保持一致。更改好后点击右上角 部署 按钮，稍等几秒后，点击左上角返回 Worker主页。</p>
+<h4 id="代码讲解"><a href="#代码讲解" class="headerlink" title="代码讲解"></a>代码讲解</h4><p>本小节就讲javascript代码了，不感兴趣的完全可以跳过本小节，继续阅读 配置Worker 小节即可，不影响部署。</p>
+<p>在定义了长字符串 vlessConfig 后，我们使用 fetch 函数来处理客户端发起的请求。只有在请求URL中含有 UUID 时我们才返回订阅信息。如果请求者不是Clash客户端而是浏览器之类的话，我们也可以拦截返回提示信息，当然也可以不拦截，直接返回明文订阅信息，此处注释掉的内容就是拦截浏览器请求，可视情况打开注释。</p>
+<p>接下来的代码就是根据本年度剩余天数来模拟剩余流量了，定义了总流量为400GB，到期日为本年最后一天。当然这些代码只是模拟了功能，并没有真正实现，说白了就是看一乐。如果想实现到期后不提供订阅其实也不难，但本文不做讲解。</p>
+<p>最后把所有的信息通过请求头中的 Content-Disposition 和 Subscription-Userinfo 字段返回给客户端。</p>
+<p>代码基本就这些了，记得保存，回到 Worker主页 。</p>
+<h4 id="配置-Worker"><a href="#配置-Worker" class="headerlink" title="配置 Worker"></a>配置 Worker</h4><p>在 Worker主页 点击上面的 设置 Tab页，在 域和路由 右边点击 添加 → 自定义域 ，输入一个二级域名即可，Cloudflare会自动识别并添加好DNS解析。</p>
+<p>点击 变量和机密 右侧的 添加 按钮，类型为 Text 变量名称输入 UUID ，值输入 tg 。</p>
+<p>最后点击部署即可。</p>
+<p>等待一分钟后，我们可以浏览器访问 <code>https://域名/tg</code> ，来下载我们的订阅文件。</p>
+<p>若下载成功，则节点部署完毕，我们导入上面的链接到客户端软件，进行节点的订阅。</p>
+<p>各个客户端软件的订阅流程不同，请自行按照各软件的方式配置订阅链接。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>掉漆的标题
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://767766.xyz/blog/workerClash/" title="通过Cloudflare Worker部署Clash订阅文件">https://767766.xyz/blog/workerClash/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/blog/tags/CloudFlare/" rel="tag"><i class="fa fa-tag"></i> CloudFlare</a>
+              <a href="/blog/tags/Worker/" rel="tag"><i class="fa fa-tag"></i> Worker</a>
+              <a href="/blog/tags/clash/" rel="tag"><i class="fa fa-tag"></i> clash</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/ai2/" rel="prev" title="人工智能入门（二）神经网络">
+      <i class="fa fa-chevron-left"></i> 人工智能入门（二）神经网络
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/vscodeExtent/" rel="next" title="vscode插件列表">
+      vscode插件列表 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Worker-%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">Worker 部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">代码讲解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-Worker"><span class="nav-number">4.</span> <span class="nav-text">配置 Worker</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="掉漆的标题"
+      src="/blog/images/huluobo.png">
+  <p class="site-author-name" itemprop="name">掉漆的标题</p>
+  <div class="site-description" itemprop="description">这个家伙很懒，什么也没有留下</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dq77" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dq77" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:diaoqi7@gmail.com" title="E-Mail → mailto:diaoqi7@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/qdtho" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;qdtho" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.767766.xyz/" title="Home → https:&#x2F;&#x2F;www.767766.xyz" rel="noopener" target="_blank"><i class="fa fa-home fa-fw"></i>Home</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">掉漆的标题</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="//static.767766.xyz/jquery.min.js"></script>
+  <script src="//static.767766.xyz/jquery.fancybox.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
