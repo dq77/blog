@@ -196,6 +196,127 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/worker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/huluobo.png">
+      <meta itemprop="name" content="掉漆的标题">
+      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="萝卜小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/worker/" class="post-title-link" itemprop="url">cloudflare 单Workers + D1实现全栈功能网站搭建流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-06-22 16:05:53 / 修改时间：16:40:51" itemprop="dateCreated datePublished" datetime="2026-06-22T16:05:53+08:00">2026-06-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>众所周知，cloudflare workers 是一个基于 cloudflare 平台的服务器less函数，它可以在 cloudflare 平台上运行，实现无服务器的架构。</p>
+<p>而 D1 是 cloudflare 平台提供的一个无服务器数据库。cloudflare workers 与 D1 可以一起使用，实现无服务器的后端架构。</p>
+<p>以前，Worker 只能作为单独后端服务，或者单独作为前端服务。不能同时作为后端服务与前端服务。</p>
+<p>现在，Worker 更新了新的功能，详情见<a target="_blank" rel="noopener" href="https://blog.cloudflare.com/zh-cn/full-stack-development-on-cloudflare-workers/">这里</a>。现在可以前后端放在同一个Worker项目中了。</p>
+<p>再加上静态资源的支持，就可以实现全栈功能网站的搭建。真正实现一个Worker全栈功能网站。</p>
+<h2 id="创建方式"><a href="#创建方式" class="headerlink" title="创建方式"></a>创建方式</h2><p>先创建普通vue项目并运行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm create vue@latest</span><br><span class="line">npm install</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+<p>进入项目并启动后，再安装wrangler</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i wrangler -save -D</span><br></pre></td></tr></table></figure>
+<p>然后创建wrangler配置文件 <code>wrangler.jsonc</code> </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;$schema&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node_modules/wrangler/config-schema.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;docs&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;compatibility_date&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2026-06-22&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;server/index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;assets&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;not_found_handling&quot;</span><span class="punctuation">:</span> <span class="string">&quot;single-page-application&quot;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;observability&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;upload_source_maps&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;compatibility_flags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">		<span class="string">&quot;nodejs_compat&quot;</span></span><br><span class="line">	<span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意配置后端服务文件入口地址 <code>server/index.js</code> ，这是后端服务的入口文件，可简单配置如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	<span class="keyword">async</span> <span class="title function_">fetch</span>(<span class="params">request</span>) &#123;</span><br><span class="line">		<span class="keyword">const</span> url = <span class="keyword">new</span> <span class="title function_">URL</span>(request.<span class="property">url</span>);</span><br><span class="line">		<span class="keyword">if</span> (url.<span class="property">pathname</span>.<span class="title function_">startsWith</span>(<span class="string">&quot;/api/&quot;</span>)) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="title class_">Response</span>.<span class="title function_">json</span>(&#123;</span><br><span class="line">				<span class="attr">name</span>: <span class="string">&quot;Cloudflare&quot;</span>,</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Response</span>(<span class="literal">null</span>, &#123; <span class="attr">status</span>: <span class="number">404</span> &#125;);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>安装worker的vite插件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i @cloudflare/vite-plugin -save -D</span><br></pre></td></tr></table></figure>
+<p>在<code>vite.config.js</code>中配置cloudflare worker</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; cloudflare &#125; <span class="keyword">from</span> <span class="string">&quot;@cloudflare/vite-plugin&quot;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">		<span class="title function_">cloudflare</span>()</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>最后，在 <code>package.json</code> 中配置发版流程。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vite&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vite build&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;deploy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm run build &amp;&amp; wrangler deploy&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>项目重新启动，在前端代码发起请求。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/user/login&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> data = <span class="keyword">await</span> res.<span class="title function_">json</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br></pre></td></tr></table></figure>
+
+<p>正常情况下前后端已经通了，至此基础前后端同项目就搭建完了。</p>
+<p>后面可以做复杂前后端， <code>server/index.js</code> 只是入口文件，路由逻辑另外写。这属于后端工程化的范畴，此处不做赘述。</p>
+<p>后面就是后端连接D1轻量数据库的方式。</p>
+<p>首先创建数据库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrangler d1 create common_db</span><br></pre></td></tr></table></figure>
+
+<p>一路默认就行，它会问你数据库名，然后问你要不要自动帮你写进配置文件，最后问你本地开发的时候要不要连远程数据库。</p>
+<blockquote>
+<p>这里会同时创建两个空数据库，本地一个，远程一个。这俩数据库的ID是相同的。</p>
+</blockquote>
+<p>然后打开 <code>wrangler.jsonc</code>  文件，可以看到他帮你写好了数据库连接。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;d1_databases&quot;: [</span><br><span class="line">	&#123;</span><br><span class="line">		&quot;binding&quot;: &quot;common_db&quot;,</span><br><span class="line">		&quot;database_name&quot;: &quot;common_db&quot;,</span><br><span class="line">		&quot;database_id&quot;: &quot;6f3d1d70-xxxx-xxxx-xxxx-61d821c4eeac&quot;</span><br><span class="line">	&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>这里可以改一下 <code>binding</code> 字段，也就是后端代码里的数据库字段，此处可以该为 <code>DB</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;binding&quot;: &quot;DB&quot;</span><br></pre></td></tr></table></figure>
+
+<p>后端代码就可以直接写 <code>env.DB</code> 来操作数据库了。</p>
+<p>然后创建数据库表，在项目根目录创建 <code>schema.sql</code> 文件：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> users (</span><br><span class="line">    user_id <span class="type">INTEGER</span> <span class="keyword">PRIMARY</span> KEY AUTOINCREMENT,</span><br><span class="line">    user_name TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">UNIQUE</span>,</span><br><span class="line">    password TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    create_time TEXT <span class="keyword">DEFAULT</span> <span class="built_in">CURRENT_TIMESTAMP</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>然后执行这个sql文件，初始化数据库表。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrangler d1 execute common_db --file=./schema.sql</span><br></pre></td></tr></table></figure>
+
+<p>这会在本地创建一个SQLlite数据库，位置在 <code>.wrangler\state\v3\d1</code> 。对了，记得把 <code>.wrangler</code> 文件夹写入到 <code>.gitignore</code> 文件里。</p>
+<p>接下来就是调用接口，后端连接数据库测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const result = await env.DB.prepare(</span><br><span class="line">	&quot;SELECT 1 as ok&quot;</span><br><span class="line">).first();</span><br><span class="line"></span><br><span class="line">return new Response(</span><br><span class="line">	JSON.stringify(&#123;</span><br><span class="line">		message: &quot;D1 connected&quot;,</span><br><span class="line">		result</span><br><span class="line">	&#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>不建议在本地调试开发时连接远程数据库，这会很慢。非要连，问AI，wrangler本地开发怎么连远程D1数据库。</p>
+</blockquote>
+<p>最后是发版了，本地启动项目的时候连接的是本地的SQLlite数据库，发版后要连接远程D1数据库，但现在远程D1应该是个空库，所以需要把本地 <code>schema.sql</code> 文件里面的语句放到云端执行一遍。<strong>所以本地所有建表语句一定一定要保存，需要在云端运行一遍。</strong></p>
+<blockquote>
+<p>其实官方更推荐生成迁移文件的办法，但我没学，我就先用上面这个笨办法了。</p>
+</blockquote>
+<p>然后执行发版命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run deploy</span><br></pre></td></tr></table></figure>
+
+<p>wrangler会自动创建云端的worker。并自动绑定D1数据库。后续每次发版都执行这个命令即可。</p>
+<p>以上就是搭建全流程了，剩下的就是前端工程化和后端工程化。 这部分可以参考 <a target="_blank" rel="noopener" href="https://gitee.com/diaoqi/docs">我写好的项目</a> 。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/vacation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -828,82 +949,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://767766.xyz/blog/workerClash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/huluobo.png">
-      <meta itemprop="name" content="掉漆的标题">
-      <meta itemprop="description" content="这个家伙很懒，什么也没有留下">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="萝卜小站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/workerClash/" class="post-title-link" itemprop="url">通过Cloudflare Worker部署Clash订阅文件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-06 10:21:03" itemprop="dateCreated datePublished" datetime="2024-03-06T10:21:03+08:00">2024-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-05 13:24:50" itemprop="dateModified" datetime="2024-11-05T13:24:50+08:00">2024-11-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>我们可以在 Cloudflare 上面通过部署 Worker ，来模拟一个Clash订阅服务器。支持模拟流量限制和时间限制。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/workerClash/" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -971,7 +1020,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -984,7 +1033,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
