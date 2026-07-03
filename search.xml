@@ -1927,244 +1927,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Trojan搭建具体流程</title>
-    <url>/troojan/</url>
-    <content><![CDATA[<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="域名购买"><a href="#域名购买" class="headerlink" title="域名购买"></a>域名购买</h4><p>购买域名选择<a href="https://www.namesilo.com/">namesilo</a>  账号 diaoqi 密码 d-</p>
-<blockquote>
-<p>ps: 这有个免费申请域名的网站 没试过好用否  <a href="https://www.freenom.com/zh/index.html?lang=zh">贴在这</a></p>
-</blockquote>
-<p>购买支付以后，切换域名的DNS服务器</p>
-<span id="more"></span>
-
-<img src="/blog/troojan/1.png" class="" width="600" title="namesilo官网">
-
-<p>首先左侧勾选域名，然后点击上面的 <code>Change Nameservers</code> 按钮。</p>
-<p>切换域名服务器至DNSpod：<code>melon.dnspod.net</code> 和 <code>clam.dnspod.net</code></p>
-<p>切换后要等大概一小时才能进入下一步</p>
-<h4 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h4><p>域名解析选择<a href="https://www.dnspod.cn/">dnspod</a>  账号 QQ邮箱 密码 d-</p>
-<img src="/blog/troojan/2.png" class="" width="600" title="解析结果">
-
-<p>添加域名以后 先加上www的解析 如下图</p>
-<img src="/blog/troojan/3.png" class="" width="600" title="第一条解析">
-
-<p>等待解析灯变绿色以后 测试解析结果</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping www.domainabcdefg.com</span><br></pre></td></tr></table></figure>
-
-<h4 id="SSL证书选择"><a href="#SSL证书选择" class="headerlink" title="SSL证书选择"></a>SSL证书选择</h4><p>申请SSL证书选择<a href="https://console.cloud.tencent.com/ssl">腾讯云</a>  账号 QQ邮箱 密码 d-</p>
-<img src="/blog/troojan/4.png" class="" width="600" title="证书列表 - 腾讯云">
-
-<blockquote>
-<p>Trojan代理下的二级域名不能使用HTTPS服务，所以不要给二级域名申请证书</p>
-</blockquote>
-<p>申请证书的时候选择自动DNS验证，无需手动更改任何东西，一直点下一步，证书颁发后下载Nginx版本即可，本步骤到此即可结束。</p>
-<p>另外也可选择手动DNS验证，手动为域名添加一条解析记录，操作如下：</p>
-<p>在 “证书列表” 页面，选择待查看证书详情的域名型证书 ID，进入 “证书详情” 页面。如下图所示：</p>
-<img src="/blog/troojan/5.png" class="" width="600" title="证书详情">
-
-<p>按操作 去DNSpod那里添加一条TXT类型的解析即可 最终结果可以看上上面的解析图</p>
-<p>只要上面的域名解析没问题 这里也没问题 直接等待CA扫描然后颁发证书即可</p>
-<p>至此，准备工作结束。</p>
-<hr>
-<h3 id="搭建服务端"><a href="#搭建服务端" class="headerlink" title="搭建服务端"></a>搭建服务端</h3><p>准备服务器一台，提前重置你钟爱的系统！（CentOS&#x2F;Debian 都可以，但是今天教程做的是 Debian 的，我会把 CentOS 的代码一并贴上）</p>
-<p>等待SSL证书生效</p>
-<h4 id="安装服务端环境"><a href="#安装服务端环境" class="headerlink" title="安装服务端环境"></a>安装服务端环境</h4><ol>
-<li><h5 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update  #Debian 更新</span><br><span class="line">yum update  #CentOS 更新</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="安装-wget"><a href="#安装-wget" class="headerlink" title="安装 wget"></a>安装 wget</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install wget   ##Debian/Ubuntu 安装 wget</span><br><span class="line">yum -y install wget    ##CentOS Yum 安装 wget</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="安装curl"><a href="#安装curl" class="headerlink" title="安装curl"></a>安装curl</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update -y &amp;&amp; apt-get install curl -y    ##Ubuntu/Debian 系统安装 Curl 方法</span><br><span class="line">yum update -y &amp;&amp; yum install curl -y            ##CentOS 系统安装 Curl 方法</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="安装-XZ-压缩工具"><a href="#安装-XZ-压缩工具" class="headerlink" title="安装 XZ 压缩工具"></a>安装 XZ 压缩工具</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install xz-utils   #Debian/Ubuntu 安装 XZ 压缩工具命令</span><br><span class="line">yum install xz    #CentOS 安装 XZ 压缩工具</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="感兴趣的先测一下网速-此步骤可跳过"><a href="#感兴趣的先测一下网速-此步骤可跳过" class="headerlink" title="感兴趣的先测一下网速(此步骤可跳过)"></a>感兴趣的先测一下网速(此步骤可跳过)</h5><p>综合测试</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -qO- bench.sh | bash</span><br></pre></td></tr></table></figure>
-<p>国内三网测速</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Lso- https://git.io/superspeed.sh)</span><br></pre></td></tr></table></figure>
-<p>回程路由信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -qO- git.io/autobesttrace | bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="安装-NGINX-并自启"><a href="#安装-NGINX-并自启" class="headerlink" title="安装 NGINX 并自启"></a>安装 NGINX 并自启</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get -y install  nginx wget unzip zip curl tar   #Debian 安装</span><br><span class="line">yum -y install  nginx wget unzip zip curl tar   #CentOS 安装</span><br><span class="line"> </span><br><span class="line">systemctl enable nginx.service    #设置 Nginx 开机启动</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="配置Nginx"><a href="#配置Nginx" class="headerlink" title="配置Nginx"></a>配置Nginx</h5><p>找到 路径<code>/etc/nginx/nginx.conf</code>替换原有代码，注意 <code>server_name</code> 字段换成你自己的域名</p>
-<blockquote>
-<p>能看懂的话可以不用替换 改一改配置项也行。看不懂请无脑复制</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user nginx;</span><br><span class="line">worker_processes auto;</span><br><span class="line">error_log /var/log/nginx/error.log;</span><br><span class="line">pid /run/nginx.pid;</span><br><span class="line"></span><br><span class="line"># Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.</span><br><span class="line">include /usr/share/nginx/modules/*.conf;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 1024;</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">                      &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">                      &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line"></span><br><span class="line">    access_log  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile            on;</span><br><span class="line">    tcp_nopush          on;</span><br><span class="line">    tcp_nodelay         on;</span><br><span class="line">    keepalive_timeout   65;</span><br><span class="line">    types_hash_max_size 2048;</span><br><span class="line"></span><br><span class="line">    include             /etc/nginx/mime.types;</span><br><span class="line">    default_type        application/octet-stream;</span><br><span class="line"></span><br><span class="line">    # Load modular configuration files from the /etc/nginx/conf.d directory.</span><br><span class="line">    # See http://nginx.org/en/docs/ngx_core_module.html#include</span><br><span class="line">    # for more information.</span><br><span class="line">    include /etc/nginx/conf.d/*.conf;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        #不带www的入口</span><br><span class="line">        server_name domain.com;</span><br><span class="line">        return 301 http://www.domain.com$request_uri;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root /usr/share/nginx/html;</span><br><span class="line">            index index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name www.domain.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">            root /usr/share/nginx/html;</span><br><span class="line">            index index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        location /m &#123;</span><br><span class="line">            alias /usr/share/nginx/reactapp;</span><br><span class="line">            index index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        location /api &#123;</span><br><span class="line">            proxy_pass http://103.111.11.1:8081;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="设置常规站点"><a href="#设置常规站点" class="headerlink" title="设置常规站点"></a>设置常规站点</h5><blockquote>
-<p>也可以先用自己的网站文件，不用他们官方的。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf /usr/share/nginx/html/*   #删除目录原有文件</span><br><span class="line">cd /usr/share/nginx/html/    #进入站点根目录</span><br><span class="line">wget https://github.com/V2RaySSR/Trojan/raw/master/web.zip   #下载官方站点</span><br><span class="line">unzip web.zip</span><br><span class="line">systemctl restart nginx.service   #重启nginx</span><br></pre></td></tr></table></figure>
-
-<p>到这里，你访问 <code>http://你的域名</code> ，应该可以打开网站了，如果没打开接着往下设置。<strong>（不是 <code>https://</code>）</strong></p>
-</li>
-<li><h5 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h5><p>如果域名和IP地址都打不开，可能是防火墙的原因，首先查看防火墙状态</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl status firewalld</span><br></pre></td></tr></table></figure>
-
-<p>如果有绿色证明开启了防火墙，然后查看已经开放的端口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --list-ports</span><br></pre></td></tr></table></figure>
-
-<p>启动防火墙后默认是不开启任何端口的，所以查到的应该是空</p>
-<p>然后打开80端口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
-
-<p>顺便443也打开</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent</span><br></pre></td></tr></table></figure>
-
-<p>其中命令含义：  </p>
-<ul>
-<li><code>--zone</code> #作用域 </li>
-<li><code>--add-port=80/tcp</code> #添加端口，格式为：端口&#x2F;通讯协议  </li>
-<li><code>--permanent</code> #永久生效，没有此参数重启后失效</li>
-</ul>
-<p>开放后重启防火墙生效</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-<p>成功后再往下一步走，此处没成功则排查问题。</p>
-</li>
-<li><h5 id="下载Trojan服务器"><a href="#下载Trojan服务器" class="headerlink" title="下载Trojan服务器"></a>下载Trojan服务器</h5><p>下载地址：<a href="https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz">https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz</a></p>
-<blockquote>
-<p>既可以在github下载后拖入服务器，也可在服务器上下载。都一样。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/src  #进入该目录</span><br><span class="line">wget https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz    #下载官方 Trojan 服务器</span><br><span class="line">tar xf trojan-1.*   #解压该文件</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>国内备份：<a href="https://ghp.ci/https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz">trojan-1.16.0-linux-amd64.tar.xz</a></p>
-</blockquote>
-</li>
-<li><h5 id="创建-Trojan-服务器配置文件"><a href="#创建-Trojan-服务器配置文件" class="headerlink" title="创建 Trojan 服务器配置文件"></a>创建 Trojan 服务器配置文件</h5><p>找到 <code>/usr/src/trojan/</code> 目录，创建并打开<code>server.conf</code>文件</p>
-<blockquote>
-<p>ubuntu下创建命令为：touch server.conf</p>
-</blockquote>
-<p>创建后，写入以下内容。 <strong>注意！</strong> 下图中的配置项 password 字段记得改了 其他配置项如果能看懂 也可以改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;run_type&quot;: &quot;server&quot;,</span><br><span class="line">    &quot;local_addr&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_port&quot;: 443,</span><br><span class="line">    &quot;remote_addr&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;remote_port&quot;: 80,</span><br><span class="line">    &quot;password&quot;: [</span><br><span class="line">        &quot;00000000&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;log_level&quot;: 1,</span><br><span class="line">    &quot;ssl&quot;: &#123;</span><br><span class="line">        &quot;cert&quot;: &quot;/usr/src/trojan-cert/fullchain.crt&quot;,</span><br><span class="line">        &quot;key&quot;: &quot;/usr/src/trojan-cert/private.key&quot;,</span><br><span class="line">        &quot;key_password&quot;: &quot;&quot;,</span><br><span class="line">        &quot;cipher&quot;: &quot;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384&quot;,</span><br><span class="line">        &quot;cipher_tls13&quot;: &quot;TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384&quot;,</span><br><span class="line">        &quot;prefer_server_cipher&quot;: true,</span><br><span class="line">        &quot;alpn&quot;: [</span><br><span class="line">            &quot;http/1.1&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;alpn_port_override&quot;: &#123;</span><br><span class="line">            &quot;h2&quot;: 81</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;reuse_session&quot;: true,</span><br><span class="line">        &quot;session_ticket&quot;: false,</span><br><span class="line">        &quot;session_timeout&quot;: 600,</span><br><span class="line">        &quot;plain_http_response&quot;: &quot;&quot;,</span><br><span class="line">        &quot;curves&quot;: &quot;&quot;,</span><br><span class="line">        &quot;dhparam&quot;: &quot;&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;tcp&quot;: &#123;</span><br><span class="line">        &quot;prefer_ipv4&quot;: false,</span><br><span class="line">        &quot;no_delay&quot;: true,</span><br><span class="line">        &quot;keep_alive&quot;: true,</span><br><span class="line">        &quot;reuse_port&quot;: false,</span><br><span class="line">        &quot;fast_open&quot;: false,</span><br><span class="line">        &quot;fast_open_qlen&quot;: 20</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;mysql&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;server_addr&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">        &quot;server_port&quot;: 3306,</span><br><span class="line">        &quot;database&quot;: &quot;trojan&quot;,</span><br><span class="line">        &quot;username&quot;: &quot;trojan&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;&quot;,</span><br><span class="line">        &quot;key&quot;: &quot;&quot;,</span><br><span class="line">        &quot;cert&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ca&quot;: &quot;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="创建-Trojan-自启服务"><a href="#创建-Trojan-自启服务" class="headerlink" title="创建 Trojan 自启服务"></a>创建 Trojan 自启服务</h5><p>Debian 系统找到 <code>/lib/systemd/system/</code> 目录，并创建 <code>trojan.service</code> 文件<br>CentOS 系统找到 <code>/usr/lib/systemd/system/</code> 目录，并创建 <code>trojan.service</code> 文件<br>打开 <code>trojan.service</code> 文件，并写入以下代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Unit]  </span><br><span class="line">Description=trojan  </span><br><span class="line">After=network.target  </span><br><span class="line">   </span><br><span class="line">[Service]  </span><br><span class="line">Type=simple  </span><br><span class="line">PIDFile=/usr/src/trojan/trojan/trojan.pid</span><br><span class="line">ExecStart=/usr/src/trojan/trojan -c &quot;/usr/src/trojan/server.conf&quot;  </span><br><span class="line">ExecReload=  </span><br><span class="line">ExecStop=/usr/src/trojan/trojan  </span><br><span class="line">PrivateTmp=true  </span><br><span class="line">   </span><br><span class="line">[Install]  </span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
-</li>
-<li><h5 id="下载并解压证书"><a href="#下载并解压证书" class="headerlink" title="下载并解压证书"></a>下载并解压证书</h5><p>下载后解压，然后打开 nginx目录，里面有俩文件</p>
-<ul>
-<li>一个是 <code>xxx.xxx.xxx_chain.crt</code> 文件</li>
-<li>一个是 <code>xxx.xxx.xxx_key.key</code> 文件</li>
-</ul>
-<p>把 <code>xxx.xxx.xxx_chain.crt</code> 改名为 <code>fullchain.crt</code> 备用<br>把 <code>xxx.xxx.xxx_key.key</code> 改名为 <code>private.key</code> 备用</p>
-</li>
-<li><h5 id="移动证书文件"><a href="#移动证书文件" class="headerlink" title="移动证书文件"></a>移动证书文件</h5><p>创建存放证书的文件夹<code>trojan-cert</code> 完整路径为 <code>/usr/src/trojan-cert</code><br>把刚才改名的 2 个文件（ <code>fullchain.crt</code> 和 <code>private.key</code> ）放到服务器 <code>/usr/src/trojan-cert</code> 目录下面</p>
-</li>
-</ol>
-<h4 id="启动Trojan服务"><a href="#启动Trojan服务" class="headerlink" title="启动Trojan服务"></a>启动Trojan服务</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl start trojan.service  #启动 Trojan</span><br><span class="line">systemctl enable trojan.service  #设置 Trojan 服务开机自启</span><br></pre></td></tr></table></figure>
-
-<h4 id="验证-SSL-证书"><a href="#验证-SSL-证书" class="headerlink" title="验证 SSL 证书"></a>验证 SSL 证书</h4><p>访问 <code>https://你的域名</code> ，检查证书和 Trojan 是否正常运行（有小锁成功）。</p>
-<p>记得是访问 <code>https://</code> 。不是 <code>http://</code></p>
-<p>至此，服务端搭建结束。</p>
-<hr>
-<h3 id="Trojan-客户端下载"><a href="#Trojan-客户端下载" class="headerlink" title="Trojan 客户端下载"></a>Trojan 客户端下载</h3><p>现在的客户端大多是订阅模式，直接使用代理的反而比较少。建议学习各平台的订阅配置文件规则集。</p>
-<ul>
-<li><h4 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h4><ul>
-<li><h5 id="V2rayN"><a href="#V2rayN" class="headerlink" title="V2rayN"></a>V2rayN</h5><p>新手推荐<a href="https://ghp.ci/https://github.com/2dust/v2rayN/releases/download/6.60/v2rayN-With-Core.zip">V2rayN</a> ，是一个基于 <code>V2Ray</code> 及 <code>Xray</code> 内核的 Windows 客户端。缺点就是只支持Windows系统。</p>
-<blockquote>
-<p>目前只建议新手使用这一个客户端。</p>
-</blockquote>
-<p>使用方式：</p>
-<ol>
-<li>下载后解压，打开程序。点击左上角服务器，添加[Trojan]服务器。</li>
-<li>别名填Trojan，地址输入Trojan服务器的域名，如 <code>www.domain.com</code>。</li>
-<li>端口443，密码填Trojan 服务器配置文件中的密码。点击确定。</li>
-<li>选中刚添加的服务器，右键，设为活动服务器。</li>
-<li>软件下方系统代理选择<code>自动配置系统代理</code>，路由选择<code>V3-全局(Global)</code>，即可打开谷歌。</li>
-</ol>
-</li>
-<li><h5 id="Clash-Verge"><a href="#Clash-Verge" class="headerlink" title="Clash Verge"></a>Clash Verge</h5><p>点击访问 <a href="https://www.clashverge.dev/install.html#__tabbed_1_1">官方网站</a>，客户端 <a href="https://ghp.ci/https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v1.7.7/Clash.Verge_1.7.7_x64-setup.exe">下载地址</a>。别忘了 <a href="https://gitee.com/diaoqi/blog-source/releases/download/v1.0.1/attach_file_1934770">下载使用说明书</a> 。Trojan类型的Clash订阅文件格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxies:</span><br><span class="line">  - name: 美国节点</span><br><span class="line">    server: www.domain.com</span><br><span class="line">    port: 443</span><br><span class="line">    type: trojan</span><br><span class="line">    password: 00000000</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><h5 id="GUI-for-SingBox"><a href="#GUI-for-SingBox" class="headerlink" title="GUI.for.SingBox"></a>GUI.for.SingBox</h5><p>Sing–Box支持众多协议，需要自己配置订阅链接。</p>
-<p>下载地址：<a href="https://ghp.ci/https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.8.8/GUI.for.SingBox-windows-386.zip">GUI.for.SingBox</a></p>
-</li>
-<li><h5 id="西部世界"><a href="#西部世界" class="headerlink" title="西部世界"></a>西部世界</h5><p>一个机场整理的客户端：<a href="https://westworldss.com/">西部世界官网</a>，进网站后点击客户端下载。</p>
-<blockquote>
-<p>国内备份：<a href="https://sjssr.fun/portal/account/login">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#105;&#x6e;&#102;&#x6f;&#64;&#x77;&#x65;&#x73;&#x74;&#119;&#111;&#114;&#108;&#100;&#x73;&#x73;&#46;&#x63;&#111;&#x6d;">&#105;&#x6e;&#102;&#x6f;&#64;&#x77;&#x65;&#x73;&#x74;&#119;&#111;&#114;&#108;&#100;&#x73;&#x73;&#46;&#x63;&#111;&#x6d;</a> 即可获取最新地址</p>
-</blockquote>
-</li>
-<li><h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>其他的好用客户端，都在 <a href="https://v2rayssr.com/vpn-client.html">这里</a>。</p>
-</li>
-</ul>
-</li>
-<li><h4 id="macOS客户端"><a href="#macOS客户端" class="headerlink" title="macOS客户端"></a>macOS客户端</h4><ul>
-<li><h5 id="Clash-Verge-1"><a href="#Clash-Verge-1" class="headerlink" title="Clash Verge"></a>Clash Verge</h5><p>在Mac上运行的clash Verge，使用说明以及下载地址请参考<a href="https://www.clashverge.dev/install.html#__tabbed_1_3">官网</a>，也是需要配置订阅文件。</p>
-</li>
-<li><h5 id="Qv2ray"><a href="#Qv2ray" class="headerlink" title="Qv2ray"></a>Qv2ray</h5><p>可用但不推荐，<a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>的复杂配置在Mac端有些不方便。适合熟悉Qv2ray的配置方式或者用惯Qv2ray的人使用。</p>
-</li>
-</ul>
-</li>
-<li><h4 id="安卓客户端"><a href="#安卓客户端" class="headerlink" title="安卓客户端"></a>安卓客户端</h4><ul>
-<li><h5 id="igniter"><a href="#igniter" class="headerlink" title="igniter"></a>igniter</h5></li>
-</ul>
-<p>  这个是官方的原版安卓客户端 <a href="https://github.com/trojan-gfw/igniter/releases">igniter</a>，可放心使用。</p>
-<blockquote>
-<p>国内备份：<a href="https://ghp.ci/https://github.com/trojan-gfw/igniter/releases/download/v0.10.2-beta/io.github.trojan_gfw.igniter-v0.10.2-beta-230001002-arm64-v8a-release.apk">igniter</a></p>
-</blockquote>
-<ul>
-<li><h5 id="Clash-Meta"><a href="#Clash-Meta" class="headerlink" title="Clash Meta"></a>Clash Meta</h5></li>
-</ul>
-<p>  需要先把配置文件弄好，手机下载 <a href="https://ghp.ci/https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.10.1/cmfa-2.10.1-meta-universal-release.apk">Clash Meta</a>，然后导入URL或者文件即可使用。</p>
-</li>
-<li><h4 id="IOS客户端"><a href="#IOS客户端" class="headerlink" title="IOS客户端"></a>IOS客户端</h4><ul>
-<li><h5 id="William-VPN"><a href="#William-VPN" class="headerlink" title="William VPN"></a>William VPN</h5></li>
-</ul>
-<p>  用美区Apple ID登录AppStore，搜索 William VPN。</p>
-<blockquote>
-<p>本人未尝试过，无教程，盲猜和安卓差不多</p>
-</blockquote>
-</li>
-<li><h4 id="Linux客户端"><a href="#Linux客户端" class="headerlink" title="Linux客户端"></a>Linux客户端</h4><ul>
-<li><h5 id="Qv2ray-1"><a href="#Qv2ray-1" class="headerlink" title="Qv2ray"></a>Qv2ray</h5></li>
-</ul>
-<p>  支持Linux的客户端不多，<a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>算是最好用的之一，具体配置方式同Windows。
-  </p>
-</li>
-<li><h4 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h4><ul>
-<li><h5 id="梅林路由器"><a href="#梅林路由器" class="headerlink" title="梅林路由器"></a>梅林路由器</h5></li>
-</ul>
-<p>  支持RT-AC86U 官改固件，Trojan 暂时没有可用的路由器插件。</p>
-<ul>
-<li><h5 id="OpenWRT路由器"><a href="#OpenWRT路由器" class="headerlink" title="OpenWRT路由器"></a>OpenWRT路由器</h5></li>
-</ul>
-<p>  支持NanoPi R2S 软路由，刷入固件FriendlyWrt_20200616_NanoPi-R2S_arm64_sd.img。</p>
-</li>
-</ul>
-<p>由于很多客户端更新频繁，跑路的跑路，喝茶的喝茶，故本文客户端不做可用性保证，建议上网查询更好用的客户端。很多链接不存在国内备份，而国外链接在国内又打不开。故建议先搭建Windows环境客户端，成功后再访问其他链接。</p>
-<p>至此，客户端搭建完毕，开始你的表演。</p>
-<hr>
-<h3 id="开启BBR加速服务（选修）"><a href="#开启BBR加速服务（选修）" class="headerlink" title="开启BBR加速服务（选修）"></a>开启BBR加速服务（选修）</h3><p>大家都知道国外的服务器远离我们，在国内连接速度并不是很好，尤其是在晚高峰期体验效果明显有所下降，此时我们需要安装一些脚本进行加速。</p>
-<p>前段时间 Google 开源了 TCP BBR 拥塞控制算法，根据用户使用体验的效果来看在 服务器上开启了 TCP BBR 后网速最高可达到 10 几倍的提升。</p>
-<p>关于 Google BBR 拥塞控制算法目前有很多个版本，一个原版，另一个为魔改版，还有加强版的 BBRPLUS 版本。魔改版 Google BBR 和 PLUS 版本的 BBR 是在原版的基础上调整了一些参数，加速效果更胜一筹。</p>
-<p>原版的 BBR 稳定，和系统兼容性好，长期运行不容易出现错误。但是其他衍生来的一些 BBR 加速版本，是经过原版的优化和改动，所以我们都不能说他是 100%的。所以这边我们建议大家不要在你的生产系统上面折腾第三方的加速软件。</p>
-<h4 id="Google-原版-BBR-安装"><a href="#Google-原版-BBR-安装" class="headerlink" title="Google 原版 BBR 安装"></a>Google 原版 BBR 安装</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh</span><br><span class="line">chmod 755 bbr.sh &amp;&amp; ./bbr.sh</span><br></pre></td></tr></table></figure>
-
-<p>接下来 BBR 会自动开始安装，中间提示的什么 就按默认选择就好。</p>
-<p>安装完成后会英文提示是否重启，输入 y 回车重启。</p>
-<p>等待大概一分钟，系统重启成功后，重新用连接工具连接服务器，输入以下命令验证 BBR 是否安装成功：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
-
-<p>如果得到如下结果则代表 BBR 安装成功：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br></pre></td></tr></table></figure>
-
-<p>安装成功后，不需要启动什么。这就完事儿了。</p>
-<p>（全文完）</p>
-<p>————————————————</p>
-]]></content>
-      <categories>
-        <category>Trojan</category>
-      </categories>
-      <tags>
-        <tag>代理</tag>
-        <tag>CentOS</tag>
-        <tag>Ubuntu</tag>
-        <tag>Trojan</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Typora安装方式及快捷键整理</title>
     <url>/typora/</url>
     <content><![CDATA[<h4 id="Typora安装"><a href="#Typora安装" class="headerlink" title="Typora安装"></a>Typora安装</h4><ol>
@@ -2939,14 +2701,17 @@
     <title>通过Cloudflare Worker部署Clash订阅文件</title>
     <url>/workerClash/</url>
     <content><![CDATA[<p>我们可以在 Cloudflare 上面通过部署 Worker ，来模拟一个Clash订阅服务器。支持模拟流量限制和时间限制。</p>
+<blockquote>
+<p>2026-07-03： 目前不推荐使用自定义订阅器，本教程已失去时效性，仅作为参考。</p>
+</blockquote>
 <span id="more"></span>
 
-<h4 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h4><p>首先要自己搭建好节点服务器，具体教程可以参考：<a href="https://767766.xyz/blog/troojan/">Trojan搭建具体流程</a> 或者 <a href="https://767766.xyz/blog/reality/">CentOS下基于X-UI搭建Vless + Reality协议</a> 。</p>
+<h4 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h4><p>首先要自己搭建好节点服务器，具体教程可以参考：<a href="https://blog.767766.xyz/trojan/">Trojan搭建具体流程</a> 或者 <a href="https://blog.767766.xyz/reality/">CentOS下基于X-UI搭建Vless + Reality协议</a> 。</p>
 <p>搭建成功后，并且节点使用无问题，再继续本教程。</p>
 <p>在 Cloudflare 上需要配置好域名解析</p>
 <blockquote>
 <p>本教程默认你已经熟悉Clash的订阅文件规则，且熟悉javascript语言。</p>
-<p>不熟悉的可以参考 <a href="https://767766.xyz/blog/clash/">Clash系列客户端订阅地址配置教程</a> ，完全不会的建议别折腾本教程。</p>
+<p>不熟悉的可以参考 <a href="https://blog.767766.xyz/clash/">Clash系列客户端订阅地址配置教程</a> ，完全不会的建议别折腾本教程。</p>
 </blockquote>
 <p>无论是搭建 Trojan 节点还是搭建 Vless 节点亦或是其他节点，对于Clash来说不过是 proxy 不同而已，在部署的时候按需更改即可。</p>
 <h4 id="Worker-部署"><a href="#Worker-部署" class="headerlink" title="Worker 部署"></a>Worker 部署</h4><p>在Cloudflare首页，点击左侧 <code>Workers 和 Pages</code>，点击创建按钮，点击 <code>创建Worker</code> 按钮。</p>
@@ -3454,6 +3219,244 @@
         <tag>Worker</tag>
         <tag>cloudflare</tag>
         <tag>赛博活佛</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Trojan搭建具体流程</title>
+    <url>/trojan/</url>
+    <content><![CDATA[<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="域名购买"><a href="#域名购买" class="headerlink" title="域名购买"></a>域名购买</h4><p>购买域名选择<a href="https://www.namesilo.com/">namesilo</a>  账号 diaoqi 密码 d-</p>
+<blockquote>
+<p>ps: 这有个免费申请域名的网站 没试过好用否  <a href="https://www.freenom.com/zh/index.html?lang=zh">贴在这</a></p>
+</blockquote>
+<p>购买支付以后，切换域名的DNS服务器</p>
+<span id="more"></span>
+
+<img src="/trojan/1.png" class="" width="600" title="namesilo官网">
+
+<p>首先左侧勾选域名，然后点击上面的 <code>Change Nameservers</code> 按钮。</p>
+<p>切换域名服务器至DNSpod：<code>melon.dnspod.net</code> 和 <code>clam.dnspod.net</code></p>
+<p>切换后要等大概一小时才能进入下一步</p>
+<h4 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h4><p>域名解析选择<a href="https://www.dnspod.cn/">dnspod</a>  账号 QQ邮箱 密码 d-</p>
+<img src="/trojan/2.png" class="" width="600" title="解析结果">
+
+<p>添加域名以后 先加上www的解析 如下图</p>
+<img src="/trojan/3.png" class="" width="600" title="第一条解析">
+
+<p>等待解析灯变绿色以后 测试解析结果</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping www.domainabcdefg.com</span><br></pre></td></tr></table></figure>
+
+<h4 id="SSL证书选择"><a href="#SSL证书选择" class="headerlink" title="SSL证书选择"></a>SSL证书选择</h4><p>申请SSL证书选择<a href="https://console.cloud.tencent.com/ssl">腾讯云</a>  账号 QQ邮箱 密码 d-</p>
+<img src="/trojan/4.png" class="" width="600" title="证书列表 - 腾讯云">
+
+<blockquote>
+<p>Trojan代理下的二级域名不能使用HTTPS服务，所以不要给二级域名申请证书</p>
+</blockquote>
+<p>申请证书的时候选择自动DNS验证，无需手动更改任何东西，一直点下一步，证书颁发后下载Nginx版本即可，本步骤到此即可结束。</p>
+<p>另外也可选择手动DNS验证，手动为域名添加一条解析记录，操作如下：</p>
+<p>在 “证书列表” 页面，选择待查看证书详情的域名型证书 ID，进入 “证书详情” 页面。如下图所示：</p>
+<img src="/trojan/5.png" class="" width="600" title="证书详情">
+
+<p>按操作 去DNSpod那里添加一条TXT类型的解析即可 最终结果可以看上上面的解析图</p>
+<p>只要上面的域名解析没问题 这里也没问题 直接等待CA扫描然后颁发证书即可</p>
+<p>至此，准备工作结束。</p>
+<hr>
+<h3 id="搭建服务端"><a href="#搭建服务端" class="headerlink" title="搭建服务端"></a>搭建服务端</h3><p>准备服务器一台，提前重置你钟爱的系统！（CentOS&#x2F;Debian 都可以，但是今天教程做的是 Debian 的，我会把 CentOS 的代码一并贴上）</p>
+<p>等待SSL证书生效</p>
+<h4 id="安装服务端环境"><a href="#安装服务端环境" class="headerlink" title="安装服务端环境"></a>安装服务端环境</h4><ol>
+<li><h5 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update  #Debian 更新</span><br><span class="line">yum update  #CentOS 更新</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="安装-wget"><a href="#安装-wget" class="headerlink" title="安装 wget"></a>安装 wget</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install wget   ##Debian/Ubuntu 安装 wget</span><br><span class="line">yum -y install wget    ##CentOS Yum 安装 wget</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="安装curl"><a href="#安装curl" class="headerlink" title="安装curl"></a>安装curl</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update -y &amp;&amp; apt-get install curl -y    ##Ubuntu/Debian 系统安装 Curl 方法</span><br><span class="line">yum update -y &amp;&amp; yum install curl -y            ##CentOS 系统安装 Curl 方法</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="安装-XZ-压缩工具"><a href="#安装-XZ-压缩工具" class="headerlink" title="安装 XZ 压缩工具"></a>安装 XZ 压缩工具</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install xz-utils   #Debian/Ubuntu 安装 XZ 压缩工具命令</span><br><span class="line">yum install xz    #CentOS 安装 XZ 压缩工具</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="感兴趣的先测一下网速-此步骤可跳过"><a href="#感兴趣的先测一下网速-此步骤可跳过" class="headerlink" title="感兴趣的先测一下网速(此步骤可跳过)"></a>感兴趣的先测一下网速(此步骤可跳过)</h5><p>综合测试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -qO- bench.sh | bash</span><br></pre></td></tr></table></figure>
+<p>国内三网测速</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -Lso- https://git.io/superspeed.sh)</span><br></pre></td></tr></table></figure>
+<p>回程路由信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -qO- git.io/autobesttrace | bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="安装-NGINX-并自启"><a href="#安装-NGINX-并自启" class="headerlink" title="安装 NGINX 并自启"></a>安装 NGINX 并自启</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get -y install  nginx wget unzip zip curl tar   #Debian 安装</span><br><span class="line">yum -y install  nginx wget unzip zip curl tar   #CentOS 安装</span><br><span class="line"> </span><br><span class="line">systemctl enable nginx.service    #设置 Nginx 开机启动</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="配置Nginx"><a href="#配置Nginx" class="headerlink" title="配置Nginx"></a>配置Nginx</h5><p>找到 路径<code>/etc/nginx/nginx.conf</code>替换原有代码，注意 <code>server_name</code> 字段换成你自己的域名</p>
+<blockquote>
+<p>能看懂的话可以不用替换 改一改配置项也行。看不懂请无脑复制</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user nginx;</span><br><span class="line">worker_processes auto;</span><br><span class="line">error_log /var/log/nginx/error.log;</span><br><span class="line">pid /run/nginx.pid;</span><br><span class="line"></span><br><span class="line"># Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.</span><br><span class="line">include /usr/share/nginx/modules/*.conf;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 1024;</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">                      &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">                      &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line"></span><br><span class="line">    access_log  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile            on;</span><br><span class="line">    tcp_nopush          on;</span><br><span class="line">    tcp_nodelay         on;</span><br><span class="line">    keepalive_timeout   65;</span><br><span class="line">    types_hash_max_size 2048;</span><br><span class="line"></span><br><span class="line">    include             /etc/nginx/mime.types;</span><br><span class="line">    default_type        application/octet-stream;</span><br><span class="line"></span><br><span class="line">    # Load modular configuration files from the /etc/nginx/conf.d directory.</span><br><span class="line">    # See http://nginx.org/en/docs/ngx_core_module.html#include</span><br><span class="line">    # for more information.</span><br><span class="line">    include /etc/nginx/conf.d/*.conf;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        #不带www的入口</span><br><span class="line">        server_name domain.com;</span><br><span class="line">        return 301 http://www.domain.com$request_uri;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root /usr/share/nginx/html;</span><br><span class="line">            index index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name www.domain.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">            root /usr/share/nginx/html;</span><br><span class="line">            index index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        location /m &#123;</span><br><span class="line">            alias /usr/share/nginx/reactapp;</span><br><span class="line">            index index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        location /api &#123;</span><br><span class="line">            proxy_pass http://103.111.11.1:8081;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="设置常规站点"><a href="#设置常规站点" class="headerlink" title="设置常规站点"></a>设置常规站点</h5><blockquote>
+<p>也可以先用自己的网站文件，不用他们官方的。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf /usr/share/nginx/html/*   #删除目录原有文件</span><br><span class="line">cd /usr/share/nginx/html/    #进入站点根目录</span><br><span class="line">wget https://github.com/V2RaySSR/Trojan/raw/master/web.zip   #下载官方站点</span><br><span class="line">unzip web.zip</span><br><span class="line">systemctl restart nginx.service   #重启nginx</span><br></pre></td></tr></table></figure>
+
+<p>到这里，你访问 <code>http://你的域名</code> ，应该可以打开网站了，如果没打开接着往下设置。<strong>（不是 <code>https://</code>）</strong></p>
+</li>
+<li><h5 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h5><p>如果域名和IP地址都打不开，可能是防火墙的原因，首先查看防火墙状态</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl status firewalld</span><br></pre></td></tr></table></figure>
+
+<p>如果有绿色证明开启了防火墙，然后查看已经开放的端口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --list-ports</span><br></pre></td></tr></table></figure>
+
+<p>启动防火墙后默认是不开启任何端口的，所以查到的应该是空</p>
+<p>然后打开80端口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<p>顺便443也打开</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<p>其中命令含义：  </p>
+<ul>
+<li><code>--zone</code> #作用域 </li>
+<li><code>--add-port=80/tcp</code> #添加端口，格式为：端口&#x2F;通讯协议  </li>
+<li><code>--permanent</code> #永久生效，没有此参数重启后失效</li>
+</ul>
+<p>开放后重启防火墙生效</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<p>成功后再往下一步走，此处没成功则排查问题。</p>
+</li>
+<li><h5 id="下载Trojan服务器"><a href="#下载Trojan服务器" class="headerlink" title="下载Trojan服务器"></a>下载Trojan服务器</h5><p>下载地址：<a href="https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz">https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz</a></p>
+<blockquote>
+<p>既可以在github下载后拖入服务器，也可在服务器上下载。都一样。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/src  #进入该目录</span><br><span class="line">wget https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz    #下载官方 Trojan 服务器</span><br><span class="line">tar xf trojan-1.*   #解压该文件</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>国内备份：<a href="https://ghp.ci/https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz">trojan-1.16.0-linux-amd64.tar.xz</a></p>
+</blockquote>
+</li>
+<li><h5 id="创建-Trojan-服务器配置文件"><a href="#创建-Trojan-服务器配置文件" class="headerlink" title="创建 Trojan 服务器配置文件"></a>创建 Trojan 服务器配置文件</h5><p>找到 <code>/usr/src/trojan/</code> 目录，创建并打开<code>server.conf</code>文件</p>
+<blockquote>
+<p>ubuntu下创建命令为：touch server.conf</p>
+</blockquote>
+<p>创建后，写入以下内容。 <strong>注意！</strong> 下图中的配置项 password 字段记得改了 其他配置项如果能看懂 也可以改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;run_type&quot;: &quot;server&quot;,</span><br><span class="line">    &quot;local_addr&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_port&quot;: 443,</span><br><span class="line">    &quot;remote_addr&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;remote_port&quot;: 80,</span><br><span class="line">    &quot;password&quot;: [</span><br><span class="line">        &quot;00000000&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;log_level&quot;: 1,</span><br><span class="line">    &quot;ssl&quot;: &#123;</span><br><span class="line">        &quot;cert&quot;: &quot;/usr/src/trojan-cert/fullchain.crt&quot;,</span><br><span class="line">        &quot;key&quot;: &quot;/usr/src/trojan-cert/private.key&quot;,</span><br><span class="line">        &quot;key_password&quot;: &quot;&quot;,</span><br><span class="line">        &quot;cipher&quot;: &quot;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384&quot;,</span><br><span class="line">        &quot;cipher_tls13&quot;: &quot;TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384&quot;,</span><br><span class="line">        &quot;prefer_server_cipher&quot;: true,</span><br><span class="line">        &quot;alpn&quot;: [</span><br><span class="line">            &quot;http/1.1&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;alpn_port_override&quot;: &#123;</span><br><span class="line">            &quot;h2&quot;: 81</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;reuse_session&quot;: true,</span><br><span class="line">        &quot;session_ticket&quot;: false,</span><br><span class="line">        &quot;session_timeout&quot;: 600,</span><br><span class="line">        &quot;plain_http_response&quot;: &quot;&quot;,</span><br><span class="line">        &quot;curves&quot;: &quot;&quot;,</span><br><span class="line">        &quot;dhparam&quot;: &quot;&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;tcp&quot;: &#123;</span><br><span class="line">        &quot;prefer_ipv4&quot;: false,</span><br><span class="line">        &quot;no_delay&quot;: true,</span><br><span class="line">        &quot;keep_alive&quot;: true,</span><br><span class="line">        &quot;reuse_port&quot;: false,</span><br><span class="line">        &quot;fast_open&quot;: false,</span><br><span class="line">        &quot;fast_open_qlen&quot;: 20</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;mysql&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false,</span><br><span class="line">        &quot;server_addr&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">        &quot;server_port&quot;: 3306,</span><br><span class="line">        &quot;database&quot;: &quot;trojan&quot;,</span><br><span class="line">        &quot;username&quot;: &quot;trojan&quot;,</span><br><span class="line">        &quot;password&quot;: &quot;&quot;,</span><br><span class="line">        &quot;key&quot;: &quot;&quot;,</span><br><span class="line">        &quot;cert&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ca&quot;: &quot;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="创建-Trojan-自启服务"><a href="#创建-Trojan-自启服务" class="headerlink" title="创建 Trojan 自启服务"></a>创建 Trojan 自启服务</h5><p>Debian 系统找到 <code>/lib/systemd/system/</code> 目录，并创建 <code>trojan.service</code> 文件<br>CentOS 系统找到 <code>/usr/lib/systemd/system/</code> 目录，并创建 <code>trojan.service</code> 文件<br>打开 <code>trojan.service</code> 文件，并写入以下代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Unit]  </span><br><span class="line">Description=trojan  </span><br><span class="line">After=network.target  </span><br><span class="line">   </span><br><span class="line">[Service]  </span><br><span class="line">Type=simple  </span><br><span class="line">PIDFile=/usr/src/trojan/trojan/trojan.pid</span><br><span class="line">ExecStart=/usr/src/trojan/trojan -c &quot;/usr/src/trojan/server.conf&quot;  </span><br><span class="line">ExecReload=  </span><br><span class="line">ExecStop=/usr/src/trojan/trojan  </span><br><span class="line">PrivateTmp=true  </span><br><span class="line">   </span><br><span class="line">[Install]  </span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="下载并解压证书"><a href="#下载并解压证书" class="headerlink" title="下载并解压证书"></a>下载并解压证书</h5><p>下载后解压，然后打开 nginx目录，里面有俩文件</p>
+<ul>
+<li>一个是 <code>xxx.xxx.xxx_chain.crt</code> 文件</li>
+<li>一个是 <code>xxx.xxx.xxx_key.key</code> 文件</li>
+</ul>
+<p>把 <code>xxx.xxx.xxx_chain.crt</code> 改名为 <code>fullchain.crt</code> 备用<br>把 <code>xxx.xxx.xxx_key.key</code> 改名为 <code>private.key</code> 备用</p>
+</li>
+<li><h5 id="移动证书文件"><a href="#移动证书文件" class="headerlink" title="移动证书文件"></a>移动证书文件</h5><p>创建存放证书的文件夹<code>trojan-cert</code> 完整路径为 <code>/usr/src/trojan-cert</code><br>把刚才改名的 2 个文件（ <code>fullchain.crt</code> 和 <code>private.key</code> ）放到服务器 <code>/usr/src/trojan-cert</code> 目录下面</p>
+</li>
+</ol>
+<h4 id="启动Trojan服务"><a href="#启动Trojan服务" class="headerlink" title="启动Trojan服务"></a>启动Trojan服务</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systemctl start trojan.service  #启动 Trojan</span><br><span class="line">systemctl enable trojan.service  #设置 Trojan 服务开机自启</span><br></pre></td></tr></table></figure>
+
+<h4 id="验证-SSL-证书"><a href="#验证-SSL-证书" class="headerlink" title="验证 SSL 证书"></a>验证 SSL 证书</h4><p>访问 <code>https://你的域名</code> ，检查证书和 Trojan 是否正常运行（有小锁成功）。</p>
+<p>记得是访问 <code>https://</code> 。不是 <code>http://</code></p>
+<p>至此，服务端搭建结束。</p>
+<hr>
+<h3 id="Trojan-客户端下载"><a href="#Trojan-客户端下载" class="headerlink" title="Trojan 客户端下载"></a>Trojan 客户端下载</h3><p>现在的客户端大多是订阅模式，直接使用代理的反而比较少。建议学习各平台的订阅配置文件规则集。</p>
+<ul>
+<li><h4 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h4><ul>
+<li><h5 id="V2rayN"><a href="#V2rayN" class="headerlink" title="V2rayN"></a>V2rayN</h5><p>新手推荐<a href="https://ghp.ci/https://github.com/2dust/v2rayN/releases/download/6.60/v2rayN-With-Core.zip">V2rayN</a> ，是一个基于 <code>V2Ray</code> 及 <code>Xray</code> 内核的 Windows 客户端。缺点就是只支持Windows系统。</p>
+<blockquote>
+<p>目前只建议新手使用这一个客户端。</p>
+</blockquote>
+<p>使用方式：</p>
+<ol>
+<li>下载后解压，打开程序。点击左上角服务器，添加[Trojan]服务器。</li>
+<li>别名填Trojan，地址输入Trojan服务器的域名，如 <code>www.domain.com</code>。</li>
+<li>端口443，密码填Trojan 服务器配置文件中的密码。点击确定。</li>
+<li>选中刚添加的服务器，右键，设为活动服务器。</li>
+<li>软件下方系统代理选择<code>自动配置系统代理</code>，路由选择<code>V3-全局(Global)</code>，即可打开谷歌。</li>
+</ol>
+</li>
+<li><h5 id="Clash-Verge"><a href="#Clash-Verge" class="headerlink" title="Clash Verge"></a>Clash Verge</h5><p>点击访问 <a href="https://www.clashverge.dev/install.html#__tabbed_1_1">官方网站</a>，客户端 <a href="https://ghp.ci/https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v1.7.7/Clash.Verge_1.7.7_x64-setup.exe">下载地址</a>。别忘了 <a href="https://gitee.com/diaoqi/blog-source/releases/download/v1.0.1/attach_file_1934770">下载使用说明书</a> 。Trojan类型的Clash订阅文件格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxies:</span><br><span class="line">  - name: 美国节点</span><br><span class="line">    server: www.domain.com</span><br><span class="line">    port: 443</span><br><span class="line">    type: trojan</span><br><span class="line">    password: 00000000</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><h5 id="GUI-for-SingBox"><a href="#GUI-for-SingBox" class="headerlink" title="GUI.for.SingBox"></a>GUI.for.SingBox</h5><p>Sing–Box支持众多协议，需要自己配置订阅链接。</p>
+<p>下载地址：<a href="https://ghp.ci/https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.8.8/GUI.for.SingBox-windows-386.zip">GUI.for.SingBox</a></p>
+</li>
+<li><h5 id="西部世界"><a href="#西部世界" class="headerlink" title="西部世界"></a>西部世界</h5><p>一个机场整理的客户端：<a href="https://westworldss.com/">西部世界官网</a>，进网站后点击客户端下载。</p>
+<blockquote>
+<p>国内备份：<a href="https://sjssr.fun/portal/account/login">西部世界官网</a><br>如果进不去，可以发送任意内容至邮箱 <a href="mailto:&#105;&#x6e;&#x66;&#x6f;&#64;&#119;&#x65;&#115;&#x74;&#x77;&#111;&#x72;&#x6c;&#100;&#115;&#115;&#46;&#x63;&#111;&#x6d;">&#105;&#x6e;&#x66;&#x6f;&#64;&#119;&#x65;&#115;&#x74;&#x77;&#111;&#x72;&#x6c;&#100;&#115;&#115;&#46;&#x63;&#111;&#x6d;</a> 即可获取最新地址</p>
+</blockquote>
+</li>
+<li><h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>其他的好用客户端，都在 <a href="https://v2rayssr.com/vpn-client.html">这里</a>。</p>
+</li>
+</ul>
+</li>
+<li><h4 id="macOS客户端"><a href="#macOS客户端" class="headerlink" title="macOS客户端"></a>macOS客户端</h4><ul>
+<li><h5 id="Clash-Verge-1"><a href="#Clash-Verge-1" class="headerlink" title="Clash Verge"></a>Clash Verge</h5><p>在Mac上运行的clash Verge，使用说明以及下载地址请参考<a href="https://www.clashverge.dev/install.html#__tabbed_1_3">官网</a>，也是需要配置订阅文件。</p>
+</li>
+<li><h5 id="Qv2ray"><a href="#Qv2ray" class="headerlink" title="Qv2ray"></a>Qv2ray</h5><p>可用但不推荐，<a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>的复杂配置在Mac端有些不方便。适合熟悉Qv2ray的配置方式或者用惯Qv2ray的人使用。</p>
+</li>
+</ul>
+</li>
+<li><h4 id="安卓客户端"><a href="#安卓客户端" class="headerlink" title="安卓客户端"></a>安卓客户端</h4><ul>
+<li><h5 id="igniter"><a href="#igniter" class="headerlink" title="igniter"></a>igniter</h5></li>
+</ul>
+<p>  这个是官方的原版安卓客户端 <a href="https://github.com/trojan-gfw/igniter/releases">igniter</a>，可放心使用。</p>
+<blockquote>
+<p>国内备份：<a href="https://ghp.ci/https://github.com/trojan-gfw/igniter/releases/download/v0.10.2-beta/io.github.trojan_gfw.igniter-v0.10.2-beta-230001002-arm64-v8a-release.apk">igniter</a></p>
+</blockquote>
+<ul>
+<li><h5 id="Clash-Meta"><a href="#Clash-Meta" class="headerlink" title="Clash Meta"></a>Clash Meta</h5></li>
+</ul>
+<p>  需要先把配置文件弄好，手机下载 <a href="https://ghp.ci/https://github.com/MetaCubeX/ClashMetaForAndroid/releases/download/v2.10.1/cmfa-2.10.1-meta-universal-release.apk">Clash Meta</a>，然后导入URL或者文件即可使用。</p>
+</li>
+<li><h4 id="IOS客户端"><a href="#IOS客户端" class="headerlink" title="IOS客户端"></a>IOS客户端</h4><ul>
+<li><h5 id="William-VPN"><a href="#William-VPN" class="headerlink" title="William VPN"></a>William VPN</h5></li>
+</ul>
+<p>  用美区Apple ID登录AppStore，搜索 William VPN。</p>
+<blockquote>
+<p>本人未尝试过，无教程，盲猜和安卓差不多</p>
+</blockquote>
+</li>
+<li><h4 id="Linux客户端"><a href="#Linux客户端" class="headerlink" title="Linux客户端"></a>Linux客户端</h4><ul>
+<li><h5 id="Qv2ray-1"><a href="#Qv2ray-1" class="headerlink" title="Qv2ray"></a>Qv2ray</h5></li>
+</ul>
+<p>  支持Linux的客户端不多，<a href="https://github.com/Qv2ray/Qv2ray/releases">Qv2ray</a>算是最好用的之一，具体配置方式同Windows。
+  </p>
+</li>
+<li><h4 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h4><ul>
+<li><h5 id="梅林路由器"><a href="#梅林路由器" class="headerlink" title="梅林路由器"></a>梅林路由器</h5></li>
+</ul>
+<p>  支持RT-AC86U 官改固件，Trojan 暂时没有可用的路由器插件。</p>
+<ul>
+<li><h5 id="OpenWRT路由器"><a href="#OpenWRT路由器" class="headerlink" title="OpenWRT路由器"></a>OpenWRT路由器</h5></li>
+</ul>
+<p>  支持NanoPi R2S 软路由，刷入固件FriendlyWrt_20200616_NanoPi-R2S_arm64_sd.img。</p>
+</li>
+</ul>
+<p>由于很多客户端更新频繁，跑路的跑路，喝茶的喝茶，故本文客户端不做可用性保证，建议上网查询更好用的客户端。很多链接不存在国内备份，而国外链接在国内又打不开。故建议先搭建Windows环境客户端，成功后再访问其他链接。</p>
+<p>至此，客户端搭建完毕，开始你的表演。</p>
+<hr>
+<h3 id="开启BBR加速服务（选修）"><a href="#开启BBR加速服务（选修）" class="headerlink" title="开启BBR加速服务（选修）"></a>开启BBR加速服务（选修）</h3><p>大家都知道国外的服务器远离我们，在国内连接速度并不是很好，尤其是在晚高峰期体验效果明显有所下降，此时我们需要安装一些脚本进行加速。</p>
+<p>前段时间 Google 开源了 TCP BBR 拥塞控制算法，根据用户使用体验的效果来看在 服务器上开启了 TCP BBR 后网速最高可达到 10 几倍的提升。</p>
+<p>关于 Google BBR 拥塞控制算法目前有很多个版本，一个原版，另一个为魔改版，还有加强版的 BBRPLUS 版本。魔改版 Google BBR 和 PLUS 版本的 BBR 是在原版的基础上调整了一些参数，加速效果更胜一筹。</p>
+<p>原版的 BBR 稳定，和系统兼容性好，长期运行不容易出现错误。但是其他衍生来的一些 BBR 加速版本，是经过原版的优化和改动，所以我们都不能说他是 100%的。所以这边我们建议大家不要在你的生产系统上面折腾第三方的加速软件。</p>
+<h4 id="Google-原版-BBR-安装"><a href="#Google-原版-BBR-安装" class="headerlink" title="Google 原版 BBR 安装"></a>Google 原版 BBR 安装</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh</span><br><span class="line">chmod 755 bbr.sh &amp;&amp; ./bbr.sh</span><br></pre></td></tr></table></figure>
+
+<p>接下来 BBR 会自动开始安装，中间提示的什么 就按默认选择就好。</p>
+<p>安装完成后会英文提示是否重启，输入 y 回车重启。</p>
+<p>等待大概一分钟，系统重启成功后，重新用连接工具连接服务器，输入以下命令验证 BBR 是否安装成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>如果得到如下结果则代表 BBR 安装成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br></pre></td></tr></table></figure>
+
+<p>安装成功后，不需要启动什么。这就完事儿了。</p>
+<p>（全文完）</p>
+<p>————————————————</p>
+]]></content>
+      <categories>
+        <category>Trojan</category>
+      </categories>
+      <tags>
+        <tag>代理</tag>
+        <tag>CentOS</tag>
+        <tag>Ubuntu</tag>
+        <tag>Trojan</tag>
       </tags>
   </entry>
 </search>
