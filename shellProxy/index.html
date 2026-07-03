@@ -28,17 +28,17 @@
 <meta property="og:site_name" content="萝卜小站">
 <meta property="og:description" content="各类终端代理到外网配置大家都知道部分仓库源在国外，墙挡着，Git需要配淘宝源才行，Maven也需要配阿里源，比较坑。 本文记载各类终端怎么突破封锁，访问外部。  前提是你能访问外网。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.767766.xyz/blog/shellProxy/qv2ray.png">
-<meta property="og:image" content="https://blog.767766.xyz/blog/shellProxy/clash.png">
-<meta property="og:image" content="https://blog.767766.xyz/blog/shellProxy/qv2ray.png">
-<meta property="og:image" content="https://blog.767766.xyz/blog/shellProxy/clash.png">
-<meta property="og:image" content="https://blog.767766.xyz/blog/shellProxy/panduan.png">
+<meta property="og:image" content="https://blog.767766.xyz/shellProxy/qv2ray.png">
+<meta property="og:image" content="https://blog.767766.xyz/shellProxy/clash.png">
+<meta property="og:image" content="https://blog.767766.xyz/shellProxy/qv2ray.png">
+<meta property="og:image" content="https://blog.767766.xyz/shellProxy/clash.png">
+<meta property="og:image" content="https://blog.767766.xyz/shellProxy/panduan.png">
 <meta property="article:published_time" content="2021-07-14T06:48:09.000Z">
 <meta property="article:modified_time" content="2024-05-30T06:21:27.669Z">
 <meta property="article:author" content="掉漆的标题">
 <meta property="article:tag" content="nginx 代理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.767766.xyz/blog/shellProxy/qv2ray.png">
+<meta name="twitter:image" content="https://blog.767766.xyz/shellProxy/qv2ray.png">
 
 <link rel="canonical" href="https://blog.767766.xyz/shellProxy/">
 
@@ -268,10 +268,10 @@
 <p>注意其中的 <code>http_proxy</code> 字段 ，他是你自己设置的本地代理，不是我们买的外面的代理地址，一般都是如上面代码所示，一般不用改。</p>
 <p>端口的话，有可能不是10809，这个要看本地服务的HTTP代理端口了，一般Shadow Socket的默认端口是10809，如果你没改过的话。</p>
 <p>如果你用的不是Shadow Socket，比如Trojan的Qv2ray的端口都是8889。如下图</p>
-<img src="/blog/shellProxy/qv2ray.png" class="qv2ray" width="600" title="Qv2ray首选项配置页">
+<img src="/shellProxy/qv2ray.png" class="qv2ray" width="600" title="Qv2ray首选项配置页">
 
 <p>而clash的默认端口是7890，如下图。</p>
-<img src="/blog/shellProxy/clash.png" class="" width="600" title="clash首选项配置页">
+<img src="/shellProxy/clash.png" class="" width="600" title="clash首选项配置页">
 
 <p>其他代理软件的HTTP端口是多少？在哪里设置HTTP端口？ 可以点击 <a target="_blank" rel="noopener" href="https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&tn=baidu&wd=ShadowsocksR%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%AB%AF%E5%8F%A3&oq=ShadowsocksR%25E5%25AE%25A2%25E6%2588%25B7%25E7%25AB%25AF%25E8%25AE%25BE%25E7%25BD%25AEHTTP%25E7%25AB%25AF%25E5%258F%25A3&rsv_pq=e289fa7000407eab&rsv_t=e2deWX9Jz5F3iuSd2sf782StltQVXoXTyy57GdI2dpTlObP1+1Nfv7j7Le4&rqlang=cn&rsv_dl=tb&rsv_enter=0&rsv_btype=t&inputT=885&rsv_sug3=13&rsv_sug1=1&rsv_sug7=100&rsv_sug4=896">这里</a> 查询，或者请我吃肯德基我教你啊。</p>
 <h5 id="使配置文件生效"><a href="#使配置文件生效" class="headerlink" title="使配置文件生效"></a>使配置文件生效</h5><p>在Bash终端中执行 <code>source ~/.bash_profile</code> 使以上配置立即生效</p>
@@ -287,10 +287,10 @@
 <p>注意其中的 <code>http_proxy</code> 字段 ，他是你自己设置的本地代理，不是我们买的外面的代理地址，一般都是如上面代码所示，一般不用改。</p>
 <p>端口的话，有可能不是10809，这个要看本地服务的HTTP代理端口了，一般Shadow Socket的默认端口是10809，如果你没改过的话。</p>
 <p>如果你用的不是Shadow Socket，比如Trojan的Qv2ray的端口都是8889。如下图</p>
-<img src="/blog/shellProxy/qv2ray.png" class="qv2ray" width="600" title="Qv2ray首选项配置页">
+<img src="/shellProxy/qv2ray.png" class="qv2ray" width="600" title="Qv2ray首选项配置页">
 
 <p>而clash的默认端口是7890，如下图。</p>
-<img src="/blog/shellProxy/clash.png" class="" width="600" title="clash首选项配置页">
+<img src="/shellProxy/clash.png" class="" width="600" title="clash首选项配置页">
 
 <p>其他代理软件的HTTP端口是多少？在哪里设置HTTP端口？ 可以点击 <a target="_blank" rel="noopener" href="https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&tn=baidu&wd=ShadowsocksR%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%AB%AF%E5%8F%A3&oq=ShadowsocksR%25E5%25AE%25A2%25E6%2588%25B7%25E7%25AB%25AF%25E8%25AE%25BE%25E7%25BD%25AEHTTP%25E7%25AB%25AF%25E5%258F%25A3&rsv_pq=e289fa7000407eab&rsv_t=e2deWX9Jz5F3iuSd2sf782StltQVXoXTyy57GdI2dpTlObP1+1Nfv7j7Le4&rqlang=cn&rsv_dl=tb&rsv_enter=0&rsv_btype=t&inputT=885&rsv_sug3=13&rsv_sug1=1&rsv_sug7=100&rsv_sug4=896">这里</a> 查询，或者请我吃肯德基我教你啊。</p>
 <h5 id="使配置文件生效-1"><a href="#使配置文件生效-1" class="headerlink" title="使配置文件生效"></a>使配置文件生效</h5><p>打开高级系统设置 -&gt; 环境变量，在系统变量中找到Path。点击编辑，即可查看所有列入Path的文件夹路径。</p>
@@ -307,7 +307,7 @@
 </blockquote>
 <p>对比下设置前后是否有区别</p>
 <p>该设置仅对当前终端窗口生效，关闭窗口，下次需要再设置一次proxy_on</p>
-<h4 id="实际演示"><a href="#实际演示" class="headerlink" title="实际演示"></a>实际演示</h4><img src="/blog/shellProxy/panduan.png" class="panduan" title="代理实际效果演示">
+<h4 id="实际演示"><a href="#实际演示" class="headerlink" title="实际演示"></a>实际演示</h4><img src="/shellProxy/panduan.png" class="panduan" title="代理实际效果演示">
 
 <p>上图展示了从杭州 proxy_on 到了洛杉矶，然后又 proxy_off 回杭州的过程。</p>
 

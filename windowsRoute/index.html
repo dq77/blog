@@ -28,8 +28,8 @@
 <meta property="og:site_name" content="萝卜小站">
 <meta property="og:description" content="公司内网与外网存在隔离，由于业务需要，大家需要频繁手动切换内外网。每天数次这种繁琐操作，不如一劳永逸，让电脑自动识别内外网，做到用户无感切换。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.767766.xyz/blog/windowsRoute/1.png">
-<meta property="og:image" content="https://blog.767766.xyz/blog/windowsRoute/2.png">
+<meta property="og:image" content="https://blog.767766.xyz/windowsRoute/1.png">
+<meta property="og:image" content="https://blog.767766.xyz/windowsRoute/2.png">
 <meta property="article:published_time" content="2023-02-24T07:21:40.000Z">
 <meta property="article:modified_time" content="2023-05-12T09:05:42.175Z">
 <meta property="article:author" content="掉漆的标题">
@@ -37,7 +37,7 @@
 <meta property="article:tag" content="网卡">
 <meta property="article:tag" content="内网">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.767766.xyz/blog/windowsRoute/1.png">
+<meta name="twitter:image" content="https://blog.767766.xyz/windowsRoute/1.png">
 
 <link rel="canonical" href="https://blog.767766.xyz/windowsRoute/">
 
@@ -258,7 +258,7 @@
 <p>活动路由中应当有网络目标为0.0.0.0的一行（默认）。</p>
 <p>还记得你第一步显示的ipconfig的本地网关吗？那里面有一个内网的网关，还有一个外网的网关。</p>
 <p>这俩网关和网卡的序号记住，后面要用。此处最好截个图，万一改坏了还能改回来。</p>
-<img src="/blog/windowsRoute/1.png" class="" width="658" title="更改之前的路由表 已脱敏">
+<img src="/windowsRoute/1.png" class="" width="658" title="更改之前的路由表 已脱敏">
 
 
 
@@ -289,7 +289,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route print -4</span><br></pre></td></tr></table></figure>
 
 <p>现在会返显你配置好的两行路由配置在里面。</p>
-<img src="/blog/windowsRoute/2.png" class="" width="666" title="更改之后的路由表">
+<img src="/windowsRoute/2.png" class="" width="666" title="更改之后的路由表">
 
 <p>如果你还有其他内网就再继续加路由。</p>
 <p>教程到此结束。这个时候你就可以在访问外网的同时，也能同时访问内网的服务器了。</p>
